@@ -16,13 +16,14 @@
   --ink: #13203a;
   --muted: #5a6478;
   --line: #cfd5de;
-  --accent: #2443c4;
-  --accent-soft: #e3e8fb;
+  --accent: #000091;
+  --accent-soft: #e6e6fb;
   --ok: #17784a;
   --ok-soft: #dff2e8;
   --ko: #b3261e;
   --ko-soft: #fbe3e1;
-  --gold: #a26a00;
+  --gold: #e1000f;
+  --bleu: #000091; --rouge: #e1000f;
   --shadow: 0 1px 0 rgba(19,32,58,.06), 0 8px 24px -12px rgba(19,32,58,.25);
   --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
   --f-read: "Newsreader", Georgia, "Times New Roman", serif;
@@ -32,14 +33,14 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #0e1320; --sheet: #161d2c; --ink: #e8ecf5; --muted: #98a2b7; --line: #2a3347;
-    --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18; --gold: #f2b544;
+    --accent: #9a9aff; --accent-soft: #1d1d4f; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18; --gold: #ff5a5f;
     --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0e1320; --sheet: #161d2c; --ink: #e8ecf5; --muted: #98a2b7; --line: #2a3347;
-  --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18; --gold: #f2b544;
+  --accent: #9a9aff; --accent-soft: #1d1d4f; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18; --gold: #ff5a5f;
   --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
   color-scheme: dark;
 }
@@ -148,7 +149,7 @@ button.board.dim { opacity: .4; }
 .bulletin .src { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 14px; display: flex; flex-direction: column; gap: 4px; }
 .bulletin .src[hidden] { display: none; }
 .quip { font: italic 400 17px/1.4 var(--f-read); color: var(--ink); }
-.gain { font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+.gain { font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
 .verdict { font-weight: 700; }
 .verdict.ok { color: var(--ok); }
 .verdict.ko { color: var(--ko); }
@@ -238,11 +239,11 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
 
 
 /* ---- Compte à rebours ---- */
-.cd { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: center; background: var(--ink); color: var(--paper); padding: 14px 18px; border-radius: 4px; margin: 0 0 20px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.cd { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: center; background: var(--bleu); color: #fff; border-bottom: 6px solid var(--rouge); padding: 14px 18px; border-radius: 4px; margin: 0 0 20px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
 .cd::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.07) 45%, transparent 60%); transform: translateX(-100%); animation: sheen 5s ease-in-out infinite; pointer-events: none; }
 @keyframes sheen { 0%, 60% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-.cd .j { grid-row: span 2; font: 900 clamp(46px, 7vw, 68px)/.85 var(--f-display); color: var(--gold); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
-:root:not([data-theme="dark"]) .cd .j { color: #ffc94a; }
+.cd .j { grid-row: span 2; font: 900 clamp(46px, 7vw, 68px)/.85 var(--f-display); color: #fff; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+
 .cd .lbl { font: 700 12px/1.2 var(--f-ui); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
 .cd .units { display: flex; gap: 10px; flex-wrap: wrap; }
 .cd .u { display: flex; flex-direction: column; align-items: center; min-width: 46px; }
@@ -306,7 +307,7 @@ button.board.is-ok.flash { animation: okflash .6s ease both; }
 /* ---- Casier ---- */
 .kind { display: inline-block; margin-left: 8px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; color: var(--paper); background: var(--muted); }
 .kind.cond, .kind.civ { background: var(--ko); }
-.kind.cours { background: var(--gold); }
+.kind.cours { background: #a26a00; }
 .kind.nl { background: var(--ok); }
 .kind.pol { background: var(--accent); }
 :root[data-theme="dark"] .kind { color: #0e1320; }
@@ -318,6 +319,52 @@ button.board.is-ok.flash { animation: okflash .6s ease both; }
 @media (max-width: 640px) { .cd { grid-template-columns: 1fr; padding: 12px 14px; } .cd .j { grid-row: auto; font-size: 44px; } .cd .u { min-width: 40px; } .cd .u b { font-size: 24px; min-width: 38px; } .hud .left { gap: 8px; } .menu-btn { padding: 6px 9px; font-size: 13px; } }
 .status { font-weight: 600; }
 
+/* ---- Tricolore ---- */
+header.mast { position: relative; }
+body::before { content: ""; display: block; height: 7px; background: linear-gradient(90deg, var(--bleu) 0 33.34%, #fff 33.34% 66.67%, var(--rouge) 66.67%); box-shadow: 0 1px 0 rgba(0,0,0,.08); }
+.brand h1 .q { color: var(--rouge); }
+.go { background: var(--bleu); color: #fff !important; box-shadow: inset 0 -5px 0 var(--rouge); }
+footer.method { border-top: 0; position: relative; }
+footer.method::before { content: ""; display: block; height: 4px; background: linear-gradient(90deg, var(--bleu) 0 33.34%, var(--line) 33.34% 66.67%, var(--rouge) 66.67%); }
+
+/* ---- À venir ---- */
+.board.soon-b { border-style: dashed; }
+.board .soon { position: absolute; top: 6px; right: -7px; transform: rotate(7deg); background: var(--rouge); color: #fff; font: 800 12px/1 var(--f-display); letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px 3px; box-shadow: 0 2px 6px -2px rgba(0,0,0,.4); z-index: 1; }
+.board .soon::before { content: ""; position: absolute; left: 50%; top: -5px; width: 22px; height: 9px; margin-left: -11px; background: rgba(255,255,255,.55); transform: rotate(-4deg); }
+.board .soonq { font: italic 400 12px/1.25 var(--f-read); color: var(--muted); margin-top: 4px; }
+.boards-intro .soon-l { display: inline-block; background: var(--rouge); color: #fff; font: 800 11px/1 var(--f-display); letter-spacing: .08em; text-transform: uppercase; padding: 3px 6px 2px; transform: rotate(-3deg); margin: 0 3px; }
+#boards-home .board.soon-b:hover .soon { animation: wiggle .5s ease; }
+@keyframes wiggle { 25% { transform: rotate(14deg); } 60% { transform: rotate(2deg); } }
+
+/* ---- Fin de partie : dépouillement ---- */
+.endfx { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; cursor: pointer; overflow: hidden; }
+.endfx[hidden] { display: none; }
+.endfx .p { position: absolute; top: 0; bottom: 0; width: 33.34%; animation: panel .5s cubic-bezier(.7,0,.3,1) both; }
+.endfx .p1 { left: 0; background: var(--bleu); animation-delay: 0s; }
+.endfx .p2 { left: 33.33%; background: #fff; animation-delay: .07s; }
+.endfx .p3 { right: 0; background: var(--rouge); animation-delay: .14s; }
+@keyframes panel { from { transform: translateY(-101%); } to { transform: none; } }
+.endfx.out .p { animation: panelout .5s cubic-bezier(.7,0,.3,1) both; }
+.endfx.out .p2 { animation-delay: .06s; } .endfx.out .p3 { animation-delay: .12s; }
+@keyframes panelout { from { transform: none; } to { transform: translateY(101%); } }
+.endfx .in { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; background: #fff; color: #13203a; padding: 26px 34px 22px; border-radius: 6px; box-shadow: 0 24px 60px -20px rgba(0,0,0,.6); min-width: min(380px, 88vw); animation: pop .5s .45s cubic-bezier(.2,1.4,.4,1) both; }
+.endfx.out .in { animation: fadeout .25s ease both; }
+@keyframes fadeout { to { opacity: 0; transform: scale(.92); } }
+.endfx .k { font: 800 14px/1 var(--f-ui); letter-spacing: .16em; text-transform: uppercase; color: #5a6478; }
+.urne { position: relative; width: 150px; height: 128px; }
+.urne .box { position: absolute; left: 10px; right: 10px; bottom: 0; height: 86px; border: 4px solid #13203a; border-radius: 6px; background: rgba(0,0,145,.06); }
+.urne .box::before { content: ""; position: absolute; left: 50%; top: -4px; width: 60px; height: 8px; margin-left: -30px; background: #13203a; border-radius: 2px; }
+.urne .box::after { content: "RF"; position: absolute; inset: auto 0 18px; text-align: center; font: 900 30px/1 var(--f-display); color: var(--bleu); opacity: .8; }
+.urne .bal { position: absolute; left: 50%; top: -30px; width: 46px; height: 30px; margin-left: -23px; background: #fff; border: 2px solid #13203a; border-radius: 2px; opacity: 0; animation: drop .55s cubic-bezier(.5,0,.8,.6) both; }
+.urne .bal::after { content: ""; position: absolute; left: 7px; right: 7px; top: 12px; height: 3px; background: var(--rouge); }
+@keyframes drop { 0% { opacity: 0; transform: translateY(-30px) rotate(-12deg); } 20% { opacity: 1; } 85% { opacity: 1; transform: translateY(48px) rotate(0); } 100% { opacity: 0; transform: translateY(62px) scaleY(.2); } }
+.endfx .sc { font: 900 clamp(72px, 16vw, 128px)/.85 var(--f-display); color: var(--bleu); font-variant-numeric: tabular-nums; }
+.endfx .sc small { display: block; font: 700 13px/1.2 var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: #5a6478; margin-top: 6px; }
+.endfx .st { font: 900 28px/1 var(--f-display); text-transform: uppercase; letter-spacing: .05em; color: var(--rouge); border: 4px solid currentColor; border-radius: 6px; padding: 6px 12px 4px; transform: rotate(-6deg); opacity: 0; }
+.endfx .st.on { animation: thump2 .38s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes thump2 { from { transform: rotate(-6deg) scale(2.4); opacity: 0; } to { transform: rotate(-6deg) scale(1); opacity: 1; } }
+.endfx .skip { font-size: 12px; color: #5a6478; margin: 4px 0 0; }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -326,7 +373,7 @@ button.board.is-ok.flash { animation: okflash .6s ease both; }
   <div class="wrap">
     <div class="brand">
       <span class="kicker">Présidentielle des 18 avril et 2 mai 2027</span>
-      <h1 id="home-title" title="Retour au menu">Qui a <em>proposé</em> ça&nbsp;?</h1>
+      <h1 id="home-title" title="Retour au menu">Qui a <em>proposé</em> ça<span class="q">&nbsp;?</span></h1>
     </div>
     <div class="right">
       <span class="cd-chip" id="cd-chip" title="Avant le premier tour, le 18 avril 2027">1er tour J-…</span>
@@ -359,7 +406,7 @@ button.board.is-ok.flash { animation: okflash .6s ease both; }
           <li><b id="f-cand">0</b><span>candidats</span></li>
           <li><b id="f-th">0</b><span>thèmes</span></li>
         </ul>
-        <p class="boards-intro">Panneaux numérotés par ordre alphabétique.</p>
+        <p class="boards-intro">Panneaux numérotés par ordre alphabétique. Bandeau <span class="soon-l">À venir</span> : programme 2027 pas encore publié en entier, ou trop peu de mesures recensées. On complète dès que ça sort.</p>
         <div class="boards" id="boards-home"></div>
       </div>
       <div class="card modebox">
@@ -371,7 +418,7 @@ button.board.is-ok.flash { animation: okflash .6s ease both; }
           <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Teste-toi sur un ou plusieurs candidats.</span></button>
           <button type="button" id="m-multi" data-mode="multi" aria-pressed="false"><b>Multi-réponses</b><span>Parfois plusieurs candidats proposent la même chose. Trouve-les tous.</span></button>
           <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Les mesures que des rivaux partagent. Oui, ça arrive.</span></button>
-          <button type="button" class="wide" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>Condamnations, procès en cours, relaxes et sorties qui ont fait du bruit : à qui appartient le dossier ? Tout est sourcé, statut judiciaire compris.</span></button>
+          <button type="button" class="wide" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>10 dossiers : condamnations, procès en cours, relaxes et sorties qui ont fait du bruit. À qui appartient le dossier ? Tout est sourcé, statut judiciaire compris.</span></button>
         </div>
 
         <div class="field" id="fld-pool">
@@ -497,6 +544,17 @@ button.board.is-ok.flash { animation: okflash .6s ease both; }
     <div id="ex-out"></div>
   </section>
 </main>
+
+<div class="endfx" id="endfx" hidden aria-hidden="true">
+  <span class="p p1"></span><span class="p p2"></span><span class="p p3"></span>
+  <div class="in">
+    <span class="k" id="fx-k">Dépouillement en cours…</span>
+    <div class="urne" id="fx-urne"><div class="box"></div></div>
+    <div class="sc"><span id="fx-sc">0</span><small id="fx-sub">points</small></div>
+    <div class="st" id="fx-st">Élu</div>
+    <p class="skip">Touchez pour voir le détail</p>
+  </div>
+</div>
 
 <footer class="method">
   <div class="wrap">
@@ -1313,6 +1371,16 @@ function boardHtml(c, tag, extra, key) {
     "<span class=\"num\">" + c.n + "</span>" + (key ? "<span class=\"key\">" + key + "</span>" : "") +
     "<span class=\"ini\">" + esc(c.ini) + "</span><span class=\"nm\">" + esc(c.name) + "</span><span class=\"pt\">" + esc(c.party) + "</span></" + tag + ">";
 }
+var SOON = {
+  lepen: "Programme 2027 à l’impression. En attendant, on a ressorti celui de 2022.",
+  zemmour: "On fait avec le programme des européennes. Le reste est encore dans les cartons.",
+  roussel: "Les « jours heureux » de 2022 servent de bande-annonce.",
+  polony: "Une seule mesure recensée. Elle se sent un peu seule.",
+  batho: "Programme en chargement… 23 %.",
+  philippot: "Mesures en route. Comme le bus de 8 h 12.",
+  arthaud: "Un dépliant pour l’instant. La suite au prochain tract.",
+  kazib: "Programme en cours de rédaction. Ne quittez pas, un conseiller va vous répondre."
+};
 function countOf(id) { return SINGLE.filter(function (x) { return x.c === id; }).length; }
 
 /* ---------- État ---------- */
@@ -1345,7 +1413,11 @@ function renderHome() {
   countUp($("f-mes"), NPROG, 900);
   $("f-cand").textContent = C.length;
   $("f-th").textContent = THEMES.length;
-  $("boards-home").innerHTML = C.map(function (c) { return boardHtml(c); }).join("");
+  $("boards-home").innerHTML = C.map(function (c) {
+    var b = boardHtml(c);
+    if (!SOON[c.id]) return b;
+    return b.replace("class=\"board\"", "class=\"board soon-b\" title=\"" + esc(SOON[c.id]) + "\"").replace("<span class=\"num\">", "<span class=\"soon\">À venir</span><span class=\"num\">").replace(/<\/div>$/, "<span class=\"soonq\">" + esc(SOON[c.id]) + "</span></div>");
+  }).join("");
   stagger($("boards-home"));
   $("cand-pick").innerHTML = C.map(function (c) {
     return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"false\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
@@ -1434,7 +1506,7 @@ function buildQuestions(conf, onlyIds) {
   }
   if (conf.mode === "casier") {
     var ks = KASES.filter(only);
-    return balanced(shuffle(ks), ks.length).map(function (x) {
+    return balanced(shuffle(ks), onlyIds ? ks.length : 10).map(function (x) {
       var dec = shuffle(ALL.filter(function (id) { return id !== x.c; })).slice(0, 3);
       return { mid: x.id, type: "pick", opts: dec.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; }) };
     });
@@ -1691,7 +1763,8 @@ function finish() {
   var isRecord = total >= 5 && (!best || game.pts > best.pts);
   if (isRecord) store("qui2027-best-" + key, game.result);
   $("r-record").hidden = !isRecord;
-  if (isRecord || p >= 75) setTimeout(function () { confetti(isRecord ? 110 : 60); }, 350);
+  var fxDone = endFx(game.pts, sc + "/" + total + " · " + p + " %", t.label, isRecord);
+  if (!fxDone && (isRecord || p >= 75)) setTimeout(function () { confetti(isRecord ? 110 : 60); }, 350);
 
   var vf = game.cfg.mode === "target" && game.cfg.targets.length === 1, rows = [];
   if (vf) {
@@ -1823,12 +1896,12 @@ function floatGain(txt) {
 }
 function confetti(n) {
   if (REDUCED) return;
-  var cs = getComputedStyle(document.documentElement), cols = ["--accent", "--gold", "--ok", "--ko"].map(function (v) { return cs.getPropertyValue(v).trim() || "#2443c4"; });
+  var cs = getComputedStyle(document.documentElement), cols = ["#000091", "#ffffff", "#e1000f"];
   for (var i = 0; i < n; i++) {
     var d = document.createElement("i");
     d.className = "confetti";
     d.style.left = (Math.random() * 100) + "vw";
-    d.style.background = cols[i % cols.length];
+    d.style.background = cols[i % cols.length]; if (i % 3 === 1) d.style.boxShadow = "0 0 0 1px rgba(0,0,0,.15)";
     d.style.setProperty("--dx", (Math.random() * 160 - 80) + "px");
     d.style.setProperty("--rot", (Math.random() * 900 - 450) + "deg");
     d.style.animationDuration = (1.6 + Math.random() * 1.6) + "s";
@@ -1837,6 +1910,34 @@ function confetti(n) {
     (function (el) { setTimeout(function () { el.remove(); }, 3800); })(d);
   }
 }
+
+/* ---------- Fin de partie : dépouillement ---------- */
+var fxTimers = [], fxOpenAt = 0;
+function endFx(pts, sub, label, record) {
+  if (REDUCED) return false;
+  var fx = $("endfx"), urne = $("fx-urne");
+  fxTimers.forEach(clearTimeout); fxTimers = [];
+  fx.classList.remove("out"); fx.hidden = false; fxOpenAt = Date.now();
+  $("fx-k").textContent = "Dépouillement en cours…";
+  $("fx-sc").textContent = "0"; $("fx-sub").textContent = sub;
+  var st = $("fx-st"); st.textContent = record ? "Record battu" : label; st.classList.remove("on");
+  urne.querySelectorAll(".bal").forEach(function (b) { b.remove(); });
+  for (var i = 0; i < 6; i++) { var bl = document.createElement("span"); bl.className = "bal"; bl.style.animationDelay = (0.55 + i * 0.16) + "s"; bl.style.left = (42 + (i % 3 - 1) * 6) + "%"; urne.appendChild(bl); }
+  function later(fn, ms) { fxTimers.push(setTimeout(fn, ms)); }
+  later(function () { countUp($("fx-sc"), pts, 1100); }, 900);
+  later(function () { $("fx-k").textContent = "Les résultats sont tombés"; }, 1900);
+  later(function () { st.classList.add("on"); confetti(record ? 140 : 90); }, 2100);
+  later(closeFx, 4300);
+  return true;
+}
+function closeFx() {
+  var fx = $("endfx"); if (fx.hidden || fx.classList.contains("out") || Date.now() - fxOpenAt < 700) return;
+  fxTimers.forEach(clearTimeout); fxTimers = [];
+  fx.classList.add("out");
+  setTimeout(function () { fx.hidden = true; fx.classList.remove("out"); }, 650);
+}
+$("endfx").addEventListener("click", closeFx);
+document.addEventListener("keydown", function (e) { if (!$("endfx").hidden && (e.key === "Escape" || e.key === "Enter" || e.key === " ")) { e.preventDefault(); closeFx(); } });
 
 /* ---------- Compte à rebours ---------- */
 var VOTE = Date.UTC(2027, 3, 18, 6, 0, 0); // dimanche 18 avril 2027, 8 h à Paris (UTC+2)
