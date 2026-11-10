@@ -329,6 +329,8 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
 
 /* ---- À venir ---- */
 .board.soon-b { border-style: dashed; }
+.board.noprog { background: transparent; }
+.board.noprog .num { background: var(--muted); }
 .board .soon { position: absolute; top: 6px; right: -7px; transform: rotate(7deg); background: var(--rouge); color: #fff; font: 800 12px/1 var(--f-display); letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px 3px; box-shadow: 0 2px 6px -2px rgba(0,0,0,.4); z-index: 1; }
 .board .soon::before { content: ""; position: absolute; left: 50%; top: -5px; width: 22px; height: 9px; margin-left: -11px; background: rgba(255,255,255,.55); transform: rotate(-4deg); }
 .board .soonq { font: italic 400 12px/1.25 var(--f-read); color: var(--muted); margin-top: 4px; }
@@ -406,7 +408,7 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
           <li><b id="f-cand">0</b><span>candidats</span></li>
           <li><b id="f-th">0</b><span>thèmes</span></li>
         </ul>
-        <p class="boards-intro">Panneaux numérotés par ordre alphabétique. Bandeau <span class="soon-l">À venir</span> : programme 2027 pas encore publié en entier, ou trop peu de mesures recensées. On complète dès que ça sort.</p>
+        <p class="boards-intro">Panneaux numérotés par ordre alphabétique. En bas, bandeau <span class="soon-l">À venir</span> : programme 2027 incomplet, ou candidature déclarée sans programme pour l’instant (panneaux « ? », pas encore jouables). On complète dès que ça sort.</p>
         <div class="boards" id="boards-home"></div>
       </div>
       <div class="card modebox">
@@ -568,6 +570,7 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
       <li>Dans les modes à réponse unique, seules les mesures propres à un candidat sont posées.</li>
       <li>Les mesures partagées par plusieurs candidats sont jouables dans les modes Multi-réponses et « Ils sont d’accord ! », avec la source de chacun.</li>
       <li>Mode « Casier &amp; polémiques » : uniquement des faits publics rapportés par la presse ou les juridictions, avec le statut exact de chaque procédure à la date de mise à jour (définitif, appel, cassation en cours, relaxe, non-lieu). Une procédure en cours n’est pas une condamnation. Ici, l’humour ne porte jamais sur les affaires.</li>
+      <li>Candidats déclarés sans programme recensé (affichés « À venir » sur l’accueil, pas encore jouables) : d’après le décompte de Public Sénat du 14 octobre 2026, complété par la déclaration de Teddy Riner le 9 novembre 2026 (France 24, franceinfo). Liste non exhaustive.</li>
       <li>Le compte à rebours vise l’ouverture des bureaux de vote le dimanche 18 avril 2027 à 8 h (heure de Paris), date retenue par le Conseil des ministres du 1er juillet 2026.</li>
       <li>L’humour vise le joueur, jamais les candidats. Aucun candidat n’a été maltraité pendant la fabrication de ce quiz. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
     </ul>
@@ -1381,6 +1384,19 @@ var SOON = {
   arthaud: "Un dépliant pour l’instant. La suite au prochain tract.",
   kazib: "Programme en cours de rédaction. Ne quittez pas, un conseiller va vous répondre."
 };
+// Candidats déclarés sans programme recensé : affichés sur l'accueil seulement, pas encore jouables.
+var NOPROG = [
+  { name: "Teddy Riner", ini: "TR", party: "Sans étiquette", q: "Candidat depuis le 9 novembre. Le programme est encore au vestiaire." },
+  { name: "Jean Lassalle", ini: "JL", party: "Résistons", q: "Programme en route, à pied, quelque part entre les Pyrénées et Paris." },
+  { name: "Karim Bouamrane", ini: "KB", party: "Maire de Saint-Ouen", q: "Candidature déclarée. Programme pas encore déclaré." },
+  { name: "Olivier Becht", ini: "OB", party: "« Extrême centre »", q: "Programme quelque part au centre. On le cherche encore." },
+  { name: "Gilles Platret", ini: "GP", party: "Ex-LR", q: "Programme en préparation. On lui garde une place au chaud." },
+  { name: "Juan Branco", ini: "JB", party: "Sans étiquette", q: "Programme en cours de rédaction. Plaidoirie à suivre." },
+  { name: "Francis Lalanne", ini: "FLa", party: "Sans étiquette", q: "Programme pas encore sorti. Le single non plus." },
+  { name: "Selma Labib", ini: "SL", party: "NPA-Révolutionnaires", q: "Programme en débat interne. Prévoir du café." },
+  { name: "Clara Egger", ini: "CE", party: "Solution démocratique", q: "Le programme sera peut-être soumis au vote. On attend le résultat." },
+  { name: "Mira Markovic", ini: "MM", party: "Parti animaliste", q: "Programme bientôt. Les animaux de compagnie patientent aussi." }
+];
 function countOf(id) { return SINGLE.filter(function (x) { return x.c === id; }).length; }
 
 /* ---------- État ---------- */
@@ -1413,11 +1429,14 @@ function renderHome() {
   countUp($("f-mes"), NPROG, 900);
   $("f-cand").textContent = C.length;
   $("f-th").textContent = THEMES.length;
-  $("boards-home").innerHTML = C.map(function (c) {
-    var b = boardHtml(c);
-    if (!SOON[c.id]) return b;
-    return b.replace("class=\"board\"", "class=\"board soon-b\" title=\"" + esc(SOON[c.id]) + "\"").replace("<span class=\"num\">", "<span class=\"soon\">À venir</span><span class=\"num\">").replace(/<\/div>$/, "<span class=\"soonq\">" + esc(SOON[c.id]) + "</span></div>");
-  }).join("");
+  var full = C.filter(function (c) { return !SOON[c.id]; }), part = C.filter(function (c) { return SOON[c.id]; });
+  $("boards-home").innerHTML = full.map(function (c) { return boardHtml(c); }).join("") +
+    part.map(function (c) {
+      return boardHtml(c).replace("class=\"board\"", "class=\"board soon-b\" title=\"" + esc(SOON[c.id]) + "\"").replace("<span class=\"num\">", "<span class=\"soon\">À venir</span><span class=\"num\">").replace(/<\/div>$/, "<span class=\"soonq\">" + esc(SOON[c.id]) + "</span></div>");
+    }).join("") +
+    NOPROG.map(function (x) {
+      return "<div class=\"board soon-b noprog\" title=\"" + esc(x.q) + "\"><span class=\"soon\">À venir</span><span class=\"num\">?</span><span class=\"ini\">" + esc(x.ini) + "</span><span class=\"nm\">" + esc(x.name) + "</span><span class=\"pt\">" + esc(x.party) + "</span><span class=\"soonq\">" + esc(x.q) + "</span></div>";
+    }).join("");
   stagger($("boards-home"));
   $("cand-pick").innerHTML = C.map(function (c) {
     return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"false\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
