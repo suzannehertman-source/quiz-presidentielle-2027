@@ -170,6 +170,14 @@ button.board.dim { opacity: .4; }
 .next-row { display: flex; justify-content: flex-end; margin-top: 16px; }
 .next-row button { border: 0; background: var(--ink); color: var(--paper); font: 800 20px/1 var(--f-display); text-transform: uppercase; letter-spacing: .04em; padding: 14px 22px; border-radius: 3px; cursor: pointer; }
 .next-row button[hidden] { display: none; }
+.next-row { gap: 10px; }
+#g-validate { background: var(--accent); }
+:root[data-theme="dark"] #g-validate { color: #0e1320; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #g-validate { color: #0e1320; } }
+button.board[aria-pressed="true"]:not(:disabled) { background: var(--accent-soft); border-color: var(--accent); border-width: 3px; }
+button.board.is-miss { border: 3px dashed var(--ok); opacity: 1; }
+.fou { display: inline-block; margin-left: 8px; font: 800 12px/1 var(--f-display); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1.5px solid currentColor; padding: 3px 6px; border-radius: 2px; }
+.also { font-style: italic; }
 .keys { font-size: 12px; color: var(--muted); margin-top: 10px; }
 .keys kbd { font: 600 11px/1 var(--f-ui); border: 1px solid var(--line); border-bottom-width: 2px; padding: 2px 5px; border-radius: 3px; background: var(--sheet); }
 
@@ -249,7 +257,7 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
   <section class="view" id="v-setup">
     <div class="setup">
       <div>
-        <p class="lede">Une mesure tirée des programmes. À toi de retrouver qui la propose. Bonnes réponses, séries et rapidité rapportent des points. Les mauvaises rapportent surtout de l’humilité.</p>
+        <p class="lede">Une mesure tirée des programmes. À toi de retrouver qui la propose. Bonnes réponses, séries et rapidité rapportent des points. Les mauvaises rapportent surtout de l’humilité, ce qui est déjà plus que certaines promesses.</p>
         <ul class="facts">
           <li><b id="f-mes">0</b><span>mesures sourcées</span></li>
           <li><b id="f-cand">0</b><span>candidats</span></li>
@@ -265,6 +273,8 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
           <button type="button" id="m-duel" data-mode="duel" aria-pressed="false"><b>Confrontation</b><span>Deux candidats face à face : à qui est la mesure ?</span></button>
           <button type="button" id="m-blitz" data-mode="blitz" aria-pressed="false"><b>Éclair 60 s</b><span>Un maximum de bonnes réponses en une minute.</span></button>
           <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Teste-toi sur un ou plusieurs candidats.</span></button>
+          <button type="button" id="m-multi" data-mode="multi" aria-pressed="false"><b>Multi-réponses</b><span>Parfois plusieurs candidats proposent la même chose. Trouve-les tous.</span></button>
+          <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Les mesures que des rivaux partagent. Oui, ça arrive.</span></button>
         </div>
 
         <div class="field" id="fld-pool">
@@ -318,7 +328,7 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
       <div class="bar" id="g-barwrap" aria-hidden="true"><i id="g-bar"></i></div>
       <span class="streak" id="g-streak">Série ×0</span>
       <span class="pts"><b id="g-pts">0</b><span>points</span></span>
-      <button type="button" class="quit" id="g-quit">Abandonner</button>
+      <button type="button" class="quit" id="g-quit">Je m’abstiens</button>
     </div>
     <article class="card bulletin" id="g-card" aria-live="polite">
       <span class="toast" id="g-toast" hidden></span>
@@ -329,7 +339,7 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
       <div class="stamp" id="g-stamp" hidden></div>
     </article>
     <div id="g-opts"></div>
-    <div class="next-row"><button type="button" id="g-next" hidden>Mesure suivante →</button></div>
+    <div class="next-row"><button type="button" id="g-validate" hidden>Valider mon choix</button><button type="button" id="g-next" hidden>Mesure suivante →</button></div>
     <p class="keys" id="g-keys">Raccourcis : touches <kbd>1</kbd> à <kbd>9</kbd> pour répondre, <kbd>Entrée</kbd> pour continuer.</p>
   </section>
 
@@ -392,11 +402,12 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
     <h2>Méthode et limites</h2>
     <ul>
       <li>État au 10 novembre 2026. Les mesures sont reformulées de façon neutre à partir des programmes officiels (souvent consultés via le recensement Votons 2027), de déclarations et d’articles de presse. Chaque mesure renvoie à sa source.</li>
-      <li>Jean-Luc Mélenchon : 200 mesures tirées du texte intégral de L’Avenir en commun (1 069 mesures), publié le 6 novembre 2026. En modes classique et éclair, le tirage est équilibré : chaque candidat a la même chance d’être tiré, quel que soit le nombre de ses mesures.</li>
+      <li>Jean-Luc Mélenchon : plus de 230 mesures tirées du texte intégral de L’Avenir en commun (1 069 mesures), publié le 6 novembre 2026. En modes classique et éclair, le tirage est équilibré : chaque candidat a la même chance d’être tiré, quel que soit le nombre de ses mesures.</li>
       <li>Marine Le Pen, Éric Zemmour et Fabien Roussel n’ont pas encore publié de programme complet pour 2027 : une partie de leurs mesures vient de leurs programmes précédents encore en ligne, indiqués comme tels dans la source.</li>
       <li>« Les principaux » : les sept candidats invités au premier débat de la campagne, organisé par le Medef le 27 août 2026.</li>
-      <li>Les mesures que plusieurs candidats proposent dans des termes proches (Smic à 1 700 €, peines planchers, RIC, retraite à 60 ans…) ont été écartées pour qu’une seule réponse soit juste.</li>
-      <li>L’humour vise le joueur, jamais les candidats. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
+      <li>Dans les modes à réponse unique, seules les mesures propres à un candidat sont posées.</li>
+      <li>Les mesures partagées par plusieurs candidats sont jouables dans les modes Multi-réponses et « Ils sont d’accord ! », avec la source de chacun.</li>
+      <li>L’humour vise le joueur, jamais les candidats. Aucun candidat n’a été maltraité pendant la fabrication de ce quiz. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
     </ul>
   </div>
 </footer>
@@ -449,6 +460,9 @@ var S = {
   melR3: { s: "L’Avenir en commun, partie 5, ch. 3", d: "6 nov. 2026", u: LAEC + "fonder-la-6e-republique/chapitre3" },
   melM2: { s: "L’Avenir en commun, partie 6, ch. 2", d: "6 nov. 2026", u: LAEC + "un-monde-ordonne/chapitre2" },
   melM3: { s: "L’Avenir en commun, partie 6, ch. 3", d: "6 nov. 2026", u: LAEC + "un-monde-ordonne/chapitre3" },
+  psRetr: { s: "Public Sénat (retraites)", d: "30 sept. 2026", u: "https://www.publicsenat.fr/actualites/politique/reculer-ou-avancer-lage-legal-avec-ou-sans-capitalisation-ce-que-proposent-les-principaux-candidats-a-lelection-presidentielle-sur-les-retraites" },
+  melLcp: { s: "LCP (programme L’Avenir en commun)", d: "6 nov. 2026", u: "https://lcp.fr/actualites/presidentielle-2027-ce-qui-change-dans-le-nouveau-programme-de-jean-luc-melenchon-444841" },
+  roMv: { s: "MonVote2027 (source : Contexte)", d: "2026", u: "https://monvote2027.fr/candidat/roussel" },
   lpRetr: { s: "Public Sénat", d: "30 sept. 2026", u: "https://www.publicsenat.fr/actualites/politique/reculer-ou-avancer-lage-legal-avec-ou-sans-capitalisation-ce-que-proposent-les-principaux-candidats-a-lelection-presidentielle-sur-les-retraites" },
   lpMedef: { s: "Euronews (débat du Medef)", d: "28 août 2026", u: "https://fr.euronews.com/2026/08/28/presidentielle-de-2027-a-roland-garros-les-candidats-croisent-le-fer-sur-leconomie" },
   lpCb: { s: "Euronews (contre-budget du RN)", d: "7 oct. 2026", u: "https://fr.euronews.com/2026/10/07/france-le-gouvernement-tire-a-boulets-rouges-sur-le-contre-budget-de-marine-le-pen" },
@@ -691,6 +705,38 @@ var RAW = [
   ["melenchon","Économie","Constituer des stocks tampons de matières premières alimentaires pour lisser les prix.","melE2"],
   ["melenchon","Économie","Rendre gratuit le socle bancaire essentiel pour tous les titulaires d’un compte.","melE3"],
   ["melenchon","Économie","Offrir aux TPE-PME un outil public et gratuit de facturation électronique.","melE3"],
+  ["melenchon","Société","Rétablir l’Observatoire de la laïcité.","melR1"],
+  ["melenchon","Société","Renforcer les moyens et l’autonomie de la Miviludes, la mission de lutte contre les dérives sectaires.","melR1"],
+  ["melenchon","Sécurité","Confier au service public le gardiennage des bâtiments publics, aujourd’hui sous-traité au privé.","melR2"],
+  ["melenchon","Institutions","Recruter les secrétaires de mairie à temps complet et mieux les former.","melR3"],
+  ["melenchon","Logement","Interdire les expulsions locatives sans relogement public.","melR3"],
+  ["melenchon","Logement","Encadrer le prix du foncier pour freiner la spéculation immobilière.","melR3"],
+  ["melenchon","Santé","Créer des zones tampons sans pesticides autour des habitations, crèches, écoles et hôpitaux.","melF1"],
+  ["melenchon","Éducation","Interdire les diplômes professionnels privés.","melF2"],
+  ["melenchon","Éducation","Recruter les chercheurs sur un statut de fonctionnaire dès la fin du doctorat.","melF2"],
+  ["melenchon","Culture","Rendre les équipements sportifs accessibles aux personnes handicapées partout en France.","melF3"],
+  ["melenchon","Santé","Doubler le budget du programme national de recherche « environnement, santé, travail ».","melF4"],
+  ["melenchon","Santé","Doter la France d’une capacité souveraine de production de vaccins.","melF4"],
+  ["melenchon","Santé","Lancer un plan national contre les troubles des conduites alimentaires.","melF4"],
+  ["melenchon","Écologie","Défendre un moratoire sur les forages en Méditerranée et l’exploitation minière des grands fonds marins.","melF5"],
+  ["melenchon","International","Mettre fin aux accords de pêche inégaux avec les pays du Sud.","melF5"],
+  ["melenchon","Numérique","Garantir le droit de parler à un interlocuteur humain face à toute organisation, publique ou privée.","melF7"],
+  ["melenchon","Numérique","Construire un cloud public, fait de centres de données publics interconnectés.","melF7"],
+  ["melenchon","Économie","Restructurer les emprunts des ménages surendettés.","melS1"],
+  ["melenchon","Travail","Rendre effectif le droit à la déconnexion et encadrer le télétravail.","melS1"],
+  ["melenchon","Santé","Mettre fin aux dépassements d’honoraires chez les médecins conventionnés.","melS1"],
+  ["melenchon","Santé","Former les soignants à l’accueil des personnes trans et intersexes.","melS2"],
+  ["melenchon","Travail","Créer dans chaque entreprise une commission de salariés qui contrôle l’égalité femmes-hommes.","melS3"],
+  ["melenchon","Budget","Construire un budget de l’État qui tient compte des effets selon le genre.","melS3"],
+  ["melenchon","Santé","Reconnaître et sanctionner les violences obstétricales et gynécologiques.","melS3"],
+  ["melenchon","Santé","Rembourser partout en France les tests de soumission chimique.","melS3"],
+  ["melenchon","Économie","Nationaliser ArcelorMittal France pour produire de l’acier décarboné.","melB2"],
+  ["melenchon","Numérique","Faire adopter par toutes les administrations un plan de sortie des dépendances numériques.","melB2"],
+  ["melenchon","Transports","Limiter la taille, le poids et les dimensions des SUV vendus.","melB3"],
+  ["melenchon","Agriculture","Interdire préventivement les élevages de poulpes et autres céphalopodes.","melB3"],
+  ["melenchon","Défense","Adapter l’équipement des soldats au changement climatique.","melM2"],
+  ["melenchon","Famille","Créer un crédit d’impôt par enfant pour toutes les familles.","melE2"],
+  ["melenchon","Justice","Durcir les sanctions contre les fraudeurs fiscaux en col blanc.","melE2"],
 
   // ---------- Marine Le Pen ----------
   ["lepen","Retraites","Revenir à un âge légal de départ à 62 ans, et à 60 ans après 40 annuités pour ceux qui ont commencé avant 20 ans.","lpRetr"],
@@ -814,7 +860,6 @@ var RAW = [
   ["tondelier","Transports","Abaisser la vitesse maximale des voitures thermiques à 110 km/h sur autoroute.","toProg"],
   ["tondelier","Justice","Créer 9 000 postes de magistrats en dix ans, 10 000 de greffiers et 7 000 d’attachés de justice.","toProg"],
   ["tondelier","Écologie","Un moratoire sur le canal Seine-Nord Europe, l’autoroute A69, le Lyon-Turin et les extensions d’aéroport.","toProg"],
-  ["tondelier","Santé","Supprimer les franchises médicales et rembourser à 100 % les soins essentiels.","toMv"],
   ["tondelier","Social","Porter à 4 jours le congé de deuil pour un proche (conjoint, parent, frère ou sœur).","toProg"],
   ["tondelier","Éducation","Augmenter de 10 % dès la première année les salaires des personnels de la recherche publique.","toProg"],
   ["tondelier","Social","Augmenter de 250 € l’allocation aux adultes handicapés.","toProg"],
@@ -826,7 +871,6 @@ var RAW = [
   ["tondelier","Retraites","Convoquer une conférence travail-retraite pour équilibrer le régime général d’ici 2050.","toProg"],
 
   // ---------- Éric Zemmour ----------
-  ["zemmour","Immigration","Renvoyer tous les étrangers détenus dans les prisons françaises.","zeBfm"],
   ["zemmour","Immigration","Renvoyer les étrangers chômeurs de longue durée et ceux qui vivent uniquement des aides sociales.","zeBfm"],
   ["zemmour","Immigration","Porter à 10 ans la durée de résidence exigée pour être naturalisé.","zeMv"],
   ["zemmour","Europe","Supprimer la Commission européenne et la remplacer par un simple secrétariat placé sous l’autorité des États.","zeEu"],
@@ -884,7 +928,6 @@ var RAW = [
   // ---------- François Ruffin ----------
   ["ruffin","Transports","Interdire les vols intérieurs lorsqu’une alternative en train existe en moins de 4 heures.","ruSite"],
   ["ruffin","Écologie","Interdire la publicité pour les voitures thermiques et les billets d’avion.","ruSite"],
-  ["ruffin","Écologie","Rétablir la consigne du verre.","ruSite"],
   ["ruffin","Écologie","Ouvrir une Maison de la réparation et du réemploi dans chaque quartier et chaque canton.","ruSite"],
   ["ruffin","Transports","Étendre le leasing social de petites voitures électriques françaises à 3 millions d’automobilistes.","ruSite"],
   ["ruffin","Justice","Créer un délit de « faute systémique » pour les dirigeants dont les choix de rentabilité causent une pollution.","ruSite"],
@@ -938,7 +981,6 @@ var RAW = [
   ["batho","Écologie","Créer une sécurité sociale climatique face aux dommages des catastrophes.","baSite"],
   ["batho","Culture","Remplacer progressivement les publicités dans l’espace public par des œuvres d’art.","baSite"],
   ["batho","Santé","Retirer immédiatement l’autorisation des pesticides cancérigènes, mutagènes, reprotoxiques et perturbateurs endocriniens.","baSite"],
-  ["batho","Santé","Rendre le Nutri-Score obligatoire et interdire la publicité pour les produits nocifs.","baSite"],
   ["batho","Santé","Créer un Défenseur de la santé humaine et animale, que chaque citoyen pourrait saisir.","baSite"],
   ["batho","Culture","Inscrire la liberté de création dans la Constitution.","baSite"],
   ["batho","Santé","Réguler l’installation des médecins et créer des centres de santé.","baSite"],
@@ -954,6 +996,54 @@ var RAW = [
   ["polony","Éducation","Voter une loi de programmation de dix ans pour l’école.","poSite"],
 ];
 
+
+// Mesures partagées : [candidats, thème, mesure, {candidat: source}, "fou" si l'accord traverse les camps]
+var SHARED = [
+  [["lepen","melenchon","tondelier"],"Retraites","Abroger la réforme de 2023 et revenir à un âge légal de départ de 62 ans.",{lepen:"psRetr",melenchon:"psRetr",tondelier:"toMv"},1],
+  [["lepen","dupont","philippot","tondelier"],"Institutions","Instaurer le référendum d’initiative citoyenne (RIC).",{lepen:"lp22",dupont:"ndDlf",philippot:"ptSite",tondelier:"toMv"},1],
+  [["lepen","melenchon","glucksmann","tondelier"],"Institutions","Élire l’Assemblée nationale à la proportionnelle.",{lepen:"lp22",melenchon:"melR1",glucksmann:"glActe",tondelier:"toMv"},1],
+  [["lepen","melenchon","tondelier","roussel"],"Transports","Renationaliser les autoroutes.",{lepen:"lp22",melenchon:"melB3",tondelier:"toMv",roussel:"roMv"},1],
+  [["philippe","melenchon"],"Écologie","Fabriquer en France des avions bombardiers d’eau pour lutter contre les feux de forêt.",{philippe:"phSite",melenchon:"melB2"},1],
+  [["lisnard","glucksmann","tondelier"],"Éducation","Supprimer ou remplacer Parcoursup.",{lisnard:"liProg",glucksmann:"glWiki",tondelier:"toMv"},1],
+  [["melenchon","tondelier","attal"],"Institutions","Supprimer l’article 49.3 de la Constitution.",{melenchon:"melR1",tondelier:"toMv",attal:"atMv"},1],
+  [["melenchon","asselineau","philippot"],"International","Sortir de l’Otan.",{melenchon:"melLcp",asselineau:"asUpr",philippot:"ptSite"},1],
+  [["melenchon","batho"],"Santé","Rendre le Nutri-Score obligatoire.",{melenchon:"melF4",batho:"baSite"},1],
+  [["lepen","philippot","lisnard"],"Santé","Supprimer les agences régionales de santé (ARS).",{lepen:"lp22",philippot:"ptSite",lisnard:"liProg"},0],
+  [["philippe","retailleau"],"Énergie","Commander huit réacteurs EPR2 en plus des six déjà prévus.",{philippe:"phSite",retailleau:"reSite"},0],
+  [["philippe","lisnard"],"Éducation","Augmenter de 20 % la rémunération des enseignants en cinq ans.",{philippe:"phSite",lisnard:"liProg"},0],
+  [["philippe","lepen","lisnard","retailleau"],"Justice","Rétablir des peines planchers.",{philippe:"phSite",lepen:"lp22",lisnard:"liProg",retailleau:"reMv"},0],
+  [["philippe","lepen","lisnard"],"Immigration","Dénoncer ou réviser l’accord franco-algérien de 1968.",{philippe:"phSite",lepen:"lp22",lisnard:"liProg"},0],
+  [["lepen","retailleau","lisnard","zemmour"],"Immigration","Mettre fin au droit du sol automatique.",{lepen:"lp22",retailleau:"reMv",lisnard:"liProg",zemmour:"zeMv"},0],
+  [["attal","glucksmann"],"Numérique","Interdire les réseaux sociaux aux moins de 15 ans.",{attal:"atMv",glucksmann:"glActe"},0],
+  [["glucksmann","tondelier"],"Institutions","Ouvrir le droit de vote à 16 ans.",{glucksmann:"glActe",tondelier:"toMv"},0],
+  [["glucksmann","tondelier","melenchon"],"Agriculture","Instaurer des prix planchers pour garantir le revenu des agriculteurs.",{glucksmann:"glActe",tondelier:"toMv",melenchon:"melB3"},0],
+  [["glucksmann","tondelier"],"International","Utiliser les avoirs russes gelés en Europe au profit de l’Ukraine.",{glucksmann:"glWiki",tondelier:"toProg"},0],
+  [["glucksmann","tondelier"],"Sécurité","Recréer une police de proximité.",{glucksmann:"glActe",tondelier:"toProg"},0],
+  [["glucksmann","tondelier","melenchon"],"Social","Expérimenter une Sécurité sociale de l’alimentation.",{glucksmann:"glActe",tondelier:"toMv",melenchon:"melS1"},0],
+  [["glucksmann","roussel","tondelier"],"International","Porter l’aide publique au développement à 0,7 % de la richesse nationale.",{glucksmann:"glActe",roussel:"roJh",tondelier:"toMv"},0],
+  [["melenchon","ruffin"],"Logement","Construire 200 000 logements publics par an.",{melenchon:"melR3",ruffin:"ruSite"},0],
+  [["ruffin","melenchon"],"Écologie","Rétablir la consigne des bouteilles et bocaux en verre.",{ruffin:"ruSite",melenchon:"melB3"},0],
+  [["tondelier","melenchon"],"Santé","Supprimer les franchises médicales.",{tondelier:"toMv",melenchon:"melS1"},0],
+  [["melenchon","roussel","glucksmann"],"Travail","Porter le Smic à 1 700 € net.",{melenchon:"melE2",roussel:"roPol",glucksmann:"glWiki"},0],
+  [["zemmour","philippot"],"Immigration","Expulser tous les détenus étrangers des prisons françaises.",{zemmour:"zeBfm",philippot:"ptSite"},0],
+  [["zemmour","philippot"],"Transports","Revenir sur l’interdiction de vendre des voitures thermiques neuves en 2035.",{zemmour:"zeEu",philippot:"ptSite"},0],
+  [["lepen","lisnard"],"Retraites","Porter le minimum vieillesse à 1 000 € par mois.",{lepen:"lp22",lisnard:"liProg"},0],
+  [["arthaud","kazib"],"Immigration","Régulariser tous les sans-papiers et instaurer la liberté de circulation et d’installation.",{arthaud:"arLo",kazib:"kaSite"},0],
+  [["melenchon","tondelier"],"Travail","Limiter de 1 à 20 l’écart entre le plus bas et le plus haut salaire d’une entreprise.",{melenchon:"melE2",tondelier:"toMv"},0],
+  [["melenchon","tondelier"],"Logement","Revaloriser de 10 % les aides au logement (APL).",{melenchon:"melE2",tondelier:"toProg"},0],
+  [["melenchon","tondelier"],"Fiscalité","Instaurer la taxe Zucman : 2 % par an sur les patrimoines de plus de 100 millions d’euros.",{melenchon:"melE2",tondelier:"toMv"},0],
+  [["tondelier","roussel"],"Société","Voter une loi-cadre contre les violences sexistes et sexuelles dotée de 3 milliards d’euros.",{tondelier:"toProg",roussel:"roPol"},0],
+  [["melenchon","glucksmann","tondelier"],"Institutions","Donner le droit de vote aux étrangers non européens aux élections locales.",{melenchon:"melS4",glucksmann:"glActe",tondelier:"toMv"},0],
+  [["melenchon","tondelier"],"Travail","Abroger la loi El Khomri et les ordonnances Macron sur le travail.",{melenchon:"melS1",tondelier:"toMv"},0],
+  [["melenchon","tondelier"],"Logement","Abroger la loi Kasbarian sur les squats et les impayés de loyer.",{melenchon:"melR3",tondelier:"toMv"},0],
+  [["philippe","attal"],"Justice","Supprimer le juge d’application des peines.",{philippe:"phSite",attal:"atMv"},0],
+  [["roussel","kazib","melenchon"],"Retraites","Rétablir la retraite à 60 ans.",{roussel:"roJh",kazib:"kaSite",melenchon:"melLcp"},0],
+  [["zemmour","lisnard","retailleau"],"Justice","Juger les mineurs délinquants comme des majeurs dès 16 ans.",{zemmour:"zeMv",lisnard:"liProg",retailleau:"reMv"},0],
+  [["lepen","zemmour"],"Sécurité","Instaurer une présomption de légitime défense pour les forces de l’ordre.",{lepen:"lp22",zemmour:"zeMv"},0],
+  [["lisnard","retailleau"],"Immigration","Remplacer l’aide médicale d’État par une simple aide médicale d’urgence.",{lisnard:"liProg",retailleau:"reMv"},0],
+  [["lepen","retailleau"],"Éducation","Rendre l’uniforme obligatoire à l’école.",{lepen:"lp22",retailleau:"reMv"},0]
+];
+
 </script>
 <script>
 (function () {
@@ -962,15 +1052,21 @@ var RAW = [
 /* ---------- Préparation ---------- */
 C.forEach(function (c, i) { c.n = i + 1; });
 var CBY = {}; C.forEach(function (c) { CBY[c.id] = c; });
-var M = RAW.map(function (r, i) { return { id: i, c: r[0], t: r[1], m: r[2], src: S[r[3]] }; });
+var M = RAW.map(function (r, i) { var o = {}; o[r[0]] = S[r[3]]; return { id: i, c: r[0], cs: [r[0]], t: r[1], m: r[2], srcs: o }; });
+SHARED.forEach(function (r) {
+  var o = {}; r[0].forEach(function (c) { o[c] = S[r[3][c]]; });
+  M.push({ id: M.length, c: r[0][0], cs: r[0].slice(), t: r[1], m: r[2], srcs: o, shared: true, fou: !!r[4] });
+});
+var SINGLE = M.filter(function (x) { return !x.shared; });
+var SH = M.filter(function (x) { return x.shared; });
 var THEMES = Array.from(new Set(M.map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
 var MAIN = C.filter(function (c) { return c.main; }).map(function (c) { return c.id; });
 var ALL = C.map(function (c) { return c.id; });
 var DUELS = [["lepen","melenchon"],["philippe","attal"],["glucksmann","melenchon"],["retailleau","zemmour"],["tondelier","ruffin"],["arthaud","kazib"],["philippot","asselineau"],["lisnard","retailleau"]];
 
-/* ---------- Humour (vise le joueur, jamais les candidats) ---------- */
-var STAMP_OK = ["Adopté", "Bien vu", "Validé", "Élu"];
-var STAMP_KO = ["Vote nul", "Raté", "Rejeté", "Recalé"];
+/* ---------- Humour : il vise le joueur, jamais les candidats ---------- */
+var STAMP_OK = ["Adopté", "Bien vu", "Validé", "Élu", "Majorité absolue", "Plébiscité"];
+var STAMP_KO = ["Vote nul", "Raté", "Rejeté", "Recalé", "Ballottage", "Censuré"];
 var QUIP_OK = [
   "Vous avez lu le programme. Vous êtes peut-être la seule personne en France.",
   "Exact. Mettez-le sur votre CV, rubrique « centres d’intérêt ».",
@@ -979,7 +1075,17 @@ var QUIP_OK = [
   "C’est ça. Vous pouvez postuler comme fact-checker.",
   "Bonne réponse, et sans antisèche. On suppose.",
   "Parfait. Votre bulletin est déjà rempli, et il est juste.",
-  "Gagné. Les éditorialistes vont devoir se méfier."
+  "Gagné. Les éditorialistes vont devoir se méfier.",
+  "Exact. Vous avez un abonnement aux tracts ou quoi ?",
+  "Bravo. Votre prof d’éducation civique verse une larme.",
+  "Juste. Le Conseil constitutionnel valide votre réponse.",
+  "Bien joué. Un sondeur vous aurait donné 3 % de chances, et il aurait eu tort.",
+  "Oui. Vous connaissez ce programme mieux que le candidat ne connaît le prix d’une baguette.",
+  "C’est bon. Vous pouvez désormais couper la parole en débat télévisé.",
+  "Exact. Votre groupe WhatsApp familial ne vous mérite pas.",
+  "Réponse validée par 100 % des suffrages exprimés (le vôtre).",
+  "Bingo. Vous lisez les annexes, vous ?",
+  "Juste. Quelqu’un ici a écouté la matinale jusqu’au bout."
 ];
 var QUIP_KO = [
   "Raté. Promis, on ne le dira à personne au bureau de vote.",
@@ -987,11 +1093,37 @@ var QUIP_KO = [
   "Perdu. On mettra ça sur le compte de la fatigue électorale.",
   "Pas du tout. Retour à la case « 20 heures ».",
   "Faux. Mais l’abstention n’était pas une option.",
-  "Raté. Le programme fait parfois 1 000 mesures, ça excuse un peu.",
+  "Raté. Certains programmes font 1 000 mesures, ça excuse un peu.",
   "Non. Votre intuition vient de voter blanc.",
-  "Perdu. Heureusement, il reste quelques mois avant le premier tour."
+  "Perdu. Heureusement, il reste quelques mois avant le premier tour.",
+  "Raté. Vous avez répondu avec le cœur. Le cœur ne lit pas les programmes.",
+  "Non. Mais c’était une très belle réponse de comptoir.",
+  "Faux. Vous venez d’inventer une alliance qui n’existe pas.",
+  "Perdu. Rassurez-vous, même certains députés se tromperaient.",
+  "Raté. Votre réponse part en commission, puis aux oubliettes.",
+  "Non. On sent que vous avez survolé les tracts dans la boîte aux lettres.",
+  "Faux. Un 49.3 sur votre réponse aurait été plus convaincant.",
+  "Raté. C’est ce qu’on appelle un sondage sorti des urnes.",
+  "Perdu. Vous êtes officiellement un électeur indécis.",
+  "Non. Mais vous avez le droit de faire un recours."
 ];
-var STREAK_TOAST = { 3: "Série de 3 : ça sent le militant", 5: "Série de 5 : programmes sous l’oreiller ?", 8: "Série de 8 : porte-parole en vue", 12: "Série de 12 : ministre de la Mémoire", 20: "Série de 20 : c’est vous qui les écrivez ?" };
+var QUIP_PARTIAL = [
+  "Presque. Une coalition incomplète, comme souvent.",
+  "Pas loin. Il vous manque des alliés, ou vous en avez trop.",
+  "À moitié juste. Un compromis, quoi."
+];
+var QUIP_FOU = [
+  "Notez la date : ils sont d’accord.",
+  "Ne le répétez surtout pas à leurs militants.",
+  "Ils ne dîneront pas ensemble, mais sur ce point ils voteraient pareil.",
+  "Un consensus. Quelqu’un peut vérifier que tout va bien ?",
+  "La preuve qu’on peut s’entendre. Au moins sur une ligne de programme.",
+  "Cette mesure ne sera jamais citée dans leurs débats. Elle est trop consensuelle.",
+  "Ils l’ont écrit chacun de leur côté. Personne n’a copié. On pense."
+];
+var STREAK_TOAST = { 3: "Série de 3 : ça sent le militant", 5: "Série de 5 : programmes sous l’oreiller ?", 8: "Série de 8 : porte-parole en vue", 12: "Série de 12 : ministre de la Mémoire", 16: "Série de 16 : vous êtes l’annexe du programme", 20: "Série de 20 : c’est vous qui les écrivez ?" };
+var FAIL_TOAST = { 3: "3 ratés d’affilée : on rouvre les bureaux de vote ?", 5: "5 ratés : vous jouez les yeux fermés ?", 8: "8 ratés : la défaite est digne, au moins" };
+var GO_LABELS = ["Lancer la partie", "Aux urnes, citoyens", "Ouvrir le bureau de vote", "À voté (bientôt)", "Que le meilleur programme gagne"];
 function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 
 /* ---------- Utilitaires ---------- */
@@ -1003,20 +1135,23 @@ function plural(n, one, many) { return n + " " + (n > 1 ? many : one); }
 function fmt(n) { return n.toLocaleString("fr-FR"); }
 function store(k, v) { try { if (v === undefined) { var x = localStorage.getItem(k); return x ? JSON.parse(x) : null; } localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
 function last(name) { return name.split(" ").slice(1).join(" "); }
-function srcHtml(m) { var s = m.src; return "Source : <a href=\"" + esc(s.u) + "\" target=\"_blank\" rel=\"noopener\">" + esc(s.s) + " ↗</a> · " + esc(s.d); }
+function names(ids) { var n = ids.map(function (id) { return CBY[id].name; }); return n.length < 2 ? n.join("") : n.slice(0, -1).join(", ") + " et " + n[n.length - 1]; }
+function srcHtml(m) {
+  var keys = m.cs;
+  if (keys.length === 1) { var s = m.srcs[keys[0]]; return "Source : <a href=\"" + esc(s.u) + "\" target=\"_blank\" rel=\"noopener\">" + esc(s.s) + " ↗</a> · " + esc(s.d); }
+  return "Sources : " + keys.map(function (k) { var s = m.srcs[k]; return esc(last(CBY[k].name)) + " (<a href=\"" + esc(s.u) + "\" target=\"_blank\" rel=\"noopener\">" + esc(s.s) + " ↗</a>)"; }).join(" ; ");
+}
 function boardHtml(c, tag, extra, key) {
   tag = tag || "div";
   return "<" + tag + (tag === "button" ? " type=\"button\"" : "") + " class=\"board\" " + (extra || "") + ">" +
     "<span class=\"num\">" + c.n + "</span>" + (key ? "<span class=\"key\">" + key + "</span>" : "") +
     "<span class=\"ini\">" + esc(c.ini) + "</span><span class=\"nm\">" + esc(c.name) + "</span><span class=\"pt\">" + esc(c.party) + "</span></" + tag + ">";
 }
-function countOf(id) { return M.filter(function (x) { return x.c === id; }).length; }
+function countOf(id) { return SINGLE.filter(function (x) { return x.c === id; }).length; }
 
 /* ---------- État ---------- */
 var cfg = { mode: "classic", pool: "main", diff: "easy", len: "20", duel: ["lepen", "melenchon"], targets: [] };
-var game = null;
-var timerId = null, autoId = null;
-
+var game = null, timerId = null, autoId = null;
 var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer") };
 function show(v) {
   Object.keys(views).forEach(function (k) { views[k].hidden = (k !== v); });
@@ -1044,15 +1179,16 @@ function renderHome() {
   $("duel-chips").innerHTML = DUELS.map(function (d, i) { return "<button type=\"button\" data-i=\"" + i + "\">" + esc(last(CBY[d[0]].name)) + " / " + esc(last(CBY[d[1]].name)) + "</button>"; }).join("");
   syncSetup();
 }
+var MODES = ["classic", "duel", "blitz", "target", "multi", "accord"];
 function syncSetup() {
-  ["classic", "duel", "blitz", "target"].forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
+  MODES.forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
   ["main", "all"].forEach(function (p) { $("p-" + p).setAttribute("aria-pressed", cfg.pool === p); });
   ["easy", "hard"].forEach(function (d) { $("d-" + d).setAttribute("aria-pressed", cfg.diff === d); });
   ["10", "20", "50", "all"].forEach(function (l) { $("l-" + l).setAttribute("aria-pressed", cfg.len === l); });
   var classicLike = cfg.mode === "classic" || cfg.mode === "blitz";
   $("fld-pool").hidden = !classicLike;
   $("fld-diff").hidden = !classicLike;
-  $("fld-len").hidden = cfg.mode !== "classic";
+  $("fld-len").hidden = !(cfg.mode === "classic" || cfg.mode === "multi");
   $("fld-duel").hidden = cfg.mode !== "duel";
   $("fld-cands").hidden = cfg.mode !== "target";
   $("d-hard").innerHTML = (cfg.pool === "main" ? "Les 7 panneaux" : "Les " + C.length + " panneaux") + "<small>Aucune aide</small>";
@@ -1063,14 +1199,14 @@ function syncSetup() {
     var n = cfg.targets.length;
     $("target-hint").textContent = n === 0 ? "Choisis au moins un candidat." :
       n === 1 ? "Un seul candidat : dis si c’est bien " + CBY[cfg.targets[0]].name + " qui propose chaque mesure. La moitié sont des pièges." :
-      "Retrouve le bon candidat parmi les " + n + " choisis (" + M.filter(function (x) { return cfg.targets.indexOf(x.c) >= 0; }).length + " mesures).";
+      "Retrouve le bon candidat parmi les " + n + " choisis (" + SINGLE.filter(function (x) { return cfg.targets.indexOf(x.c) >= 0; }).length + " mesures).";
     ok = n > 0;
   }
   if (cfg.mode === "duel") ok = cfg.duel[0] !== cfg.duel[1];
   $("btn-start").disabled = !ok;
-  $("btn-start").firstElementChild.textContent = cfg.mode === "duel" && !ok ? "Choisis deux candidats différents" : "Lancer la partie";
+  $("btn-start").firstElementChild.textContent = cfg.mode === "duel" && !ok ? "Choisis deux candidats différents" : pick(GO_LABELS);
   var best = store("qui2027-best-" + modeKey(cfg));
-  $("best").textContent = best ? "Ton record dans ce mode : " + fmt(best.pts) + " points (" + best.score + "/" + best.total + ")." : "Pas encore de record dans ce mode.";
+  $("best").textContent = best ? "Ton record dans ce mode : " + fmt(best.pts) + " points (" + best.score + "/" + best.total + ")." : "Pas encore de record dans ce mode. La place est libre.";
 }
 function modeKey(c) { return c.mode === "classic" || c.mode === "blitz" ? c.mode + "-" + c.pool + "-" + c.diff : c.mode; }
 $("modes").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.mode = b.dataset.mode; syncSetup(); });
@@ -1089,38 +1225,6 @@ $("cand-pick").addEventListener("click", function (e) {
 $("btn-start").addEventListener("click", function () { startGame(buildQuestions(cfg), cfg); });
 
 /* ---------- Questions ---------- */
-function optionsFor(x, conf) {
-  if (conf.mode === "duel") return conf.duel.slice();
-  if (conf.mode === "target") return C.filter(function (c) { return conf.targets.indexOf(c.id) >= 0; }).map(function (c) { return c.id; });
-  var pool = conf.pool === "main" ? MAIN : ALL;
-  if (conf.diff === "hard") return pool.slice();
-  return shuffle(pool.filter(function (id) { return id !== x.c; })).slice(0, 3).concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; });
-}
-function buildQuestions(conf, onlyIds) {
-  var only = function (x) { return !onlyIds || onlyIds.indexOf(x.id) >= 0; };
-  if (conf.mode === "target" && conf.targets.length === 1) {
-    var who = conf.targets[0];
-    var mine = M.filter(function (x) { return x.c === who && only(x); });
-    var others = M.filter(function (x) { return x.c !== who && only(x); });
-    if (!onlyIds) others = shuffle(others).slice(0, Math.max(mine.length, 4));
-    return shuffle(mine.concat(others)).map(function (x) { return { mid: x.id, type: "vf", who: who }; });
-  }
-  var pool;
-  if (conf.mode === "duel") pool = M.filter(function (x) { return conf.duel.indexOf(x.c) >= 0; });
-  else if (conf.mode === "target") pool = M.filter(function (x) { return conf.targets.indexOf(x.c) >= 0; });
-  else { var ids = conf.pool === "main" ? MAIN : ALL; pool = M.filter(function (x) { return ids.indexOf(x.c) >= 0; }); }
-  pool = shuffle(pool.filter(only));
-  if (conf.mode === "duel" && !onlyIds) {
-    // équilibre : autant de mesures de chaque côté (max 10 chacun)
-    var a = pool.filter(function (x) { return x.c === conf.duel[0]; }), b = pool.filter(function (x) { return x.c === conf.duel[1]; });
-    var k = Math.min(10, Math.max(a.length, b.length));
-    pool = shuffle(a.slice(0, k).concat(b.slice(0, k)));
-  }
-  if ((conf.mode === "classic" || conf.mode === "blitz") && !onlyIds && conf.len !== "all") pool = balanced(pool, conf.mode === "blitz" ? 60 : parseInt(conf.len, 10));
-  return pool.map(function (x) { return { mid: x.id, type: "pick", opts: optionsFor(x, conf) }; });
-}
-
-// Tirage équilibré : chaque candidat a autant de chances d'être tiré, quel que soit le nombre de ses mesures.
 function balanced(pool, n) {
   var q = {}; pool.forEach(function (x) { (q[x.c] = q[x.c] || []).push(x); });
   var out = [], ids = Object.keys(q);
@@ -1131,11 +1235,57 @@ function balanced(pool, n) {
   }
   return out;
 }
+function multiOptions(x, size) {
+  var decoys = shuffle(ALL.filter(function (id) { return x.cs.indexOf(id) < 0; }));
+  var n = Math.min(8, Math.max(size, x.cs.length + 3));
+  return x.cs.concat(decoys.slice(0, n - x.cs.length)).sort(function (a, b) { return CBY[a].n - CBY[b].n; });
+}
+function optionsFor(x, conf) {
+  if (conf.mode === "duel") return conf.duel.slice();
+  if (conf.mode === "target") return C.filter(function (c) { return conf.targets.indexOf(c.id) >= 0; }).map(function (c) { return c.id; });
+  var pool = conf.pool === "main" ? MAIN : ALL;
+  if (conf.diff === "hard") return pool.slice();
+  return shuffle(pool.filter(function (id) { return id !== x.c; })).slice(0, 3).concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; });
+}
+function buildQuestions(conf, onlyIds) {
+  var only = function (x) { return !onlyIds || onlyIds.indexOf(x.id) >= 0; };
+  if (conf.mode === "accord") {
+    var acc = shuffle(SH.filter(only));
+    acc.sort(function (a, b) { return (b.fou ? 1 : 0) - (a.fou ? 1 : 0); }); // les accords les plus improbables d'abord
+    acc = shuffle(acc.slice(0, 9)).concat(shuffle(acc.slice(9)));
+    return acc.map(function (x) { return { mid: x.id, type: "multi", opts: multiOptions(x, 6) }; });
+  }
+  if (conf.mode === "multi") {
+    var n = conf.len === "all" ? M.length : parseInt(conf.len, 10);
+    var sh = shuffle(SH.filter(only)), si = balanced(SINGLE.filter(only), onlyIds ? 9999 : n);
+    var mix = onlyIds ? shuffle(sh.concat(si)) : shuffle(sh.slice(0, Math.ceil(n / 2)).concat(si.slice(0, n - Math.min(sh.length, Math.ceil(n / 2)))));
+    return mix.map(function (x) { return { mid: x.id, type: "multi", opts: multiOptions(x, 5) }; });
+  }
+  if (conf.mode === "target" && conf.targets.length === 1) {
+    var who = conf.targets[0];
+    var mine = M.filter(function (x) { return x.cs.indexOf(who) >= 0 && only(x); });
+    var others = SINGLE.filter(function (x) { return x.cs.indexOf(who) < 0 && only(x); });
+    if (!onlyIds) others = shuffle(others).slice(0, Math.max(mine.length, 4));
+    return shuffle(mine.concat(others)).map(function (x) { return { mid: x.id, type: "vf", who: who }; });
+  }
+  var pool;
+  if (conf.mode === "duel") pool = SINGLE.filter(function (x) { return conf.duel.indexOf(x.c) >= 0; });
+  else if (conf.mode === "target") pool = SINGLE.filter(function (x) { return conf.targets.indexOf(x.c) >= 0; });
+  else { var ids = conf.pool === "main" ? MAIN : ALL; pool = SINGLE.filter(function (x) { return ids.indexOf(x.c) >= 0; }); }
+  pool = shuffle(pool.filter(only));
+  if (conf.mode === "duel" && !onlyIds) {
+    var a = pool.filter(function (x) { return x.c === conf.duel[0]; }), b = pool.filter(function (x) { return x.c === conf.duel[1]; });
+    var k = Math.min(10, Math.max(a.length, b.length));
+    pool = shuffle(a.slice(0, k).concat(b.slice(0, k)));
+  }
+  if ((conf.mode === "classic" || conf.mode === "blitz") && !onlyIds && conf.len !== "all") pool = balanced(pool, conf.mode === "blitz" ? 60 : parseInt(conf.len, 10));
+  return pool.map(function (x) { return { mid: x.id, type: "pick", opts: optionsFor(x, conf) }; });
+}
 
 /* ---------- Partie ---------- */
 function startGame(qs, conf) {
   clearInterval(timerId); clearTimeout(autoId);
-  game = { qs: qs, i: 0, answers: [], cfg: JSON.parse(JSON.stringify(conf)), pts: 0, streak: 0, bestStreak: 0, over: false, t0: Date.now() };
+  game = { qs: qs, i: 0, answers: [], cfg: JSON.parse(JSON.stringify(conf)), pts: 0, streak: 0, fails: 0, bestStreak: 0, over: false };
   if (conf.mode === "blitz") { game.timeLeft = 60; startTimer(); }
   show("game");
   renderQ();
@@ -1164,15 +1314,22 @@ function renderQ() {
   $("g-text").textContent = "« " + m.m + " »";
   $("g-src").hidden = true; $("g-src").innerHTML = "";
   $("g-stamp").hidden = true; $("g-toast").hidden = true;
-  $("g-next").hidden = true;
+  $("g-next").hidden = true; $("g-validate").hidden = true;
   $("g-keys").hidden = blitz;
+  game.sel = [];
+  var keys = "123456789";
   if (q.type === "vf") {
     var w = CBY[q.who];
-    $("g-ask").textContent = "Est-ce bien " + w.name + " qui propose cette mesure ?";
-    $("g-opts").innerHTML = "<div class=\"vf\"><button type=\"button\" id=\"vf-yes\" data-v=\"yes\">Oui, c’est " + esc(last(w.name)) + "</button><button type=\"button\" id=\"vf-no\" data-v=\"no\">Non, quelqu’un d’autre</button></div>";
+    $("g-ask").textContent = "Est-ce que " + w.name + " propose cette mesure ?";
+    $("g-opts").innerHTML = "<div class=\"vf\"><button type=\"button\" id=\"vf-yes\" data-v=\"yes\">Oui, c’est " + esc(last(w.name)) + "</button><button type=\"button\" id=\"vf-no\" data-v=\"no\">Non, ce n’est pas " + esc(last(w.name)) + "</button></div>";
+  } else if (q.type === "multi") {
+    $("g-ask").textContent = game.cfg.mode === "accord" ? "Qui est d’accord sur ce point ? Sélectionne tous ceux qui le proposent." : "Qui propose cette mesure ? Il peut y en avoir un seul, ou plusieurs.";
+    $("g-opts").innerHTML = "<div class=\"boards\">" + q.opts.map(function (cid, k) {
+      return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" aria-pressed=\"false\" aria-label=\"" + esc(CBY[cid].name) + "\"", k < 9 ? keys[k] : "");
+    }).join("") + "</div>";
+    $("g-validate").hidden = false; $("g-validate").disabled = true;
   } else {
     $("g-ask").textContent = game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?";
-    var keys = "123456789";
     $("g-opts").innerHTML = "<div class=\"boards" + (q.opts.length === 2 ? " two" : "") + "\">" + q.opts.map(function (cid, k) {
       return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" aria-label=\"" + esc(CBY[cid].name) + "\"", k < 9 ? keys[k] : "");
     }).join("") + "</div>";
@@ -1180,49 +1337,83 @@ function renderQ() {
   game.qStart = Date.now();
   if (game.answers[game.i]) reveal(game.answers[game.i], false);
 }
+function score(a, base, secs) {
+  if (a.ok) {
+    game.streak++; game.fails = 0; game.bestStreak = Math.max(game.bestStreak, game.streak);
+    var streakB = Math.min(150, 25 * (game.streak - 1)), speedB = secs < 4 ? 50 : (secs < 8 ? 25 : 0);
+    a.gain = base + streakB + speedB; a.detail = { streak: streakB, speed: speedB };
+  } else { game.streak = 0; game.fails++; a.gain = a.partial || 0; }
+  game.pts += a.gain;
+}
 $("g-opts").addEventListener("click", function (e) {
   var b = e.target.closest("button"); if (!b || b.disabled || !game || game.over || game.answers[game.i]) return;
-  var q = game.qs[game.i], m = M[q.mid], a;
-  if (q.type === "vf") { var yes = b.dataset.v === "yes"; a = { mid: q.mid, pick: yes ? q.who : "other", ok: yes === (m.c === q.who), type: "vf", who: q.who }; }
+  var q = game.qs[game.i], m = M[q.mid], a, secs = (Date.now() - game.qStart) / 1000;
+  if (q.type === "multi") {
+    var id = b.dataset.c, k = game.sel.indexOf(id);
+    if (k >= 0) game.sel.splice(k, 1); else game.sel.push(id);
+    b.setAttribute("aria-pressed", k < 0);
+    $("g-validate").disabled = game.sel.length === 0;
+    return;
+  }
+  if (q.type === "vf") { var yes = b.dataset.v === "yes"; a = { mid: q.mid, pick: yes ? q.who : "other", ok: yes === (m.cs.indexOf(q.who) >= 0), type: "vf", who: q.who }; }
   else a = { mid: q.mid, pick: b.dataset.c, ok: b.dataset.c === m.c, type: "pick" };
-  var secs = (Date.now() - game.qStart) / 1000;
-  if (a.ok) {
-    game.streak++; game.bestStreak = Math.max(game.bestStreak, game.streak);
-    var base = 100, streakB = Math.min(150, 25 * (game.streak - 1)), speedB = secs < 4 ? 50 : (secs < 8 ? 25 : 0);
-    if (game.cfg.diff === "hard" && (game.cfg.mode === "classic" || game.cfg.mode === "blitz")) base = 150;
-    a.gain = base + streakB + speedB; a.detail = { base: base, streak: streakB, speed: speedB };
-  } else { game.streak = 0; a.gain = 0; }
-  game.pts += a.gain;
+  var base = (game.cfg.diff === "hard" && (game.cfg.mode === "classic" || game.cfg.mode === "blitz")) ? 150 : 100;
+  score(a, base, secs);
   game.answers[game.i] = a;
   reveal(a, true);
   if (game.cfg.mode === "blitz") autoId = setTimeout(next, a.ok ? 650 : 1300);
 });
+$("g-validate").addEventListener("click", validateMulti);
+function validateMulti() {
+  if (!game || game.over || game.answers[game.i] || !game.sel.length) return;
+  var q = game.qs[game.i], m = M[q.mid], secs = (Date.now() - game.qStart) / 1000;
+  var good = game.sel.filter(function (id) { return m.cs.indexOf(id) >= 0; }).length, bad = game.sel.length - good;
+  var a = { mid: q.mid, picks: game.sel.slice(), ok: good === m.cs.length && bad === 0, type: "multi", good: good, bad: bad };
+  if (!a.ok) a.partial = Math.max(0, 40 * good - 30 * bad);
+  score(a, 100 + 40 * (m.cs.length - 1), secs);
+  game.answers[game.i] = a;
+  reveal(a, true);
+}
 function reveal(a, animate) {
-  var q = game.qs[game.i], m = M[q.mid], cand = CBY[m.c];
+  var q = game.qs[game.i], m = M[q.mid];
   var st = $("g-stamp");
-  st.textContent = pick(a.ok ? STAMP_OK : STAMP_KO);
+  st.textContent = a.ok ? (m.fou ? "C’est fou" : pick(STAMP_OK)) : (a.type === "multi" && a.good ? "Ballottage" : pick(STAMP_KO));
   st.className = "stamp " + (a.ok ? "ok" : "ko") + (animate ? " thump" : "");
   st.hidden = false;
+  $("g-validate").hidden = true;
   if (q.type === "vf") {
-    var truth = m.c === q.who;
+    var truth = m.cs.indexOf(q.who) >= 0;
     $("vf-yes").disabled = true; $("vf-no").disabled = true;
     (truth ? $("vf-yes") : $("vf-no")).classList.add("is-ok");
     if (!a.ok) (truth ? $("vf-no") : $("vf-yes")).classList.add("is-ko");
   } else {
+    var picked = a.type === "multi" ? a.picks : [a.pick];
     q.opts.forEach(function (cid) {
       var el = $("opt-" + cid); if (!el) return;
       el.disabled = true;
-      if (cid === m.c) el.classList.add("is-ok"); else if (cid === a.pick) el.classList.add("is-ko"); else el.classList.add("dim");
+      var right = m.cs.indexOf(cid) >= 0, chosen = picked.indexOf(cid) >= 0;
+      if (right && chosen) el.classList.add("is-ok");
+      else if (right) el.classList.add(a.type === "multi" ? "is-miss" : "is-ok");
+      else if (chosen) el.classList.add("is-ko");
+      else el.classList.add("dim");
     });
   }
-  var parts = [];
-  parts.push("<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + (a.ok ? "Exact : " : "C’était ") + esc(cand.name) + " (" + esc(cand.party) + ")." +
-    (a.ok ? " <span class=\"gain\">+" + a.gain + " pts" + bonusTxt(a.detail) + "</span>" : "") + "</span>");
-  if (game.cfg.mode !== "blitz") parts.push("<span class=\"quip\">" + esc(pick(a.ok ? QUIP_OK : QUIP_KO)) + "</span>");
+  var parts = [], who = names(m.cs) + (m.cs.length === 1 ? " (" + CBY[m.c].party + ")" : "");
+  var head = a.ok ? (m.cs.length > 1 ? "Exact : " + who + " le proposent tous." : "Exact : " + who + ".") :
+    (a.type === "multi" ? (m.cs.length > 1 ? "Réponse : " + who + " le proposent." : "Réponse : seulement " + who + ".") + (a.good ? " Vous en aviez " + a.good + " sur " + m.cs.length + (a.bad ? ", plus " + plural(a.bad, "intrus", "intrus") : "") + "." : "") : "C’était " + who + ".");
+  var gainTxt = a.gain ? " <span class=\"gain\">+" + a.gain + " pts" + (a.ok ? bonusTxt(a.detail) : " (consolation)") + "</span>" : "";
+  parts.push("<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + esc(head) + gainTxt + (m.fou ? "<span class=\"fou\">Accord improbable</span>" : "") + "</span>");
+  if (game.cfg.mode !== "blitz") {
+    var quip = m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
+    parts.push("<span class=\"quip\">" + esc(quip) + "</span>");
+  }
   parts.push("<span>" + srcHtml(m) + "</span>");
   $("g-src").innerHTML = parts.join("");
   $("g-src").hidden = false;
-  if (a.ok && animate && STREAK_TOAST[game.streak]) { $("g-toast").textContent = STREAK_TOAST[game.streak]; $("g-toast").hidden = false; }
+  if (animate) {
+    var toast = a.ok ? STREAK_TOAST[game.streak] : FAIL_TOAST[game.fails];
+    if (toast) { $("g-toast").textContent = toast; $("g-toast").hidden = false; }
+  }
   hudUpdate();
   if (game.cfg.mode !== "blitz") {
     var nx = $("g-next");
@@ -1237,7 +1428,7 @@ function next() {
   if (!game || game.over || !game.answers[game.i]) return;
   game.i++;
   if (game.i >= game.qs.length) {
-    if (game.cfg.mode === "blitz") { game.qs = game.qs.concat(buildQuestions(game.cfg)); } // on ne tombe jamais à court
+    if (game.cfg.mode === "blitz") game.qs = game.qs.concat(buildQuestions(game.cfg));
     else { finish(); return; }
   }
   renderQ();
@@ -1250,9 +1441,14 @@ $("g-quit").addEventListener("click", function () {
 document.addEventListener("keydown", function (e) {
   if (views.game.hidden || !game || game.over) return;
   if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
-  var q = game.qs[game.i];
-  if ((e.key === "Enter" || e.key === " ") && game.answers[game.i] && game.cfg.mode !== "blitz") { if (document.activeElement && document.activeElement.id === "g-next") return; e.preventDefault(); next(); return; }
-  if (game.answers[game.i]) return;
+  var q = game.qs[game.i], answered = !!game.answers[game.i];
+  if (e.key === "Enter" || e.key === " ") {
+    if (document.activeElement && /^(g-next|g-validate)$/.test(document.activeElement.id)) return;
+    if (!answered && q.type === "multi") { e.preventDefault(); validateMulti(); return; }
+    if (answered && game.cfg.mode !== "blitz") { e.preventDefault(); next(); }
+    return;
+  }
+  if (answered) return;
   var k = "123456789".indexOf(e.key);
   if (k < 0) return;
   if (q.type === "vf") { if (k === 0) $("vf-yes").click(); if (k === 1) $("vf-no").click(); }
@@ -1265,7 +1461,12 @@ function tier(p) {
   if (p >= 75) return { label: "Éditorialiste du dimanche soir", text: "Vous situez presque tout. Encore deux ou trois confusions et vous aurez votre rond de serviette sur les plateaux." };
   if (p >= 55) return { label: "Électeur éclairé", text: "Solide. Quelques candidats se ressemblent encore à vos yeux : regardez vos confusions ci-dessous." };
   if (p >= 35) return { label: "Spectateur du 20 heures", text: "Les grandes lignes sont là, les détails beaucoup moins. L’onglet « Toutes les mesures » vous tend les bras." };
+  if (p >= 15) return { label: "Lecteur de tracts en diagonale", text: "Vous avez vu passer des affiches, c’est un début. Le reste viendra en jouant." };
   return { label: "Champion du pile ou face", text: "Pour l’instant, un dé à six faces ferait à peu près aussi bien. Bonne nouvelle : c’est en jouant qu’on apprend, et chaque mesure a sa source." };
+}
+function found(a, id) { // le joueur a-t-il bien associé ce candidat à la mesure ?
+  if (a.type === "multi") return a.picks.indexOf(id) >= 0;
+  return a.ok;
 }
 function finish() {
   clearInterval(timerId); clearTimeout(autoId);
@@ -1276,9 +1477,8 @@ function finish() {
   game.result = { pts: game.pts, score: sc, total: total, pct: p, label: t.label, streak: game.bestStreak };
   $("r-pts").textContent = fmt(game.pts);
   $("r-sub").textContent = "points · " + sc + "/" + total + " (" + p + " %) · meilleure série ×" + game.bestStreak;
-  var duel = game.cfg.mode === "duel";
-  var title = t.label, text = t.text;
-  if (duel && total) {
+  var text = t.text;
+  if (game.cfg.mode === "duel" && total) {
     var A = CBY[game.cfg.duel[0]], B = CBY[game.cfg.duel[1]];
     var ra = ans.filter(function (a) { return M[a.mid].c === A.id; }), rb = ans.filter(function (a) { return M[a.mid].c === B.id; });
     var pa = pct(ra.filter(function (a) { return a.ok; }).length, ra.length), pb = pct(rb.filter(function (a) { return a.ok; }).length, rb.length);
@@ -1286,7 +1486,8 @@ function finish() {
       "Vous reconnaissez mieux les mesures de " + (pa > pb ? A.name : B.name) + " (" + Math.max(pa, pb) + " %) que celles de " + (pa > pb ? B.name : A.name) + " (" + Math.min(pa, pb) + " %).") + " " + t.text;
   }
   if (game.cfg.mode === "blitz") text = plural(sc, "bonne réponse", "bonnes réponses") + " en 60 secondes. " + text;
-  $("r-title").textContent = title;
+  if (game.cfg.mode === "accord") text = "Vous avez retrouvé " + plural(sc, "accord", "accords") + " sur " + total + ". Morale de l’histoire : ils se ressemblent parfois plus qu’ils ne l’avouent. " + t.text;
+  $("r-title").textContent = t.label;
   $("r-text").textContent = text;
   var best = store("qui2027-best-" + key);
   var isRecord = total >= 5 && (!best || game.pts > best.pts);
@@ -1296,15 +1497,15 @@ function finish() {
   var vf = game.cfg.mode === "target" && game.cfg.targets.length === 1, rows = [];
   if (vf) {
     var who = game.cfg.targets[0];
-    var mine = ans.filter(function (a) { return M[a.mid].c === who; }), oth = ans.filter(function (a) { return M[a.mid].c !== who; });
+    var mine = ans.filter(function (a) { return M[a.mid].cs.indexOf(who) >= 0; }), oth = ans.filter(function (a) { return M[a.mid].cs.indexOf(who) < 0; });
     $("r-cand-sub").textContent = "Mesures de " + CBY[who].name + " reconnues, et pièges évités.";
     rows.push({ l: "Ses mesures reconnues", a: mine.filter(function (a) { return a.ok; }).length, b: mine.length });
     rows.push({ l: "Pièges évités", a: oth.filter(function (a) { return a.ok; }).length, b: oth.length });
   } else {
     $("r-cand-sub").textContent = "Part des mesures de chaque candidat que tu as bien attribuées.";
     C.forEach(function (c) {
-      var mine = ans.filter(function (a) { return M[a.mid].c === c.id; });
-      if (mine.length) rows.push({ l: c.n + ". " + c.name, a: mine.filter(function (a) { return a.ok; }).length, b: mine.length });
+      var mine = ans.filter(function (a) { return M[a.mid].cs.indexOf(c.id) >= 0; });
+      if (mine.length) rows.push({ l: c.n + ". " + c.name, a: mine.filter(function (a) { return found(a, c.id); }).length, b: mine.length });
     });
     rows.sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
   }
@@ -1317,20 +1518,23 @@ function finish() {
   var conf = {};
   ans.forEach(function (a) {
     if (a.ok) return;
-    var real = M[a.mid].c, k2 = a.type === "vf" ? (a.pick === "other" ? "miss|" + real : "fake|" + real) : a.pick + "|" + real;
-    conf[k2] = (conf[k2] || 0) + 1;
+    var m = M[a.mid], real = m.c;
+    if (a.type === "vf") { var k2 = a.pick === "other" ? "miss|" + q2(m) : "fake|" + real; conf[k2] = (conf[k2] || 0) + 1; }
+    else if (a.type === "pick") { var k3 = a.pick + "|" + real; conf[k3] = (conf[k3] || 0) + 1; }
+    else a.picks.forEach(function (pid) { if (m.cs.indexOf(pid) < 0) { var k4 = pid + "|" + real; conf[k4] = (conf[k4] || 0) + 1; } });
   });
+  function q2(m) { return game.cfg.targets[0] || m.c; }
   var cl = Object.keys(conf).map(function (k2) { return { k: k2, n: conf[k2] }; }).sort(function (x, y) { return y.n - x.n; }).slice(0, 5);
   $("r-conf").innerHTML = cl.length ? cl.map(function (o) {
     var p2 = o.k.split("|"), times = o.n > 1 ? " (" + o.n + " fois)" : "";
     if (p2[0] === "miss") return "<li>Vous n’avez pas reconnu une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
     if (p2[0] === "fake") return "<li>Vous avez cru reconnaître une mesure qui venait de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
     return "<li>Vous avez attribué à <b>" + esc(CBY[p2[0]].name) + "</b> une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
-  }).join("") : "<li style=\"border-color:var(--ok)\">Aucune confusion. Sans faute, chapeau.</li>";
+  }).join("") : "<li style=\"border-color:var(--ok)\">Aucune confusion notable. Chapeau.</li>";
   var missed = ans.filter(function (a) { return !a.ok; });
   $("r-missed").innerHTML = missed.length ? missed.slice(0, 12).map(function (a) {
     var m = M[a.mid];
-    return "<li><q>" + esc(m.m) + "</q><div class=\"meta\"><b>" + esc(CBY[m.c].name) + "</b> · " + esc(m.t) + " · " + srcHtml(m) + "</div></li>";
+    return "<li><q>" + esc(m.m) + "</q><div class=\"meta\"><b>" + esc(names(m.cs)) + "</b> · " + esc(m.t) + " · " + srcHtml(m) + "</div></li>";
   }).join("") + (missed.length > 12 ? "<li class=\"meta\">… et " + (missed.length - 12) + " autres.</li>" : "") : "<li>Rien à revoir.</li>";
   $("r-retry").disabled = missed.length === 0;
   $("r-copied").hidden = true;
@@ -1350,7 +1554,7 @@ $("r-retry").addEventListener("click", function () {
 });
 $("r-setup").addEventListener("click", function () { game = null; show("setup"); syncSetup(); });
 $("r-copy").addEventListener("click", function () {
-  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé" }[game.cfg.mode];
+  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »" }[game.cfg.mode];
   var extra = game.cfg.mode === "duel" ? " (" + last(CBY[game.cfg.duel[0]].name) + " / " + last(CBY[game.cfg.duel[1]].name) + ")" : "";
   var txt = "Qui a proposé ça ? Présidentielle 2027, " + lab + extra + " : " + fmt(r.pts) + " points, " + r.score + "/" + r.total + " (" + r.pct + " %), « " + r.label + " ». À toi : " + location.href.split("#")[0];
   var done = function (msg) { $("r-copied").textContent = msg; $("r-copied").hidden = false; };
@@ -1359,25 +1563,31 @@ $("r-copy").addEventListener("click", function () {
 
 /* ---------- Explorer ---------- */
 function initExplorer() {
-  $("ex-c").innerHTML = "<option value=\"\">Tous les candidats</option><option value=\"__main\">Les 7 principaux</option>" + C.map(function (c) { return "<option value=\"" + c.id + "\">" + c.n + ". " + esc(c.name) + "</option>"; }).join("");
+  $("ex-c").innerHTML = "<option value=\"\">Tous les candidats</option><option value=\"__main\">Les 7 principaux</option><option value=\"__shared\">Mesures partagées</option>" + C.map(function (c) { return "<option value=\"" + c.id + "\">" + c.n + ". " + esc(c.name) + "</option>"; }).join("");
   $("ex-t").innerHTML = "<option value=\"\">Tous les thèmes</option>" + THEMES.map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("");
+  $("ex-q").placeholder = "Rechercher une mesure (retraites, Smic, Otan, sardines…)";
   ["ex-q", "ex-c", "ex-t"].forEach(function (id) { $(id).addEventListener("input", renderExplorer); });
 }
 function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 function renderExplorer() {
   var q = norm($("ex-q").value.trim()), fc = $("ex-c").value, ft = $("ex-t").value;
   var list = M.filter(function (x) {
-    var okc = !fc || (fc === "__main" ? MAIN.indexOf(x.c) >= 0 : x.c === fc);
-    return okc && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + CBY[x.c].name).indexOf(q) >= 0);
+    var okc = !fc || (fc === "__main" ? x.cs.some(function (c) { return MAIN.indexOf(c) >= 0; }) : fc === "__shared" ? x.shared : x.cs.indexOf(fc) >= 0);
+    return okc && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + names(x.cs)).indexOf(q) >= 0);
   });
-  $("ex-count").textContent = plural(list.length, "mesure", "mesures");
+  var count = list.length;
+  $("ex-count").textContent = count ? plural(count, "mesure", "mesures") : "";
   var html = C.map(function (c) {
-    var mine = list.filter(function (x) { return x.c === c.id; });
+    if (fc && fc !== "__main" && fc !== "__shared" && fc !== c.id) return "";
+    var mine = list.filter(function (x) { return x.cs.indexOf(c.id) >= 0; });
     if (!mine.length) return "";
     return "<section class=\"ex-group\"><h3><span class=\"num\">" + c.n + "</span>" + esc(c.name) + "<small>" + esc(c.party) + " · " + plural(mine.length, "mesure", "mesures") + "</small></h3><div class=\"ex-list\">" +
-      mine.map(function (x) { return "<article class=\"card ex-item\"><p>" + esc(x.m) + "</p><div class=\"meta\"><span class=\"th\">" + esc(x.t) + "</span><span>" + srcHtml(x) + "</span></div></article>"; }).join("") + "</div></section>";
+      mine.map(function (x) {
+        var also = x.shared ? "<span class=\"also\">Aussi proposé par " + esc(names(x.cs.filter(function (k) { return k !== c.id; }))) + "</span>" : "";
+        return "<article class=\"card ex-item\"><p>" + esc(x.m) + "</p><div class=\"meta\"><span class=\"th\">" + esc(x.t) + "</span>" + also + "<span>" + srcHtml(x) + "</span></div></article>";
+      }).join("") + "</div></section>";
   }).join("");
-  $("ex-out").innerHTML = html || "<p>Aucune mesure ne correspond. Essaie un autre mot.</p>";
+  $("ex-out").innerHTML = html || "<p>Aucune mesure ne correspond. Même les programmes ont leurs limites.</p>";
 }
 
 /* ---------- Démarrage ---------- */
