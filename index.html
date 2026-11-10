@@ -236,6 +236,88 @@ footer.method { border-top: 2px solid var(--ink); padding: 22px 0 40px; font-siz
 footer.method h2 { font: 800 20px/1 var(--f-display); text-transform: uppercase; color: var(--ink); margin: 0 0 10px; }
 footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; max-width: 75ch; }
 
+
+/* ---- Compte à rebours ---- */
+.cd { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: center; background: var(--ink); color: var(--paper); padding: 14px 18px; border-radius: 4px; margin: 0 0 20px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.cd::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.07) 45%, transparent 60%); transform: translateX(-100%); animation: sheen 5s ease-in-out infinite; pointer-events: none; }
+@keyframes sheen { 0%, 60% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.cd .j { grid-row: span 2; font: 900 clamp(46px, 7vw, 68px)/.85 var(--f-display); color: var(--gold); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+:root:not([data-theme="dark"]) .cd .j { color: #ffc94a; }
+.cd .lbl { font: 700 12px/1.2 var(--f-ui); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+.cd .units { display: flex; gap: 10px; flex-wrap: wrap; }
+.cd .u { display: flex; flex-direction: column; align-items: center; min-width: 46px; }
+.cd .u b { font: 800 28px/1 var(--f-display); font-variant-numeric: tabular-nums; background: rgba(255,255,255,.08); padding: 4px 6px 2px; border-radius: 3px; min-width: 44px; text-align: center; }
+.cd .u b.tick { animation: tick .35s ease; }
+@keyframes tick { 0% { transform: translateY(-30%); opacity: .2; } 100% { transform: none; opacity: 1; } }
+.cd .u span { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; opacity: .7; margin-top: 3px; }
+.cd .quipcd { grid-column: 1 / -1; font: italic 400 15px/1.35 var(--f-read); opacity: .85; margin-top: 4px; }
+.cd-chip { font: 800 14px/1 var(--f-display); letter-spacing: .06em; text-transform: uppercase; border: 1.5px solid var(--gold); color: var(--gold); padding: 8px 10px 7px; border-radius: 2px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mast .right { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.brand h1 { cursor: pointer; }
+.brand h1:hover em { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 6px; }
+
+/* ---- Menu ---- */
+.menu-btn { border: 1.5px solid var(--ink); background: var(--sheet); padding: 7px 12px; font-weight: 700; font-size: 14px; cursor: pointer; border-radius: 2px; display: inline-flex; align-items: center; gap: 6px; }
+.menu-btn:hover { background: var(--ink); color: var(--paper); }
+.hud .left { display: flex; gap: 10px; align-items: center; }
+
+/* ---- Méthode repliée ---- */
+footer.method { padding: 10px 0 24px; }
+footer.method details summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px; font: 800 15px/1 var(--f-display); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 8px 0; }
+footer.method details summary::-webkit-details-marker { display: none; }
+footer.method details summary::after { content: "+"; font: 800 18px/1 var(--f-display); border: 1.5px solid currentColor; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 2px; }
+footer.method details[open] summary::after { content: "–"; }
+footer.method details summary:hover { color: var(--ink); }
+footer.method details ul { margin-top: 8px; }
+
+/* ---- Mouvement ---- */
+.view:not([hidden]) { animation: rise .38s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.pop > * { animation: pop .42s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
+.bulletin.enter { animation: slidein .4s cubic-bezier(.2,.9,.2,1) both; }
+@keyframes slidein { from { opacity: 0; transform: translateX(24px) rotate(.6deg); } to { opacity: 1; transform: none; } }
+.bulletin.shake { animation: shake .45s cubic-bezier(.36,.07,.19,.97) both; }
+@keyframes shake { 10%, 90% { transform: translateX(-2px); } 20%, 80% { transform: translateX(4px); } 30%, 50%, 70% { transform: translateX(-7px); } 40%, 60% { transform: translateX(7px); } }
+button.board.is-ok.flash { animation: okflash .6s ease both; }
+@keyframes okflash { 0% { box-shadow: 0 0 0 0 var(--ok); } 100% { box-shadow: 0 0 0 14px transparent; } }
+.pts { position: relative; }
+.pts .float { position: absolute; right: 0; top: -6px; font: 900 20px/1 var(--f-display); color: var(--gold); pointer-events: none; animation: floatup 1.1s ease-out forwards; white-space: nowrap; }
+@keyframes floatup { from { opacity: 1; transform: translateY(0) scale(1.1); } to { opacity: 0; transform: translateY(-38px) scale(.9); } }
+.pts b.bump { animation: bump .35s ease; }
+@keyframes bump { 50% { transform: scale(1.25); color: var(--gold); } }
+.streak.hot { animation: glow 1.2s ease-in-out infinite alternate; }
+@keyframes glow { from { box-shadow: 0 0 0 0 transparent; } to { box-shadow: 0 0 14px -2px var(--gold); } }
+.toast:not([hidden]) { animation: toastin .5s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes toastin { from { opacity: 0; transform: translateY(-8px) scale(.9); } to { opacity: 1; transform: none; } }
+.confetti { position: fixed; top: -12px; width: 9px; height: 14px; z-index: 50; pointer-events: none; border-radius: 1px; animation: fall linear forwards; }
+@keyframes fall { to { transform: translate3d(var(--dx), 105vh, 0) rotate(var(--rot)); opacity: .9; } }
+.go { position: relative; overflow: hidden; transition: transform .15s ease, filter .15s ease; }
+.go:hover:not(:disabled) { transform: translateY(-2px); }
+.go:not(:disabled)::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.25) 50%, transparent 65%); transform: translateX(-100%); animation: sheen 3.5s ease-in-out infinite; }
+.go span:last-child { transition: transform .2s ease; }
+.go:hover span:last-child { transform: translateX(6px); }
+.modes button { transition: transform .12s ease, border-color .12s ease, background .12s ease; }
+.modes button:hover { transform: translateY(-2px); border-color: var(--accent); }
+.modes button.wide { grid-column: 1 / -1; }
+.modes .new { display: inline-block; margin-left: 6px; font: 800 11px/1 var(--f-ui); letter-spacing: .08em; background: var(--ko); color: #fff; padding: 3px 5px; border-radius: 2px; vertical-align: 2px; }
+.board .num { transition: background .15s ease; }
+
+/* ---- Casier ---- */
+.kind { display: inline-block; margin-left: 8px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; color: var(--paper); background: var(--muted); }
+.kind.cond, .kind.civ { background: var(--ko); }
+.kind.cours { background: var(--gold); }
+.kind.nl { background: var(--ok); }
+.kind.pol { background: var(--accent); }
+:root[data-theme="dark"] .kind { color: #0e1320; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kind { color: #0e1320; } }
+.notice { margin: 0 0 12px; font-size: 13px; color: var(--muted); border-left: 3px solid var(--gold); padding: 6px 10px; background: var(--sheet); }
+.notice[hidden], .kind[hidden] { display: none; }
+.setup > * { min-width: 0; }
+.menu-btn { white-space: nowrap; }
+@media (max-width: 640px) { .cd { grid-template-columns: 1fr; padding: 12px 14px; } .cd .j { grid-row: auto; font-size: 44px; } .cd .u { min-width: 40px; } .cd .u b { font-size: 24px; min-width: 38px; } .hud .left { gap: 8px; } .menu-btn { padding: 6px 9px; font-size: 13px; } }
+.status { font-weight: 600; }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -244,12 +326,15 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
   <div class="wrap">
     <div class="brand">
       <span class="kicker">Présidentielle des 18 avril et 2 mai 2027</span>
-      <h1>Qui a <em>proposé</em> ça&nbsp;?</h1>
+      <h1 id="home-title" title="Retour au menu">Qui a <em>proposé</em> ça&nbsp;?</h1>
     </div>
-    <nav class="tabs" aria-label="Sections">
-      <button type="button" id="tab-jouer" data-view="jouer" aria-pressed="true">Jouer</button>
-      <button type="button" id="tab-explorer" data-view="explorer" aria-pressed="false">Toutes les mesures</button>
-    </nav>
+    <div class="right">
+      <span class="cd-chip" id="cd-chip" title="Avant le premier tour, le 18 avril 2027">1er tour J-…</span>
+      <nav class="tabs" aria-label="Sections">
+        <button type="button" id="tab-jouer" data-view="jouer" aria-pressed="true">⌂ Menu</button>
+        <button type="button" id="tab-explorer" data-view="explorer" aria-pressed="false">Toutes les mesures</button>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -257,6 +342,17 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
   <section class="view" id="v-setup">
     <div class="setup">
       <div>
+        <div class="cd" id="cd" aria-live="off">
+          <span class="j" id="cd-j">J-…</span>
+          <span class="lbl">Avant le premier tour · dimanche 18 avril 2027</span>
+          <div class="units" aria-hidden="true">
+            <span class="u"><b id="cd-d">–</b><span>jours</span></span>
+            <span class="u"><b id="cd-h">–</b><span>heures</span></span>
+            <span class="u"><b id="cd-m">–</b><span>min</span></span>
+            <span class="u"><b id="cd-s">–</b><span>s</span></span>
+          </div>
+          <span class="quipcd" id="cd-quip"></span>
+        </div>
         <p class="lede">Une mesure tirée des programmes. À toi de retrouver qui la propose. Bonnes réponses, séries et rapidité rapportent des points. Les mauvaises rapportent surtout de l’humilité, ce qui est déjà plus que certaines promesses.</p>
         <ul class="facts">
           <li><b id="f-mes">0</b><span>mesures sourcées</span></li>
@@ -275,6 +371,7 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
           <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Teste-toi sur un ou plusieurs candidats.</span></button>
           <button type="button" id="m-multi" data-mode="multi" aria-pressed="false"><b>Multi-réponses</b><span>Parfois plusieurs candidats proposent la même chose. Trouve-les tous.</span></button>
           <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Les mesures que des rivaux partagent. Oui, ça arrive.</span></button>
+          <button type="button" class="wide" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>Condamnations, procès en cours, relaxes et sorties qui ont fait du bruit : à qui appartient le dossier ? Tout est sourcé, statut judiciaire compris.</span></button>
         </div>
 
         <div class="field" id="fld-pool">
@@ -311,6 +408,9 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
           </div>
           <div class="chips" id="duel-chips" aria-label="Affiches suggérées"></div>
         </div>
+        <div class="field" id="fld-casier" hidden>
+          <p class="notice">Présomption d’innocence : une enquête ou un procès en cours n’est pas une condamnation. Chaque fiche indique le statut exact de la procédure et sa source. Les candidats sans affaire ni polémique retenue servent de leurres.</p>
+        </div>
         <div class="field" id="fld-cands" hidden>
           <span class="lab" id="lab-cands">Candidats ciblés</span>
           <div class="cand-pick" id="cand-pick" role="group" aria-labelledby="lab-cands"></div>
@@ -324,15 +424,16 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
 
   <section class="view" id="v-game" hidden>
     <div class="hud">
-      <span class="prog" id="g-prog">Mesure 1 / 20</span>
+      <span class="left"><button type="button" class="menu-btn" id="g-menu" title="Abandonner et revenir au menu">← Menu</button><span class="prog" id="g-prog">Mesure 1 / 20</span></span>
       <div class="bar" id="g-barwrap" aria-hidden="true"><i id="g-bar"></i></div>
       <span class="streak" id="g-streak">Série ×0</span>
       <span class="pts"><b id="g-pts">0</b><span>points</span></span>
       <button type="button" class="quit" id="g-quit">Je m’abstiens</button>
     </div>
+    <p class="notice" id="g-notice" hidden>Présomption d’innocence : une procédure en cours n’est pas une condamnation. Le statut exact s’affiche après ta réponse.</p>
     <article class="card bulletin" id="g-card" aria-live="polite">
       <span class="toast" id="g-toast" hidden></span>
-      <span class="theme" id="g-theme">Thème</span>
+      <span class="theme" id="g-theme">Thème</span><span class="kind" id="g-kind" hidden></span>
       <blockquote id="g-text"></blockquote>
       <p class="ask" id="g-ask">Qui propose cette mesure ?</p>
       <div class="src" id="g-src" hidden></div>
@@ -355,7 +456,7 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
     <div class="res-actions">
       <button type="button" class="btn primary" id="r-again">Rejouer</button>
       <button type="button" class="btn" id="r-retry">Rejouer mes erreurs</button>
-      <button type="button" class="btn" id="r-setup">Changer de mode</button>
+      <button type="button" class="btn" id="r-setup">⌂ Menu</button>
       <button type="button" class="btn" id="r-copy">Copier mon score</button>
       <span class="copied" id="r-copied" hidden>Copié.</span>
     </div>
@@ -366,8 +467,8 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
         <div class="rows" id="r-cand"></div>
       </div>
       <div class="card panel">
-        <h3>Par thème</h3>
-        <p class="sub">Taux de bonnes réponses selon le sujet.</p>
+        <h3 id="r-theme-h">Par thème</h3>
+        <p class="sub" id="r-theme-sub">Taux de bonnes réponses selon le sujet.</p>
         <div class="rows" id="r-theme"></div>
       </div>
       <div class="card panel">
@@ -399,7 +500,8 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
 
 <footer class="method">
   <div class="wrap">
-    <h2>Méthode et limites</h2>
+    <details>
+    <summary>Méthode et limites</summary>
     <ul>
       <li>État au 10 novembre 2026. Les mesures sont reformulées de façon neutre à partir des programmes officiels (souvent consultés via le recensement Votons 2027), de déclarations et d’articles de presse. Chaque mesure renvoie à sa source.</li>
       <li>Jean-Luc Mélenchon : plus de 230 mesures tirées du texte intégral de L’Avenir en commun (1 069 mesures), publié le 6 novembre 2026. En modes classique et éclair, le tirage est équilibré : chaque candidat a la même chance d’être tiré, quel que soit le nombre de ses mesures.</li>
@@ -407,8 +509,11 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
       <li>« Les principaux » : les sept candidats invités au premier débat de la campagne, organisé par le Medef le 27 août 2026.</li>
       <li>Dans les modes à réponse unique, seules les mesures propres à un candidat sont posées.</li>
       <li>Les mesures partagées par plusieurs candidats sont jouables dans les modes Multi-réponses et « Ils sont d’accord ! », avec la source de chacun.</li>
+      <li>Mode « Casier &amp; polémiques » : uniquement des faits publics rapportés par la presse ou les juridictions, avec le statut exact de chaque procédure à la date de mise à jour (définitif, appel, cassation en cours, relaxe, non-lieu). Une procédure en cours n’est pas une condamnation. Ici, l’humour ne porte jamais sur les affaires.</li>
+      <li>Le compte à rebours vise l’ouverture des bureaux de vote le dimanche 18 avril 2027 à 8 h (heure de Paris), date retenue par le Conseil des ministres du 1er juillet 2026.</li>
       <li>L’humour vise le joueur, jamais les candidats. Aucun candidat n’a été maltraité pendant la fabrication de ce quiz. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
     </ul>
+    </details>
   </div>
 </footer>
 
@@ -1044,6 +1149,34 @@ var SHARED = [
   [["lepen","retailleau"],"Éducation","Rendre l’uniforme obligatoire à l’école.",{lepen:"lp22",retailleau:"reMv"},0]
 ];
 
+/* Mode « Casier & polémiques » : faits judiciaires et polémiques publiques, formulés de façon neutre, avec leur statut exact à la date de mise à jour. Une procédure en cours n'est pas une condamnation. */
+var CASES = [
+  ["lepen","cond","2026","Affaire des assistants d’eurodéputés du FN (2004-2016) : condamnation en appel pour détournement de fonds publics à 3 ans de prison dont 2 avec sursis (1 an sous bracelet électronique), 100 000 € d’amende et 45 mois d’inéligibilité dont 30 avec sursis.","Non définitif : pourvoi en cassation en cours. La Cour de cassation doit statuer au plus tard début avril 2027. Elle conteste les faits et reste éligible.",{s:"Euronews, 7 juillet 2026",d:"arrêt de la cour d’appel de Paris",u:"https://fr.euronews.com/2026/07/07/marine-le-pen-condamnee-a-45-mois-dineligibilite-dont-30-mois-assortis-de-sursis"}],
+  ["lepen","pol","2017","Pour accepter une interview sur TF1 pendant la campagne présidentielle, a demandé que le drapeau européen prévu dans le décor soit retiré.","Polémique, sans suite judiciaire.",{s:"Public Sénat",d:"avril 2017",u:"https://www.publicsenat.fr/actualites/politique/philippot-qualifie-le-drapeau-europeen-de-torchon-oligarchique-58983"}],
+  ["melenchon","cond","2019","Condamné par le tribunal correctionnel de Bobigny à 3 mois de prison avec sursis et 8 000 € d’amende pour rébellion et provocation lors de la perquisition agitée du siège de son mouvement en octobre 2018.","Définitif : il a annoncé ne pas faire appel.",{s:"Public Sénat",d:"9 décembre 2019",u:"https://www.publicsenat.fr/actualites/politique/melenchon-condamne-a-trois-mois-avec-sursis-pour-la-perquisition-houleuse-a-lfi"}],
+  ["melenchon","pol","2026","Lors d’un rassemblement devant un tribunal parisien, a estimé que le caractère terroriste des massacres du 7 octobre 2023 pouvait être questionné.","Polémique, sans suite judiciaire connue.",{s:"La Gazette France (AFP)",d:"juin 2026",u:"https://www.lagazettefrance.fr/article/pour-melenchon-le-caractere-terroriste-du-7-octobre-peut-etre-questionne"}],
+  ["zemmour","cond","2025","Condamné en appel à 10 000 € d’amende pour contestation de crime contre l’humanité, pour avoir soutenu en 2019 que le maréchal Pétain avait « sauvé » des juifs français, après deux relaxes et une cassation.","Il a annoncé un pourvoi en cassation.",{s:"La Libre (AFP)",d:"2 avril 2025",u:"https://www.lalibre.be/international/europe/2025/04/02/petain-sauveur-de-juifs-francais-zemmour-condamne-a-10000-euros-damende-L5KWSO364JELFK3HZLYYFRLNS4/"}],
+  ["zemmour","cond","2025","Condamné à 15 000 € d’amende pour provocation à la haine raciale et injures racistes, pour son discours à la « convention de la droite » de septembre 2019.","Définitif : la Cour de cassation a rejeté son pourvoi.",{s:"La Libre",d:"17 septembre 2025",u:"https://www.lalibre.be/international/europe/2025/09/17/zemmour-definitivement-condamne-pour-racisme-les-lois-nadmettent-pas-que-la-haine-puisse-servir-de-fondement-a-notre-societe-2UQ2WKE7W5HYXJ3SKA2BHBG4YQ/"}],
+  ["zemmour","cond","2025","Condamné à 10 000 € d’amende pour complicité d’injure publique et provocation à la haine, pour des propos tenus en 2020 sur CNews au sujet des mineurs étrangers isolés.","Définitif : pourvoi rejeté par la Cour de cassation le 2 décembre 2025.",{s:"Le Club des juristes",d:"décembre 2025",u:"https://www.leclubdesjuristes.com/en-bref/la-cour-de-cassation-confirme-deux-condamnations-deric-zemmour-pour-complicite-dinjure-publique-provocation-a-la-haine-et-pour-diffamation-13229/"}],
+  ["zemmour","civ","2022","Condamné au civil, avec son parti et un proche, à verser 70 000 € pour contrefaçon de droits d’auteur : son clip d’entrée en campagne utilisait sans autorisation des extraits de films.","Jugement du tribunal judiciaire de Paris ; son entourage avait annoncé faire appel.",{s:"Europe 1",d:"4 mars 2022",u:"https://www.europe1.fr/politique/eric-zemmour-condamne-pour-contrefacon-de-droits-dauteur-dans-son-clip-de-campagne-4097443"}],
+  ["zemmour","cond","2026","Condamné pour diffamation publique envers l’Institut national d’études démographiques (Ined), qu’il avait accusé de falsifier des chiffres sur l’immigration : 1 500 € d’amende avec sursis.","Définitif : pourvoi rejeté le 27 janvier 2026.",{s:"Ined",d:"janvier 2026",u:"https://www.ined.fr/fr/presse/condamnation-definitive-monsieur-eric-zemmour-et-monsieur-jean-christophe-thiery-bercegol-du"}],
+  ["asselineau","cours","2026","Renvoyé devant le tribunal correctionnel de Paris pour harcèlement sexuel et agression sexuelle sur un collaborateur, et tentative d’agression sexuelle sur un autre ; la cour d’appel a infirmé un non-lieu de 2024.","Procès à venir. Il conteste les accusations et reste présumé innocent.",{s:"Brut (AFP)",d:"mai 2026",u:"https://www.brut.media/fr/articles/france/justice-faits-divers/agression-et-harcelement-sexuels-francois-asselineau-renvoye-en-proces"}],
+  ["roussel","cours","2022","Visé par une enquête du Parquet national financier pour détournement de fonds publics, après des soupçons d’emploi fictif comme assistant parlementaire entre 2009 et 2014.","Enquête préliminaire ; il conteste et dit avoir des documents prouvant son travail. Aucune condamnation.",{s:"La Libre (AFP)",d:"11 mars 2022",u:"https://www.lalibre.be/international/europe/elections-france/2022/03/11/le-candidat-a-la-presidentielle-fabien-roussel-vise-par-une-enquete-sur-des-soupcons-demploi-fictif-SCMUPWG3O5FDXIIA5WOGIU7NW4/"}],
+  ["philippe","nl","2025","Visé par l’enquête de la Cour de justice de la République sur la gestion du Covid-19, sous le statut de témoin assisté pour mise en danger de la vie d’autrui et abstention volontaire de combattre un sinistre.","Non-lieu prononcé par la commission d’instruction de la CJR.",{s:"H24info (AFP)",d:"2025",u:"https://h24info.ma/monde/france-edouard-philippe-covid-19/"}],
+  ["kazib","cours","2026","Poursuivi pour apologie du terrorisme pour des messages publiés le 7 octobre 2023 en soutien à la « résistance palestinienne ».","Procès renvoyé après la transmission d’une question prioritaire de constitutionnalité. Il dénonce une procédure politique et reste présumé innocent.",{s:"Le Courrier de l’Atlas",d:"juin 2026",u:"https://lecourrierdelatlas.com/proces-anasse-kazib-apologie-terrorisme-renvoye/"}],
+  ["philippot","cours","2019","A décroché le drapeau européen d’un centre des impôts de Forbach pour le remplacer par un drapeau français ; le parquet a ouvert une enquête pour violation de domicile et vol.","Enquête ouverte ; il dénonce une manœuvre politique. Aucune condamnation connue.",{s:"Public Sénat (AFP)",d:"mai 2019",u:"https://www.publicsenat.fr/actualites/politique/enquete-ouverte-contre-florian-philippot-pour-avoir-decroche-le-drapeau-europeen"}],
+  ["dupont","nl","2017","Jugé pour provocation à la haine pour avoir évoqué une « invasion migratoire » pendant la campagne présidentielle de 2017.","Relaxé par le tribunal correctionnel de Paris.",{s:"Public Sénat",d:"décision de la 17e chambre",u:"https://www.publicsenat.fr/actualites/politique/dupont-aignan-relaxe-pour-ses-propos-sur-l-invasion-migratoire-en-france-86680"}],
+  ["dupont","pol","2021","Sanctionné par le Bureau de l’Assemblée nationale pour « fraude au scrutin », pour avoir voté à la place d’un collègue absent.","Sanction parlementaire ; il récuse la fraude et parle d’une « erreur ».",{s:"LCP",d:"14 octobre 2021",u:"https://lcp.fr/actualites/nicolas-dupont-aignan-sanctionne-par-l-assemblee-le-depute-recuse-la-fraude-et-concede"}],
+  ["ruffin","pol","2017","Privé d’un quart de son indemnité pendant un mois pour avoir porté le maillot d’un club de foot amateur de sa circonscription à la tribune de l’Assemblée.","Sanction parlementaire, sans suite judiciaire.",{s:"Paris Match",d:"décembre 2017",u:"https://www.parismatch.be/actualites/politique/2017/12/21/le-depute-insoumis-francois-ruffin-puni-pour-avoir-porte-un-maillot-de-foot-dans-lhemicycle-IG6EHLJM25HXZPA5MX635FUCNI/"}],
+  ["ruffin","cond","—","Du temps où il était journaliste, a été condamné pour diffamation à cause d’un livre consacré aux quartiers nord d’Amiens.","Condamnation ancienne, antérieure à sa carrière politique.",{s:"Europe 1",d:"législatives 2017",u:"https://www.europe1.fr/politique/legislatives-francois-ruffin-refoule-a-amiens-nord-2996414"}],
+  ["ruffin","pol","2026","Sa bande dessinée de « député-reporter » a été accusée de clichés racistes ; il a reconnu « des passages ratés ».","Polémique, sans suite judiciaire.",{s:"LCP",d:"mai 2026",u:"https://lcp.fr/index%2ephp/actualites/le-temps-des-colonies-c-est-fini-pourquoi-francois-ruffin-crispe-une-partie-de-la-gauche"}],
+  ["retailleau","pol","2024","Tout juste nommé ministre de l’Intérieur, a déclaré que « l’État de droit, ça n’est pas intangible ni sacré », avant d’être recadré par le Premier ministre.","Polémique ; il a dénoncé des propos sortis de leur contexte.",{s:"Public Sénat",d:"septembre 2024",u:"https://www.publicsenat.fr/actualites/politique/511613"}],
+  ["tondelier","pol","2025","A parlé de « déportation » au sujet d’une eurodéputée détenue en Israël après avoir participé à une flottille pour Gaza, avant de présenter ses excuses.","Polémique ; excuses publiques.",{s:"Puremédias",d:"octobre 2025",u:"https://www.ozap.com/actu/je-naurai-pas-du-dire-ca-marine-tondelier-presente-ses-excuses-apres-avoir-parle-de-deportation-sur-tf1/652006"}],
+  ["glucksmann","pol","2025","A suggéré que les États-Unis rendent la statue de la Liberté à la France, ce qui lui a valu une réplique de la Maison-Blanche.","Polémique diplomatique, sans suite.",{s:"Yahoo News",d:"mars 2025",u:"https://www.yahoo.com/news/white-house-slams-french-mep-102356451.html"}],
+  ["attal","pol","2023","Tout juste nommé ministre de l’Éducation, a annoncé l’interdiction de l’abaya à l’école, décision dénoncée par une partie de la gauche.","Polémique politique ; la mesure a été appliquée.",{s:"The Local (AFP)",d:"septembre 2023",u:"https://www.thelocal.fr/20230904/minister-500-french-schools-under-scrutiny-over-abaya-ban"}]
+];
+var CASE_KIND = { cond: "Condamnation", civ: "Condamnation civile", cours: "Procédure en cours", nl: "Relaxe ou non-lieu", pol: "Polémique" };
+
 </script>
 <script>
 (function () {
@@ -1057,9 +1190,15 @@ SHARED.forEach(function (r) {
   var o = {}; r[0].forEach(function (c) { o[c] = S[r[3][c]]; });
   M.push({ id: M.length, c: r[0][0], cs: r[0].slice(), t: r[1], m: r[2], srcs: o, shared: true, fou: !!r[4] });
 });
-var SINGLE = M.filter(function (x) { return !x.shared; });
+var NPROG = M.length;
+CASES.forEach(function (r) {
+  var o = {}; o[r[0]] = r[5];
+  M.push({ id: M.length, c: r[0], cs: [r[0]], t: CASE_KIND[r[1]], kind: r[1], year: r[2], m: r[3], status: r[4], srcs: o, kase: true });
+});
+var KASES = M.filter(function (x) { return x.kase; });
+var SINGLE = M.filter(function (x) { return !x.shared && !x.kase; });
 var SH = M.filter(function (x) { return x.shared; });
-var THEMES = Array.from(new Set(M.map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
+var THEMES = Array.from(new Set(M.filter(function (x) { return !x.kase; }).map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
 var MAIN = C.filter(function (c) { return c.main; }).map(function (c) { return c.id; });
 var ALL = C.map(function (c) { return c.id; });
 var DUELS = [["lepen","melenchon"],["philippe","attal"],["glucksmann","melenchon"],["retailleau","zemmour"],["tondelier","ruffin"],["arthaud","kazib"],["philippot","asselineau"],["lisnard","retailleau"]];
@@ -1085,6 +1224,9 @@ var QUIP_OK = [
   "Exact. Votre groupe WhatsApp familial ne vous mérite pas.",
   "Réponse validée par 100 % des suffrages exprimés (le vôtre).",
   "Bingo. Vous lisez les annexes, vous ?",
+  "Exact. On vous verrait bien en régie d’une soirée électorale.",
+  "Juste. Votre oncle qui sait tout vient de perdre son titre.",
+  "Bonne pioche. Vous pourriez réciter ça à un meeting sans prompteur.",
   "Juste. Quelqu’un ici a écouté la matinale jusqu’au bout."
 ];
 var QUIP_KO = [
@@ -1105,7 +1247,10 @@ var QUIP_KO = [
   "Faux. Un 49.3 sur votre réponse aurait été plus convaincant.",
   "Raté. C’est ce qu’on appelle un sondage sorti des urnes.",
   "Perdu. Vous êtes officiellement un électeur indécis.",
-  "Non. Mais vous avez le droit de faire un recours."
+  "Non. Mais vous avez le droit de faire un recours.",
+  "Raté. Vous venez d’inventer une motion de synthèse.",
+  "Faux. Même le tirage au sort aurait hésité.",
+  "Perdu. Un éléphant du parti vient de lever un sourcil."
 ];
 var QUIP_PARTIAL = [
   "Presque. Une coalition incomplète, comme souvent.",
@@ -1123,6 +1268,27 @@ var QUIP_FOU = [
 ];
 var STREAK_TOAST = { 3: "Série de 3 : ça sent le militant", 5: "Série de 5 : programmes sous l’oreiller ?", 8: "Série de 8 : porte-parole en vue", 12: "Série de 12 : ministre de la Mémoire", 16: "Série de 16 : vous êtes l’annexe du programme", 20: "Série de 20 : c’est vous qui les écrivez ?" };
 var FAIL_TOAST = { 3: "3 ratés d’affilée : on rouvre les bureaux de vote ?", 5: "5 ratés : vous jouez les yeux fermés ?", 8: "8 ratés : la défaite est digne, au moins" };
+var QUIP_CASE_OK = [
+  "Exact. Vous lisez la rubrique justice jusqu’au bout, vous.",
+  "Bonne réponse. Votre mémoire mériterait un greffier.",
+  "Juste. Vous suivez l’actualité judiciaire mieux qu’un chroniqueur du palais.",
+  "Bien vu. Vous avez visiblement gardé les coupures de presse.",
+  "Exact. On vous imagine au premier rang des audiences publiques."
+];
+var QUIP_CASE_KO = [
+  "Raté. Jugement hâtif : relisez le dossier avant de trancher.",
+  "Non. Mauvais dossier : le greffe vous renvoie votre copie.",
+  "Perdu. Heureusement, ici, l’erreur judiciaire ne coûte que des points.",
+  "Raté. Vous avez confondu les dossiers, ça arrive aussi aux greffes.",
+  "Non. La présomption d’innocence s’applique aussi à vos réponses."
+];
+var CD_QUIPS = [
+  "Largement le temps de lire tous les programmes. En théorie.",
+  "Il reste des débats, des sondages et au moins trois « petites phrases » par semaine.",
+  "Assez de temps pour changer d’avis plusieurs fois. Vous ne seriez pas le seul.",
+  "D’ici là, entraînez-vous : le bureau de vote ne donne pas d’indice.",
+  "Le compte à rebours tourne. Les programmes, eux, s’allongent."
+];
 var GO_LABELS = ["Lancer la partie", "Aux urnes, citoyens", "Ouvrir le bureau de vote", "À voté (bientôt)", "Que le meilleur programme gagne"];
 function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 
@@ -1155,22 +1321,32 @@ var game = null, timerId = null, autoId = null;
 var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer") };
 function show(v) {
   Object.keys(views).forEach(function (k) { views[k].hidden = (k !== v); });
-  $("tab-jouer").setAttribute("aria-pressed", v !== "explorer");
+  $("tab-jouer").setAttribute("aria-pressed", v === "setup");
   $("tab-explorer").setAttribute("aria-pressed", v === "explorer");
 }
 document.querySelectorAll("nav.tabs button").forEach(function (b) {
   b.addEventListener("click", function () {
     if (b.dataset.view === "explorer") { location.hash = "explorer"; show("explorer"); renderExplorer(); }
-    else { if (location.hash) history.replaceState(null, "", location.pathname + location.search); show(game && !game.over ? "game" : "setup"); }
+    else goMenu();
   });
 });
+function goMenu() {
+  clearInterval(timerId); clearTimeout(autoId);
+  game = null;
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  show("setup"); syncSetup();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+$("home-title").addEventListener("click", goMenu);
+$("g-menu").addEventListener("click", goMenu);
 
 /* ---------- Accueil ---------- */
 function renderHome() {
-  $("f-mes").textContent = M.length;
+  countUp($("f-mes"), NPROG, 900);
   $("f-cand").textContent = C.length;
   $("f-th").textContent = THEMES.length;
   $("boards-home").innerHTML = C.map(function (c) { return boardHtml(c); }).join("");
+  stagger($("boards-home"));
   $("cand-pick").innerHTML = C.map(function (c) {
     return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"false\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
   }).join("");
@@ -1179,7 +1355,7 @@ function renderHome() {
   $("duel-chips").innerHTML = DUELS.map(function (d, i) { return "<button type=\"button\" data-i=\"" + i + "\">" + esc(last(CBY[d[0]].name)) + " / " + esc(last(CBY[d[1]].name)) + "</button>"; }).join("");
   syncSetup();
 }
-var MODES = ["classic", "duel", "blitz", "target", "multi", "accord"];
+var MODES = ["classic", "duel", "blitz", "target", "multi", "accord", "casier"];
 function syncSetup() {
   MODES.forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
   ["main", "all"].forEach(function (p) { $("p-" + p).setAttribute("aria-pressed", cfg.pool === p); });
@@ -1191,6 +1367,7 @@ function syncSetup() {
   $("fld-len").hidden = !(cfg.mode === "classic" || cfg.mode === "multi");
   $("fld-duel").hidden = cfg.mode !== "duel";
   $("fld-cands").hidden = cfg.mode !== "target";
+  $("fld-casier").hidden = cfg.mode !== "casier";
   $("d-hard").innerHTML = (cfg.pool === "main" ? "Les 7 panneaux" : "Les " + C.length + " panneaux") + "<small>Aucune aide</small>";
   $("duel-a").value = cfg.duel[0]; $("duel-b").value = cfg.duel[1];
   C.forEach(function (c) { var b = $("pick-" + c.id); if (b) b.setAttribute("aria-pressed", cfg.targets.indexOf(c.id) >= 0); });
@@ -1255,6 +1432,13 @@ function buildQuestions(conf, onlyIds) {
     acc = shuffle(acc.slice(0, 9)).concat(shuffle(acc.slice(9)));
     return acc.map(function (x) { return { mid: x.id, type: "multi", opts: multiOptions(x, 6) }; });
   }
+  if (conf.mode === "casier") {
+    var ks = KASES.filter(only);
+    return balanced(shuffle(ks), ks.length).map(function (x) {
+      var dec = shuffle(ALL.filter(function (id) { return id !== x.c; })).slice(0, 3);
+      return { mid: x.id, type: "pick", opts: dec.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; }) };
+    });
+  }
   if (conf.mode === "multi") {
     var n = conf.len === "all" ? M.length : parseInt(conf.len, 10);
     var sh = shuffle(SH.filter(only)), si = balanced(SINGLE.filter(only), onlyIds ? 9999 : n);
@@ -1287,6 +1471,7 @@ function startGame(qs, conf) {
   clearInterval(timerId); clearTimeout(autoId);
   game = { qs: qs, i: 0, answers: [], cfg: JSON.parse(JSON.stringify(conf)), pts: 0, streak: 0, fails: 0, bestStreak: 0, over: false };
   if (conf.mode === "blitz") { game.timeLeft = 60; startTimer(); }
+  shownPts = 0;
   show("game");
   renderQ();
   window.scrollTo({ top: 0, behavior: "auto" });
@@ -1301,17 +1486,24 @@ function startTimer() {
     if (game.timeLeft <= 0) { clearInterval(timerId); clearTimeout(autoId); finish(); }
   }, 1000);
 }
+var shownPts = 0;
 function hudUpdate() {
-  $("g-pts").textContent = fmt(game.pts);
+  if (game.pts !== shownPts) { var el = $("g-pts"); countUp(el, game.pts, 450, shownPts); el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); shownPts = game.pts; }
+  else $("g-pts").textContent = fmt(game.pts);
   var s = $("g-streak"); s.textContent = "Série ×" + game.streak; s.classList.toggle("hot", game.streak >= 3);
 }
 function renderQ() {
   var q = game.qs[game.i], m = M[q.mid], n = game.qs.length, blitz = game.cfg.mode === "blitz";
-  if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = "Mesure " + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
+  if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = (game.cfg.mode === "casier" ? "Dossier " : "Mesure ") + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
   else $("g-prog").textContent = game.timeLeft + " s";
   hudUpdate();
-  $("g-theme").textContent = m.t;
-  $("g-text").textContent = "« " + m.m + " »";
+  var kase = !!m.kase;
+  $("g-theme").textContent = kase ? (m.year && m.year !== "—" ? "Dossier · " + m.year : "Dossier") : m.t;
+  $("g-kind").hidden = !kase;
+  if (kase) { $("g-kind").textContent = m.t; $("g-kind").className = "kind " + m.kind; }
+  $("g-notice").hidden = game.cfg.mode !== "casier";
+  var card = $("g-card"); card.classList.remove("enter", "shake"); void card.offsetWidth; card.classList.add("enter");
+  $("g-text").textContent = kase ? m.m : "« " + m.m + " »";
   $("g-src").hidden = true; $("g-src").innerHTML = "";
   $("g-stamp").hidden = true; $("g-toast").hidden = true;
   $("g-next").hidden = true; $("g-validate").hidden = true;
@@ -1329,11 +1521,12 @@ function renderQ() {
     }).join("") + "</div>";
     $("g-validate").hidden = false; $("g-validate").disabled = true;
   } else {
-    $("g-ask").textContent = game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?";
+    $("g-ask").textContent = game.cfg.mode === "casier" ? "À quel candidat appartient ce dossier ?" : (game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?");
     $("g-opts").innerHTML = "<div class=\"boards" + (q.opts.length === 2 ? " two" : "") + "\">" + q.opts.map(function (cid, k) {
       return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" aria-label=\"" + esc(CBY[cid].name) + "\"", k < 9 ? keys[k] : "");
     }).join("") + "</div>";
   }
+  var bx = $("g-opts").querySelector(".boards"); if (bx) stagger(bx);
   game.qStart = Date.now();
   if (game.answers[game.i]) reveal(game.answers[game.i], false);
 }
@@ -1377,7 +1570,7 @@ function validateMulti() {
 function reveal(a, animate) {
   var q = game.qs[game.i], m = M[q.mid];
   var st = $("g-stamp");
-  st.textContent = a.ok ? (m.fou ? "C’est fou" : pick(STAMP_OK)) : (a.type === "multi" && a.good ? "Ballottage" : pick(STAMP_KO));
+  st.textContent = m.kase ? (a.ok ? pick(["Bien vu", "Exact", "Dossier bouclé"]) : pick(["Raté", "Mauvais dossier", "Classé faux"])) : a.ok ? (m.fou ? "C’est fou" : pick(STAMP_OK)) : (a.type === "multi" && a.good ? "Ballottage" : pick(STAMP_KO));
   st.className = "stamp " + (a.ok ? "ok" : "ko") + (animate ? " thump" : "");
   st.hidden = false;
   $("g-validate").hidden = true;
@@ -1392,7 +1585,7 @@ function reveal(a, animate) {
       var el = $("opt-" + cid); if (!el) return;
       el.disabled = true;
       var right = m.cs.indexOf(cid) >= 0, chosen = picked.indexOf(cid) >= 0;
-      if (right && chosen) el.classList.add("is-ok");
+      if (right && chosen) el.classList.add("is-ok", "flash");
       else if (right) el.classList.add(a.type === "multi" ? "is-miss" : "is-ok");
       else if (chosen) el.classList.add("is-ko");
       else el.classList.add("dim");
@@ -1403,8 +1596,9 @@ function reveal(a, animate) {
     (a.type === "multi" ? (m.cs.length > 1 ? "Réponse : " + who + " le proposent." : "Réponse : seulement " + who + ".") + (a.good ? " Vous en aviez " + a.good + " sur " + m.cs.length + (a.bad ? ", plus " + plural(a.bad, "intrus", "intrus") : "") + "." : "") : "C’était " + who + ".");
   var gainTxt = a.gain ? " <span class=\"gain\">+" + a.gain + " pts" + (a.ok ? bonusTxt(a.detail) : " (consolation)") + "</span>" : "";
   parts.push("<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + esc(head) + gainTxt + (m.fou ? "<span class=\"fou\">Accord improbable</span>" : "") + "</span>");
+  if (m.kase) parts.push("<span class=\"status\">Statut : " + esc(m.status) + "</span>");
   if (game.cfg.mode !== "blitz") {
-    var quip = m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
+    var quip = m.kase ? (a.ok ? pick(QUIP_CASE_OK) : pick(QUIP_CASE_KO)) : m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
     parts.push("<span class=\"quip\">" + esc(quip) + "</span>");
   }
   parts.push("<span>" + srcHtml(m) + "</span>");
@@ -1413,11 +1607,14 @@ function reveal(a, animate) {
   if (animate) {
     var toast = a.ok ? STREAK_TOAST[game.streak] : FAIL_TOAST[game.fails];
     if (toast) { $("g-toast").textContent = toast; $("g-toast").hidden = false; }
+    if (a.gain) floatGain("+" + a.gain);
+    if (!a.ok) { var cd2 = $("g-card"); cd2.classList.remove("enter", "shake"); void cd2.offsetWidth; cd2.classList.add("shake"); }
+    if (a.ok && STREAK_TOAST[game.streak]) confetti(40);
   }
   hudUpdate();
   if (game.cfg.mode !== "blitz") {
     var nx = $("g-next");
-    nx.textContent = game.i + 1 < game.qs.length ? "Mesure suivante →" : "Voir mon résultat →";
+    nx.textContent = game.i + 1 < game.qs.length ? (m.kase ? "Dossier suivant →" : "Mesure suivante →") : "Voir mon résultat →";
     nx.hidden = false;
     if (animate) nx.focus({ preventScroll: true });
   }
@@ -1436,7 +1633,7 @@ function next() {
 $("g-quit").addEventListener("click", function () {
   clearInterval(timerId); clearTimeout(autoId);
   if (game && game.answers.filter(Boolean).length > 0) finish();
-  else { game = null; show("setup"); syncSetup(); }
+  else goMenu();
 });
 document.addEventListener("keydown", function (e) {
   if (views.game.hidden || !game || game.over) return;
@@ -1475,7 +1672,7 @@ function finish() {
   var total = ans.length, sc = ans.filter(function (a) { return a.ok; }).length, p = pct(sc, total), t = tier(p);
   var key = modeKey(game.cfg);
   game.result = { pts: game.pts, score: sc, total: total, pct: p, label: t.label, streak: game.bestStreak };
-  $("r-pts").textContent = fmt(game.pts);
+  countUp($("r-pts"), game.pts, 1100);
   $("r-sub").textContent = "points · " + sc + "/" + total + " (" + p + " %) · meilleure série ×" + game.bestStreak;
   var text = t.text;
   if (game.cfg.mode === "duel" && total) {
@@ -1486,6 +1683,7 @@ function finish() {
       "Vous reconnaissez mieux les mesures de " + (pa > pb ? A.name : B.name) + " (" + Math.max(pa, pb) + " %) que celles de " + (pa > pb ? B.name : A.name) + " (" + Math.min(pa, pb) + " %).") + " " + t.text;
   }
   if (game.cfg.mode === "blitz") text = plural(sc, "bonne réponse", "bonnes réponses") + " en 60 secondes. " + text;
+  if (game.cfg.mode === "casier") text = "Vous avez attribué " + plural(sc, "dossier", "dossiers") + " sur " + total + " au bon candidat. Rappel utile : une procédure en cours n’est pas une condamnation. " + t.text.replace("chaque mesure a sa source", "chaque dossier a sa source");
   if (game.cfg.mode === "accord") text = "Vous avez retrouvé " + plural(sc, "accord", "accords") + " sur " + total + ". Morale de l’histoire : ils se ressemblent parfois plus qu’ils ne l’avouent. " + t.text;
   $("r-title").textContent = t.label;
   $("r-text").textContent = text;
@@ -1493,6 +1691,7 @@ function finish() {
   var isRecord = total >= 5 && (!best || game.pts > best.pts);
   if (isRecord) store("qui2027-best-" + key, game.result);
   $("r-record").hidden = !isRecord;
+  if (isRecord || p >= 75) setTimeout(function () { confetti(isRecord ? 110 : 60); }, 350);
 
   var vf = game.cfg.mode === "target" && game.cfg.targets.length === 1, rows = [];
   if (vf) {
@@ -1510,7 +1709,11 @@ function finish() {
     rows.sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
   }
   $("r-cand").innerHTML = rows.map(rowHtml).join("");
-  var trows = THEMES.map(function (th) {
+  var casier = game.cfg.mode === "casier";
+  $("r-theme-h").textContent = casier ? "Par type de dossier" : "Par thème";
+  $("r-theme-sub").textContent = casier ? "Condamnations, procédures, relaxes, polémiques." : "Taux de bonnes réponses selon le sujet.";
+  var seenT = Array.from(new Set(ans.map(function (a) { return M[a.mid].t; })));
+  var trows = seenT.map(function (th) {
     var l = ans.filter(function (a) { return M[a.mid].t === th; });
     return { l: th, a: l.filter(function (a) { return a.ok; }).length, b: l.length };
   }).filter(function (r) { return r.b > 0; }).sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
@@ -1534,7 +1737,7 @@ function finish() {
   var missed = ans.filter(function (a) { return !a.ok; });
   $("r-missed").innerHTML = missed.length ? missed.slice(0, 12).map(function (a) {
     var m = M[a.mid];
-    return "<li><q>" + esc(m.m) + "</q><div class=\"meta\"><b>" + esc(names(m.cs)) + "</b> · " + esc(m.t) + " · " + srcHtml(m) + "</div></li>";
+    return "<li><q>" + esc(m.m) + "</q><div class=\"meta\"><b>" + esc(names(m.cs)) + "</b> · " + esc(m.t) + (m.kase ? " · " + esc(m.status) : "") + " · " + srcHtml(m) + "</div></li>";
   }).join("") + (missed.length > 12 ? "<li class=\"meta\">… et " + (missed.length - 12) + " autres.</li>" : "") : "<li>Rien à revoir.</li>";
   $("r-retry").disabled = missed.length === 0;
   $("r-copied").hidden = true;
@@ -1552,9 +1755,9 @@ $("r-retry").addEventListener("click", function () {
   var c2 = JSON.parse(JSON.stringify(game.cfg)); if (c2.mode === "blitz") c2.mode = "classic";
   startGame(buildQuestions(c2, ids), c2);
 });
-$("r-setup").addEventListener("click", function () { game = null; show("setup"); syncSetup(); });
+$("r-setup").addEventListener("click", goMenu);
 $("r-copy").addEventListener("click", function () {
-  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »" }[game.cfg.mode];
+  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »", casier: "« Casier & polémiques »" }[game.cfg.mode];
   var extra = game.cfg.mode === "duel" ? " (" + last(CBY[game.cfg.duel[0]].name) + " / " + last(CBY[game.cfg.duel[1]].name) + ")" : "";
   var txt = "Qui a proposé ça ? Présidentielle 2027, " + lab + extra + " : " + fmt(r.pts) + " points, " + r.score + "/" + r.total + " (" + r.pct + " %), « " + r.label + " ». À toi : " + location.href.split("#")[0];
   var done = function (msg) { $("r-copied").textContent = msg; $("r-copied").hidden = false; };
@@ -1572,6 +1775,7 @@ function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 function renderExplorer() {
   var q = norm($("ex-q").value.trim()), fc = $("ex-c").value, ft = $("ex-t").value;
   var list = M.filter(function (x) {
+    if (x.kase) return false;
     var okc = !fc || (fc === "__main" ? x.cs.some(function (c) { return MAIN.indexOf(c) >= 0; }) : fc === "__shared" ? x.shared : x.cs.indexOf(fc) >= 0);
     return okc && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + names(x.cs)).indexOf(q) >= 0);
   });
@@ -1590,7 +1794,80 @@ function renderExplorer() {
   $("ex-out").innerHTML = html || "<p>Aucune mesure ne correspond. Même les programmes ont leurs limites.</p>";
 }
 
+/* ---------- Effets ---------- */
+var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function countUp(el, to, ms, from) {
+  from = from || 0;
+  if (REDUCED || !window.requestAnimationFrame) { el.textContent = fmt(to); return; }
+  var t0 = null;
+  if (el._raf) cancelAnimationFrame(el._raf);
+  function step(t) {
+    if (!t0) t0 = t;
+    var k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = fmt(Math.round(from + (to - from) * e));
+    if (k < 1) el._raf = requestAnimationFrame(step);
+  }
+  el._raf = requestAnimationFrame(step);
+}
+function stagger(box) {
+  if (REDUCED) return;
+  box.classList.remove("pop");
+  Array.prototype.forEach.call(box.children, function (ch, i) { ch.style.animationDelay = Math.min(i * 35, 600) + "ms"; });
+  void box.offsetWidth; box.classList.add("pop");
+}
+function floatGain(txt) {
+  if (REDUCED) return;
+  var host = document.querySelector(".hud .pts"), f = document.createElement("span");
+  f.className = "float"; f.textContent = txt; host.appendChild(f);
+  setTimeout(function () { f.remove(); }, 1200);
+}
+function confetti(n) {
+  if (REDUCED) return;
+  var cs = getComputedStyle(document.documentElement), cols = ["--accent", "--gold", "--ok", "--ko"].map(function (v) { return cs.getPropertyValue(v).trim() || "#2443c4"; });
+  for (var i = 0; i < n; i++) {
+    var d = document.createElement("i");
+    d.className = "confetti";
+    d.style.left = (Math.random() * 100) + "vw";
+    d.style.background = cols[i % cols.length];
+    d.style.setProperty("--dx", (Math.random() * 160 - 80) + "px");
+    d.style.setProperty("--rot", (Math.random() * 900 - 450) + "deg");
+    d.style.animationDuration = (1.6 + Math.random() * 1.6) + "s";
+    d.style.animationDelay = (Math.random() * .35) + "s";
+    document.body.appendChild(d);
+    (function (el) { setTimeout(function () { el.remove(); }, 3800); })(d);
+  }
+}
+
+/* ---------- Compte à rebours ---------- */
+var VOTE = Date.UTC(2027, 3, 18, 6, 0, 0); // dimanche 18 avril 2027, 8 h à Paris (UTC+2)
+var cdPrev = {};
+function pad(n) { return (n < 10 ? "0" : "") + n; }
+function cdSet(id, v) { var el = $(id); if (cdPrev[id] === v) return; cdPrev[id] = v; el.textContent = v; if (!REDUCED) { el.classList.remove("tick"); void el.offsetWidth; el.classList.add("tick"); } }
+function cdTick() {
+  var ms = VOTE - Date.now();
+  if (ms <= 0) {
+    $("cd-j").textContent = "Jour J"; $("cd-chip").textContent = "1er tour : c’est aujourd’hui (ou c’est passé)";
+    ["cd-d", "cd-h", "cd-m", "cd-s"].forEach(function (id) { $(id).textContent = "00"; });
+    $("cd-quip").textContent = "Les bureaux de vote sont ouverts. Le quiz, lui, ne ferme jamais.";
+    return;
+  }
+  var s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+  var jd = Math.ceil(ms / 86400000);
+  $("cd-j").textContent = "J-" + jd;
+  $("cd-chip").textContent = "1er tour J-" + jd;
+  cdSet("cd-d", String(d)); cdSet("cd-h", pad(h)); cdSet("cd-m", pad(m)); cdSet("cd-s", pad(sec));
+}
+function cdQuip() {
+  var days = Math.max(1, Math.ceil((VOTE - Date.now()) / 86400000));
+  var perDay = (NPROG / days).toLocaleString("fr-FR", { maximumFractionDigits: 1 });
+  var lines = CD_QUIPS.concat(["Pour connaître les " + fmt(NPROG) + " mesures de ce quiz d’ici là : " + perDay + " par jour. Faisable, entre deux cafés."]);
+  $("cd-quip").textContent = pick(lines);
+}
+
 /* ---------- Démarrage ---------- */
+cdTick(); cdQuip();
+setInterval(cdTick, 1000);
+setInterval(cdQuip, 12000);
 initExplorer();
 renderHome();
 if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else show("setup");
