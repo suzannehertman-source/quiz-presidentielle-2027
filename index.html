@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Qui a proposé ça ? Présidentielle 2027</title>
+<meta name="description" content="Le quiz des programmes de la présidentielle 2027 : retrouve quel candidat propose chaque mesure.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* Layout idea : des panneaux électoraux numérotés (1 à 12) face à une mesure imprimée comme un bulletin ; un tampon d'encre juge chaque réponse. */
+/* Layout idea : des panneaux électoraux numérotés face à une mesure imprimée comme un bulletin ; un tampon d'encre juge chaque réponse. */
 :root {
   --paper: #e9ecf0;
   --sheet: #ffffff;
@@ -21,6 +22,7 @@
   --ok-soft: #dff2e8;
   --ko: #b3261e;
   --ko-soft: #fbe3e1;
+  --gold: #a26a00;
   --shadow: 0 1px 0 rgba(19,32,58,.06), 0 8px 24px -12px rgba(19,32,58,.25);
   --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
   --f-read: "Newsreader", Georgia, "Times New Roman", serif;
@@ -30,14 +32,14 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #0e1320; --sheet: #161d2c; --ink: #e8ecf5; --muted: #98a2b7; --line: #2a3347;
-    --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18;
+    --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18; --gold: #f2b544;
     --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0e1320; --sheet: #161d2c; --ink: #e8ecf5; --muted: #98a2b7; --line: #2a3347;
-  --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18;
+  --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18; --gold: #f2b544;
   --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
   color-scheme: dark;
 }
@@ -47,9 +49,9 @@ body { background: var(--paper); color: var(--ink); font: 400 16px/1.5 var(--f-u
 button { font: inherit; color: inherit; }
 a { color: var(--accent); }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.vh { position: absolute; left: -9999px; }
 
-/* Masthead */
 header.mast { border-bottom: 2px solid var(--ink); }
 .mast .wrap { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-top: 22px; padding-bottom: 14px; flex-wrap: wrap; }
 .brand { display: flex; flex-direction: column; gap: 2px; }
@@ -60,30 +62,43 @@ nav.tabs { display: flex; gap: 4px; }
 nav.tabs button { border: 1.5px solid var(--ink); background: transparent; padding: 8px 14px; font-weight: 600; font-size: 14px; cursor: pointer; border-radius: 2px; }
 nav.tabs button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
-main { padding: 28px 0 56px; }
+main.wrap { padding: 28px 20px 56px; }
 .view[hidden] { display: none; }
 
-/* Setup */
-.setup { display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: start; }
-@media (max-width: 820px) { .setup { grid-template-columns: 1fr; } }
+/* Accueil */
+.setup { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: start; }
+@media (max-width: 860px) { .setup { grid-template-columns: 1fr; } }
 .lede { font: 400 21px/1.45 var(--f-read); max-width: 34em; margin: 0 0 18px; text-wrap: pretty; }
-.facts { display: flex; gap: 22px; flex-wrap: wrap; margin: 0 0 24px; padding: 0; list-style: none; }
+.facts { display: flex; gap: 22px; flex-wrap: wrap; margin: 0 0 22px; padding: 0; list-style: none; }
 .facts li { display: flex; flex-direction: column; }
 .facts b { font: 800 40px/1 var(--f-display); font-variant-numeric: tabular-nums; }
 .facts span { font-size: 13px; color: var(--muted); }
 .card { background: var(--sheet); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 4px; }
-.modebox { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+.modebox { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
 .modebox h2 { margin: 0; font: 800 26px/1 var(--f-display); text-transform: uppercase; letter-spacing: .01em; }
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.modes button { text-align: left; border: 1.5px solid var(--line); background: var(--sheet); padding: 10px 12px; border-radius: 3px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
+.modes button b { font: 800 19px/1 var(--f-display); text-transform: uppercase; letter-spacing: .02em; }
+.modes button span { font-size: 12.5px; color: var(--muted); line-height: 1.3; }
+.modes button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.modes button[aria-pressed="true"] b { color: var(--accent); }
 .field { display: flex; flex-direction: column; gap: 8px; }
+.field[hidden] { display: none; }
 .field > .lab { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .seg { display: flex; flex-wrap: wrap; gap: 6px; }
 .seg button { border: 1.5px solid var(--line); background: var(--sheet); padding: 8px 12px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600; }
 .seg button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .seg button small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
-.cand-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; }
+.cand-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
 .cand-pick button { display: flex; gap: 8px; align-items: center; text-align: left; border: 1.5px solid var(--line); background: var(--sheet); padding: 6px 8px; border-radius: 3px; cursor: pointer; font-size: 13px; line-height: 1.2; }
-.cand-pick button .n { font: 800 18px/1 var(--f-display); width: 24px; height: 24px; display: grid; place-items: center; border: 1.5px solid currentColor; flex: none; }
+.cand-pick button .n { font: 800 16px/1 var(--f-display); min-width: 24px; height: 24px; display: grid; place-items: center; border: 1.5px solid currentColor; flex: none; }
 .cand-pick button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.duel-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+.duel-row select { font: inherit; font-size: 15px; padding: 9px 10px; border: 1.5px solid var(--line); border-radius: 3px; background: var(--sheet); color: var(--ink); width: 100%; }
+.duel-row .vs { font: 900 24px/1 var(--f-display); color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { border: 1px dashed var(--line); background: transparent; padding: 5px 9px; border-radius: 999px; cursor: pointer; font-size: 12.5px; color: var(--muted); }
+.chips button:hover { border-color: var(--accent); color: var(--accent); }
 .hint { font-size: 13px; color: var(--muted); margin: 0; }
 .go { appearance: none; border: 0; background: var(--accent); color: #fff; font: 800 24px/1 var(--f-display); text-transform: uppercase; letter-spacing: .04em; padding: 16px 20px; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
 :root[data-theme="dark"] .go { color: #0e1320; }
@@ -92,17 +107,18 @@ main { padding: 28px 0 56px; }
 .go:disabled { opacity: .45; cursor: not-allowed; }
 .best { font-size: 13px; color: var(--muted); }
 
-/* Panneaux (candidats) */
+/* Panneaux */
 .boards-intro { margin: 0 0 10px; font-size: 13px; color: var(--muted); }
-.boards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-@media (max-width: 820px) { .boards { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 460px) { .boards { grid-template-columns: repeat(3, 1fr); } }
-.board { position: relative; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; padding: 26px 8px 8px; min-height: 104px; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; text-align: left; }
+.boards { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 8px; }
+.boards.two { grid-template-columns: 1fr 1fr; }
+.boards.two .board { min-height: 140px; }
+.boards.two .board .ini { font-size: 56px; }
+.board { position: relative; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; padding: 26px 8px 8px; min-height: 100px; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; text-align: left; }
 .board .num { position: absolute; top: 0; left: 0; font: 800 15px/1 var(--f-display); background: var(--ink); color: var(--paper); padding: 4px 7px 3px; font-variant-numeric: tabular-nums; }
-.board .ini { font: 900 34px/.9 var(--f-display); letter-spacing: -.01em; }
+.board .ini { font: 900 32px/.9 var(--f-display); letter-spacing: -.01em; }
 .board .nm { font-weight: 700; font-size: 13px; line-height: 1.15; }
 .board .pt { font-size: 11px; color: var(--muted); line-height: 1.2; }
-.board .flag { position: absolute; top: 4px; right: 5px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.board .key { position: absolute; top: 4px; right: 6px; font: 600 11px/1 var(--f-ui); color: var(--muted); }
 button.board { cursor: pointer; transition: transform .12s ease, background .12s ease; }
 button.board:hover:not(:disabled) { transform: translateY(-2px); background: var(--accent-soft); }
 button.board:disabled { cursor: default; }
@@ -110,31 +126,42 @@ button.board.is-ok { background: var(--ok-soft); border-color: var(--ok); }
 button.board.is-ok .num { background: var(--ok); }
 button.board.is-ko { background: var(--ko-soft); border-color: var(--ko); }
 button.board.is-ko .num { background: var(--ko); }
-button.board.dim { opacity: .45; }
+button.board.dim { opacity: .4; }
 
 /* Jeu */
-.hud { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.hud { display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 14px; align-items: center; margin-bottom: 14px; }
+@media (max-width: 640px) { .hud { grid-template-columns: 1fr 1fr; } .hud .bar { grid-column: 1 / -1; order: 9; } }
 .hud .prog { font: 800 22px/1 var(--f-display); text-transform: uppercase; font-variant-numeric: tabular-nums; }
-.bar { flex: 1 1 200px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; min-width: 120px; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; min-width: 100px; }
 .bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s ease; }
-.hud .sc { font-weight: 700; font-variant-numeric: tabular-nums; }
-.hud .quit { background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 14px; }
-.bulletin { position: relative; padding: 30px 32px 24px; margin-bottom: 18px; overflow: hidden; }
+.bar.timer i { background: var(--gold); transition: width 1s linear; }
+.pts { display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
+.pts b { font: 900 30px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+.pts span { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.streak { font: 800 16px/1 var(--f-display); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding: 6px 8px; border: 1.5px solid var(--line); border-radius: 3px; font-variant-numeric: tabular-nums; }
+.streak.hot { color: var(--gold); border-color: var(--gold); }
+.quit { background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 14px; }
+.bulletin { position: relative; padding: 28px 32px 22px; margin-bottom: 18px; overflow: hidden; }
 .bulletin .theme { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); border: 1.5px solid currentColor; padding: 3px 8px; border-radius: 2px; }
-.bulletin blockquote { margin: 16px 0 6px; font: 500 clamp(22px, 3.3vw, 32px)/1.3 var(--f-read); text-wrap: balance; max-width: 30em; }
+.bulletin blockquote { margin: 16px 0 6px; font: 500 clamp(22px, 3.2vw, 31px)/1.3 var(--f-read); text-wrap: balance; max-width: 30em; }
 .bulletin .ask { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
-.bulletin .src { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 14px; display: flex; gap: 6px 14px; flex-wrap: wrap; align-items: baseline; }
+.bulletin .src { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 14px; display: flex; flex-direction: column; gap: 4px; }
 .bulletin .src[hidden] { display: none; }
+.quip { font: italic 400 17px/1.4 var(--f-read); color: var(--ink); }
+.gain { font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
 .verdict { font-weight: 700; }
 .verdict.ok { color: var(--ok); }
 .verdict.ko { color: var(--ko); }
-.stamp { position: absolute; right: 22px; top: 18px; font: 900 34px/1 var(--f-display); text-transform: uppercase; letter-spacing: .06em; padding: 6px 12px 4px; border: 4px solid currentColor; border-radius: 6px; transform: rotate(-9deg) scale(1); opacity: .85; pointer-events: none; mix-blend-mode: multiply; }
+.stamp { position: absolute; right: 22px; top: 18px; font: 900 32px/1 var(--f-display); text-transform: uppercase; letter-spacing: .06em; padding: 6px 12px 4px; border: 4px solid currentColor; border-radius: 6px; transform: rotate(-9deg); opacity: .85; pointer-events: none; mix-blend-mode: multiply; }
 :root[data-theme="dark"] .stamp { mix-blend-mode: normal; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .stamp { mix-blend-mode: normal; } }
+.stamp[hidden] { display: none; }
 .stamp.ok { color: var(--ok); }
 .stamp.ko { color: var(--ko); }
 .stamp.thump { animation: thump .32s cubic-bezier(.2,1.6,.4,1) both; }
 @keyframes thump { 0% { transform: rotate(-9deg) scale(2.2); opacity: 0; } 100% { transform: rotate(-9deg) scale(1); opacity: .85; } }
+.toast { position: absolute; left: 32px; top: 18px; font: 800 15px/1 var(--f-display); text-transform: uppercase; letter-spacing: .06em; color: var(--gold); }
+.toast[hidden] { display: none; }
 .vf { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .vf button { border: 1.5px solid var(--ink); background: var(--sheet); padding: 18px; font: 800 24px/1.1 var(--f-display); text-transform: uppercase; cursor: pointer; border-radius: 2px; }
 .vf button:hover:not(:disabled) { background: var(--accent-soft); }
@@ -149,17 +176,19 @@ button.board.dim { opacity: .45; }
 /* Résultats */
 .res-top { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; padding: 26px; margin-bottom: 20px; }
 @media (max-width: 640px) { .res-top { grid-template-columns: 1fr; } }
-.bigscore { font: 900 clamp(72px, 13vw, 128px)/.85 var(--f-display); font-variant-numeric: tabular-nums; }
-.bigscore small { font-size: .4em; color: var(--muted); }
+.bigscore { display: flex; flex-direction: column; gap: 6px; }
+.bigscore b { font: 900 clamp(64px, 12vw, 116px)/.85 var(--f-display); font-variant-numeric: tabular-nums; }
+.bigscore span { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .res-top h2 { margin: 0 0 6px; font: 800 34px/1 var(--f-display); text-transform: uppercase; text-wrap: balance; }
 .res-top p { margin: 0; font: 400 18px/1.45 var(--f-read); max-width: 36em; }
+.res-top .record { margin-top: 10px; font: 800 16px/1 var(--f-display); text-transform: uppercase; color: var(--gold); letter-spacing: .04em; }
 .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 820px) { .res-grid { grid-template-columns: 1fr; } }
+@media (max-width: 860px) { .res-grid { grid-template-columns: 1fr; } }
 .panel { padding: 20px; }
 .panel h3 { margin: 0 0 4px; font: 800 22px/1 var(--f-display); text-transform: uppercase; }
 .panel .sub { margin: 0 0 14px; font-size: 13px; color: var(--muted); }
 .rows { display: flex; flex-direction: column; gap: 8px; }
-.row { display: grid; grid-template-columns: 150px 1fr 54px; gap: 10px; align-items: center; font-size: 14px; }
+.row { display: grid; grid-template-columns: 160px 1fr 54px; gap: 10px; align-items: center; font-size: 14px; }
 @media (max-width: 460px) { .row { grid-template-columns: 110px 1fr 48px; } }
 .row .lbl { overflow-wrap: anywhere; line-height: 1.2; }
 .row .trk { height: 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
@@ -178,6 +207,7 @@ button.board.dim { opacity: .45; }
 .btn.primary { background: var(--ink); color: var(--paper); }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
 .copied { font-size: 13px; color: var(--ok); align-self: center; }
+.copied[hidden] { display: none; }
 
 /* Explorer */
 .ex-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
@@ -194,14 +224,11 @@ button.board.dim { opacity: .45; }
 .ex-item .meta { font-size: 12.5px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; }
 .ex-item .meta .th { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
 
-/* Méthode */
 footer.method { border-top: 2px solid var(--ink); padding: 22px 0 40px; font-size: 14px; color: var(--muted); }
 footer.method h2 { font: 800 20px/1 var(--f-display); text-transform: uppercase; color: var(--ink); margin: 0 0 10px; }
-footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; max-width: 70ch; }
+footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; max-width: 75ch; }
 
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
-}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
@@ -219,33 +246,39 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
 </header>
 
 <main class="wrap">
-  <!-- SETUP -->
   <section class="view" id="v-setup">
     <div class="setup">
       <div>
-        <p class="lede">Une mesure tirée des programmes, des sites et des plateaux. À toi de retrouver le candidat qui la porte. À la fin, tu sais à quel point tu connais vraiment les programmes.</p>
+        <p class="lede">Une mesure tirée des programmes. À toi de retrouver qui la propose. Bonnes réponses, séries et rapidité rapportent des points. Les mauvaises rapportent surtout de l’humilité.</p>
         <ul class="facts">
           <li><b id="f-mes">0</b><span>mesures sourcées</span></li>
           <li><b id="f-cand">0</b><span>candidats</span></li>
           <li><b id="f-th">0</b><span>thèmes</span></li>
         </ul>
-        <p class="boards-intro">Les panneaux sont numérotés par ordre alphabétique.</p>
+        <p class="boards-intro">Panneaux numérotés par ordre alphabétique.</p>
         <div class="boards" id="boards-home"></div>
       </div>
       <div class="card modebox">
         <h2>Choisis ta partie</h2>
-        <div class="field">
-          <span class="lab" id="lab-mode">Mode</span>
-          <div class="seg" role="group" aria-labelledby="lab-mode" id="seg-mode">
-            <button type="button" id="m-all" data-mode="all" aria-pressed="true">Tous les candidats<small>Devine qui a dit quoi</small></button>
-            <button type="button" id="m-target" data-mode="target" aria-pressed="false">Cibler des candidats<small>Teste-toi sur certains</small></button>
+        <div class="modes" role="group" aria-label="Mode de jeu" id="modes">
+          <button type="button" id="m-classic" data-mode="classic" aria-pressed="true"><b>Classique</b><span>Une mesure, retrouve le bon candidat.</span></button>
+          <button type="button" id="m-duel" data-mode="duel" aria-pressed="false"><b>Confrontation</b><span>Deux candidats face à face : à qui est la mesure ?</span></button>
+          <button type="button" id="m-blitz" data-mode="blitz" aria-pressed="false"><b>Éclair 60 s</b><span>Un maximum de bonnes réponses en une minute.</span></button>
+          <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Teste-toi sur un ou plusieurs candidats.</span></button>
+        </div>
+
+        <div class="field" id="fld-pool">
+          <span class="lab" id="lab-pool">Candidats en jeu</span>
+          <div class="seg" role="group" aria-labelledby="lab-pool" id="seg-pool">
+            <button type="button" id="p-main" data-pool="main" aria-pressed="true">Les principaux<small>Les 7 en tête des sondages</small></button>
+            <button type="button" id="p-all" data-pool="all" aria-pressed="false">Tous<small>Petits candidats compris</small></button>
           </div>
         </div>
         <div class="field" id="fld-diff">
           <span class="lab" id="lab-diff">Difficulté</span>
           <div class="seg" role="group" aria-labelledby="lab-diff" id="seg-diff">
-            <button type="button" id="d-easy" data-diff="easy" aria-pressed="true">4 panneaux<small>Un bon et trois leurres</small></button>
-            <button type="button" id="d-hard" data-diff="hard" aria-pressed="false">12 panneaux<small>Tous les candidats</small></button>
+            <button type="button" id="d-easy" data-diff="easy" aria-pressed="true">4 panneaux<small>Un bon, trois leurres</small></button>
+            <button type="button" id="d-hard" data-diff="hard" aria-pressed="false">Tous les panneaux<small>Aucune aide</small></button>
           </div>
         </div>
         <div class="field" id="fld-len">
@@ -253,14 +286,25 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
           <div class="seg" role="group" aria-labelledby="lab-len" id="seg-len">
             <button type="button" id="l-10" data-len="10" aria-pressed="false">10</button>
             <button type="button" id="l-20" data-len="20" aria-pressed="true">20</button>
-            <button type="button" id="l-40" data-len="40" aria-pressed="false">40</button>
+            <button type="button" id="l-50" data-len="50" aria-pressed="false">50</button>
             <button type="button" id="l-all" data-len="all" aria-pressed="false">Toutes</button>
           </div>
+        </div>
+        <div class="field" id="fld-duel" hidden>
+          <span class="lab">Le face-à-face</span>
+          <div class="duel-row">
+            <label for="duel-a" class="vh">Premier candidat</label>
+            <select id="duel-a"></select>
+            <span class="vs" aria-hidden="true">VS</span>
+            <label for="duel-b" class="vh">Second candidat</label>
+            <select id="duel-b"></select>
+          </div>
+          <div class="chips" id="duel-chips" aria-label="Affiches suggérées"></div>
         </div>
         <div class="field" id="fld-cands" hidden>
           <span class="lab" id="lab-cands">Candidats ciblés</span>
           <div class="cand-pick" id="cand-pick" role="group" aria-labelledby="lab-cands"></div>
-          <p class="hint" id="target-hint">Un seul candidat : réponds par oui ou non (« Est-ce bien lui ou elle ? »). Plusieurs : retrouve le bon parmi eux.</p>
+          <p class="hint" id="target-hint"></p>
         </div>
         <button type="button" class="go" id="btn-start"><span>Lancer la partie</span><span aria-hidden="true">→</span></button>
         <span class="best" id="best"></span>
@@ -268,15 +312,16 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
     </div>
   </section>
 
-  <!-- GAME -->
   <section class="view" id="v-game" hidden>
     <div class="hud">
       <span class="prog" id="g-prog">Mesure 1 / 20</span>
-      <div class="bar" aria-hidden="true"><i id="g-bar"></i></div>
-      <span class="sc" id="g-score">0 bonne réponse</span>
+      <div class="bar" id="g-barwrap" aria-hidden="true"><i id="g-bar"></i></div>
+      <span class="streak" id="g-streak">Série ×0</span>
+      <span class="pts"><b id="g-pts">0</b><span>points</span></span>
       <button type="button" class="quit" id="g-quit">Abandonner</button>
     </div>
     <article class="card bulletin" id="g-card" aria-live="polite">
+      <span class="toast" id="g-toast" hidden></span>
       <span class="theme" id="g-theme">Thème</span>
       <blockquote id="g-text"></blockquote>
       <p class="ask" id="g-ask">Qui propose cette mesure ?</p>
@@ -285,16 +330,16 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
     </article>
     <div id="g-opts"></div>
     <div class="next-row"><button type="button" id="g-next" hidden>Mesure suivante →</button></div>
-    <p class="keys">Raccourcis : <kbd>1</kbd> à <kbd>9</kbd>, <kbd>0</kbd> <kbd>-</kbd> <kbd>=</kbd> pour répondre, <kbd>Entrée</kbd> pour continuer.</p>
+    <p class="keys" id="g-keys">Raccourcis : touches <kbd>1</kbd> à <kbd>9</kbd> pour répondre, <kbd>Entrée</kbd> pour continuer.</p>
   </section>
 
-  <!-- RESULTS -->
   <section class="view" id="v-res" hidden>
     <div class="card res-top">
-      <div class="bigscore" id="r-score">0<small>/0</small></div>
+      <div class="bigscore"><b id="r-pts">0</b><span id="r-sub">points</span></div>
       <div>
         <h2 id="r-title">Résultat</h2>
         <p id="r-text"></p>
+        <div class="record" id="r-record" hidden>Nouveau record personnel</div>
       </div>
     </div>
     <div class="res-actions">
@@ -306,18 +351,18 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
     </div>
     <div class="res-grid">
       <div class="card panel">
-        <h3>Par candidat</h3>
+        <h3 id="r-cand-h">Par candidat</h3>
         <p class="sub" id="r-cand-sub">Part des mesures de chaque candidat que tu as bien attribuées.</p>
         <div class="rows" id="r-cand"></div>
       </div>
       <div class="card panel">
         <h3>Par thème</h3>
-        <p class="sub">Taux de bonnes réponses selon le sujet de la mesure.</p>
+        <p class="sub">Taux de bonnes réponses selon le sujet.</p>
         <div class="rows" id="r-theme"></div>
       </div>
       <div class="card panel">
         <h3>Tes confusions</h3>
-        <p class="sub">Les attributions erronées qui reviennent le plus.</p>
+        <p class="sub">Les attributions ratées qui reviennent le plus.</p>
         <ul class="confusions" id="r-conf"></ul>
       </div>
       <div class="card panel">
@@ -328,15 +373,14 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
     </div>
   </section>
 
-  <!-- EXPLORER -->
   <section class="view" id="v-explorer" hidden>
     <div class="ex-bar">
-      <label for="ex-q" class="sr-only" style="position:absolute;left:-9999px">Rechercher</label>
-      <input id="ex-q" type="search" placeholder="Rechercher une mesure (retraites, Smic, immigration…)">
-      <label for="ex-c" style="position:absolute;left:-9999px">Candidat</label>
-      <select id="ex-c"><option value="">Tous les candidats</option></select>
-      <label for="ex-t" style="position:absolute;left:-9999px">Thème</label>
-      <select id="ex-t"><option value="">Tous les thèmes</option></select>
+      <label for="ex-q" class="vh">Rechercher</label>
+      <input id="ex-q" type="search" placeholder="Rechercher une mesure (retraites, Smic, Europe…)">
+      <label for="ex-c" class="vh">Candidat</label>
+      <select id="ex-c"></select>
+      <label for="ex-t" class="vh">Thème</label>
+      <select id="ex-t"></select>
       <span class="ex-count" id="ex-count"></span>
     </div>
     <div id="ex-out"></div>
@@ -347,170 +391,475 @@ footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction:
   <div class="wrap">
     <h2>Méthode et limites</h2>
     <ul>
-      <li>État au 10 novembre 2026. Les mesures sont reformulées de façon neutre à partir de programmes, de déclarations et d’articles de presse ; chaque mesure renvoie à la source consultée, avec sa date quand elle est connue.</li>
-      <li>Candidats retenus : les principales personnalités déclarées ou annoncées. La candidature de Marine Tondelier doit encore être validée par les adhérents des Écologistes (13 décembre 2026) ; Xavier Bertrand a annoncé sa candidature sans l’avoir encore officialisée.</li>
-      <li>Éric Zemmour n’a pas publié de programme : ses mesures viennent de ses déclarations et de recensements de positions.</li>
-      <li>Les mesures partagées par plusieurs candidats (Smic à 1 700 €, peines planchers, majorité pénale à 16 ans…) ont été écartées pour qu’une seule réponse soit juste.</li>
-      <li>Les programmes évoluent jusqu’au dépôt des candidatures (12 mars 2027) : vérifie toujours la source avant de citer une mesure.</li>
+      <li>État au 10 novembre 2026. Les mesures sont reformulées de façon neutre à partir des programmes officiels (souvent consultés via le recensement Votons 2027), de déclarations et d’articles de presse. Chaque mesure renvoie à sa source.</li>
+      <li>Jean-Luc Mélenchon : mesures tirées du texte intégral de L’Avenir en commun (1 069 mesures), publié le 6 novembre 2026.</li>
+      <li>Marine Le Pen, Éric Zemmour et Fabien Roussel n’ont pas encore publié de programme complet pour 2027 : une partie de leurs mesures vient de leurs programmes précédents encore en ligne, indiqués comme tels dans la source.</li>
+      <li>« Les principaux » : les sept candidats invités au premier débat de la campagne, organisé par le Medef le 27 août 2026.</li>
+      <li>Les mesures que plusieurs candidats proposent dans des termes proches (Smic à 1 700 €, peines planchers, RIC, retraite à 60 ans…) ont été écartées pour qu’une seule réponse soit juste.</li>
+      <li>L’humour vise le joueur, jamais les candidats. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
     </ul>
   </div>
 </footer>
 
 <script>
+/* Données : candidats, sources et mesures. État au 10 novembre 2026. */
+var C = [
+  { id: "arthaud", name: "Nathalie Arthaud", ini: "NA", party: "Lutte ouvrière" },
+  { id: "asselineau", name: "François Asselineau", ini: "FA", party: "UPR" },
+  { id: "attal", name: "Gabriel Attal", ini: "GA", party: "Renaissance", main: true },
+  { id: "batho", name: "Delphine Batho", ini: "DB", party: "Génération écologie" },
+  { id: "bertrand", name: "Xavier Bertrand", ini: "XB", party: "Nous France" },
+  { id: "dupont", name: "Nicolas Dupont-Aignan", ini: "NDA", party: "Debout la France" },
+  { id: "glucksmann", name: "Raphaël Glucksmann", ini: "RG", party: "Place publique · PS", main: true },
+  { id: "kazib", name: "Anasse Kazib", ini: "AK", party: "Révolution permanente" },
+  { id: "lepen", name: "Marine Le Pen", ini: "MLP", party: "Rassemblement national", main: true },
+  { id: "lisnard", name: "David Lisnard", ini: "DL", party: "Nouvelle Énergie" },
+  { id: "melenchon", name: "Jean-Luc Mélenchon", ini: "JLM", party: "La France insoumise", main: true },
+  { id: "philippe", name: "Édouard Philippe", ini: "EP", party: "Horizons", main: true },
+  { id: "philippot", name: "Florian Philippot", ini: "FP", party: "Les Patriotes" },
+  { id: "polony", name: "Natacha Polony", ini: "NP", party: "Sans étiquette" },
+  { id: "retailleau", name: "Bruno Retailleau", ini: "BR", party: "Les Républicains", main: true },
+  { id: "roussel", name: "Fabien Roussel", ini: "FR", party: "Parti communiste" },
+  { id: "ruffin", name: "François Ruffin", ini: "FRu", party: "Debout !" },
+  { id: "tondelier", name: "Marine Tondelier", ini: "MT", party: "Les Écologistes", main: true },
+  { id: "zemmour", name: "Éric Zemmour", ini: "EZ", party: "Reconquête" }
+];
+
+var LAEC = "https://melenchon2027.fr/programme/livre/";
+var S = {
+  melB1: { s: "L’Avenir en commun, partie 1, ch. 1", d: "6 nov. 2026", u: LAEC + "pour-une-bifurcation-ecologique-et-sociale/chapitre1" },
+  melB2: { s: "L’Avenir en commun, partie 1, ch. 2", d: "6 nov. 2026", u: LAEC + "pour-une-bifurcation-ecologique-et-sociale/chapitre2" },
+  melB3: { s: "L’Avenir en commun, partie 1, ch. 3", d: "6 nov. 2026", u: LAEC + "pour-une-bifurcation-ecologique-et-sociale/chapitre3" },
+  melE1: { s: "L’Avenir en commun, partie 2, ch. 1", d: "6 nov. 2026", u: LAEC + "une-economie-au-service-des-besoins/chapitre1" },
+  melE2: { s: "L’Avenir en commun, partie 2, ch. 2", d: "6 nov. 2026", u: LAEC + "une-economie-au-service-des-besoins/chapitre2" },
+  melE3: { s: "L’Avenir en commun, partie 2, ch. 3", d: "6 nov. 2026", u: LAEC + "une-economie-au-service-des-besoins/chapitre3" },
+  melS1: { s: "L’Avenir en commun, partie 3, ch. 1", d: "6 nov. 2026", u: LAEC + "mettre-en-securite-sociale/chapitre1" },
+  melS2: { s: "L’Avenir en commun, partie 3, ch. 2", d: "6 nov. 2026", u: LAEC + "mettre-en-securite-sociale/chapitre2" },
+  melS3: { s: "L’Avenir en commun, partie 3, ch. 3", d: "6 nov. 2026", u: LAEC + "mettre-en-securite-sociale/chapitre3" },
+  melS4: { s: "L’Avenir en commun, partie 3, ch. 4", d: "6 nov. 2026", u: LAEC + "mettre-en-securite-sociale/chapitre4" },
+  melF1: { s: "L’Avenir en commun, partie 4, ch. 1", d: "6 nov. 2026", u: LAEC + "le-gout-du-futur-aux-nouvelles-frontieres-de-l-humanite/chapitre1" },
+  melF2: { s: "L’Avenir en commun, partie 4, ch. 2", d: "6 nov. 2026", u: LAEC + "le-gout-du-futur-aux-nouvelles-frontieres-de-l-humanite/chapitre2" },
+  melF3: { s: "L’Avenir en commun, partie 4, ch. 3", d: "6 nov. 2026", u: LAEC + "le-gout-du-futur-aux-nouvelles-frontieres-de-l-humanite/chapitre3" },
+  melF4: { s: "L’Avenir en commun, partie 4, ch. 4", d: "6 nov. 2026", u: LAEC + "le-gout-du-futur-aux-nouvelles-frontieres-de-l-humanite/chapitre4" },
+  melF5: { s: "L’Avenir en commun, partie 4, ch. 5", d: "6 nov. 2026", u: LAEC + "le-gout-du-futur-aux-nouvelles-frontieres-de-l-humanite/chapitre5" },
+  melF6: { s: "L’Avenir en commun, partie 4, ch. 6", d: "6 nov. 2026", u: LAEC + "le-gout-du-futur-aux-nouvelles-frontieres-de-l-humanite/chapitre6" },
+  melF7: { s: "L’Avenir en commun, partie 4, ch. 7", d: "6 nov. 2026", u: LAEC + "le-gout-du-futur-aux-nouvelles-frontieres-de-l-humanite/chapitre7" },
+  melR1: { s: "L’Avenir en commun, partie 5, ch. 1", d: "6 nov. 2026", u: LAEC + "fonder-la-6e-republique/chapitre1" },
+  melR2: { s: "L’Avenir en commun, partie 5, ch. 2", d: "6 nov. 2026", u: LAEC + "fonder-la-6e-republique/chapitre2" },
+  melR3: { s: "L’Avenir en commun, partie 5, ch. 3", d: "6 nov. 2026", u: LAEC + "fonder-la-6e-republique/chapitre3" },
+  melM2: { s: "L’Avenir en commun, partie 6, ch. 2", d: "6 nov. 2026", u: LAEC + "un-monde-ordonne/chapitre2" },
+  melM3: { s: "L’Avenir en commun, partie 6, ch. 3", d: "6 nov. 2026", u: LAEC + "un-monde-ordonne/chapitre3" },
+  lpRetr: { s: "Public Sénat", d: "30 sept. 2026", u: "https://www.publicsenat.fr/actualites/politique/reculer-ou-avancer-lage-legal-avec-ou-sans-capitalisation-ce-que-proposent-les-principaux-candidats-a-lelection-presidentielle-sur-les-retraites" },
+  lpMedef: { s: "Euronews (débat du Medef)", d: "28 août 2026", u: "https://fr.euronews.com/2026/08/28/presidentielle-de-2027-a-roland-garros-les-candidats-croisent-le-fer-sur-leconomie" },
+  lpCb: { s: "Euronews (contre-budget du RN)", d: "7 oct. 2026", u: "https://fr.euronews.com/2026/10/07/france-le-gouvernement-tire-a-boulets-rouges-sur-le-contre-budget-de-marine-le-pen" },
+  lp140: { s: "Public Sénat", d: "oct. 2026", u: "https://www.publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f" },
+  lpPge: { s: "Planète Grandes Écoles (contre-budget du 6 oct.)", d: "oct. 2026", u: "https://www.planetegrandesecoles.com/?p=130999" },
+  lp22: { s: "Site du RN, « 22 mesures » (via Votons 2027)", d: "en ligne en 2026", u: "https://rassemblementnational.fr/22-mesures" },
+  phEu: { s: "Euronews (France 2)", d: "9 oct. 2026", u: "https://fr.euronews.com/2026/10/09/presidentielle-2027-edouard-philippe-mise-sur-le-travail-et-la-reduction-des-depenses-publ" },
+  phSite: { s: "Programme d’Édouard Philippe (via Votons 2027)", d: "2026", u: "https://www.edouardphilippe.fr/" },
+  atPs: { s: "Public Sénat", d: "30 sept. 2026", u: "https://www.publicsenat.fr/actualites/politique/reculer-ou-avancer-lage-legal-avec-ou-sans-capitalisation-ce-que-proposent-les-principaux-candidats-a-lelection-presidentielle-sur-les-retraites" },
+  atSite: { s: "Programme de Gabriel Attal (via Votons 2027)", d: "2026", u: "https://attalpresident.fr/programme" },
+  atMv: { s: "MonVote2027 (sources : Europe 1, franceinfo, JDD)", d: "2025-2026", u: "https://monvote2027.fr/candidat/attal" },
+  atMvx: { s: "Moneyvox", d: "30 juin 2025", u: "https://www.moneyvox.fr/retraite/actualites/104059/une-reforme-sans-age-legal-de-depart-dans-les-cartons-de-gabriel-attal" },
+  glPs: { s: "Public Sénat", d: "août 2026", u: "https://www.publicsenat.fr/actualites/politique/fiscalite-ecole-immigration-ce-que-propose-raphael-glucksmann" },
+  glActe: { s: "Place publique, « L’Acte I » (via Votons 2027)", d: "2026", u: "https://place-publique.eu/pages/6mRSwq5tuSrSi68Cw1IADX/l-acte-i" },
+  glWiki: { s: "Recensé par wikiglucksmann.fr (AFP, LCP, X)", d: "2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
+  rePs: { s: "Public Sénat", d: "30 sept. 2026", u: "https://www.publicsenat.fr/actualites/politique/reculer-ou-avancer-lage-legal-avec-ou-sans-capitalisation-ce-que-proposent-les-principaux-candidats-a-lelection-presidentielle-sur-les-retraites" },
+  reSite: { s: "Les Républicains, projet (via Votons 2027)", d: "2026", u: "https://republicains.fr/qrtravail/" },
+  reMv: { s: "MonVote2027 (sources : Public Sénat, franceinfo, Terre-net)", d: "2026", u: "https://monvote2027.fr/candidat/retailleau" },
+  reFi: { s: "franceinfo", d: "12 févr. 2026", u: "https://www.franceinfo.fr/politique/bruno-retailleau/presidentielle-2027-bruno-retailleau-annonce-sa-candidature_7802885.html" },
+  toProg: { s: "Programme des Écologistes, « Pour une prospérité écologique » (via Votons 2027)", d: "13 juil. 2026", u: "https://lesecologistes.fr/pages/6ImK65GKUnvibm33WGkjkj/projet-2027" },
+  toMv: { s: "Programme des Écologistes, via MonVote2027", d: "13 juil. 2026", u: "https://monvote2027.fr/candidat/tondelier" },
+  zeBfm: { s: "Planet.fr (BFMTV)", d: "17 sept. 2026", u: "https://www.planet.fr/2027-officiellement-candidat-eric-zemmour-propose-dexpulser-tous-les-detenus-et-chomeurs-etrangers.2999311.817022.html" },
+  zeEu: { s: "Programme Reconquête, européennes 2024 (via Votons 2027)", d: "2024", u: "https://assets.ericzemmour.fr/document/Programme%20Reconqu%C3%AAte%20Europ%C3%A9ennes%202024.pdf" },
+  zeMv: { s: "MonVote2027", d: "2026", u: "https://monvote2027.fr/candidat/zemmour" },
+  roPol: { s: "Poligraph (programme PCF)", d: "revu le 30 oct. 2026", u: "https://poligraph.fr/elections/presidentielle-2027/candidats/fabien-roussel" },
+  roJh: { s: "PCF, « La France des jours heureux » (via Votons 2027)", d: "programme de 2022", u: "https://votons-2027.fr/candidats/roussel/programme" },
+  liProg: { s: "Programme Nouvelle Énergie (via Votons 2027)", d: "2026", u: "https://www.unenouvelleenergie.fr/notre-programme/" },
+  beSite: { s: "Nous France (via Votons 2027)", d: "2026", u: "https://www.nousfrance.fr/vision/" },
+  ruSite: { s: "Cahiers de campagne de François Ruffin (via Votons 2027)", d: "2026", u: "https://nouspresident.fr/cahiers-de-campagne/" },
+  arLo: { s: "Lutte ouvrière, dépliant de campagne (via Votons 2027)", d: "nov. 2026", u: "https://www.lutte-ouvriere.org/medias/document/fichiers/2026/11/Depliant-NA-3nov.pdf" },
+  asUpr: { s: "Programme de l’UPR (via Votons 2027)", d: "2026", u: "https://upr.fr/notre-programme" },
+  baSite: { s: "Site de Delphine Batho (via Votons 2027)", d: "2026", u: "https://delphinebatho.fr/priorites/" },
+  ndDlf: { s: "Projet de Debout la France (via Votons 2027)", d: "2026", u: "https://www.debout-la-france.fr/notre-projet/" },
+  kaSite: { s: "Programme d’Anasse Kazib (via Votons 2027)", d: "2026", u: "https://anasse2027.fr/programme" },
+  ptSite: { s: "Projet des Patriotes (via Votons 2027)", d: "2026", u: "https://les-patriotes.fr/projetpourlafrance/" },
+  poSite: { s: "Site de Natacha Polony (via Votons 2027)", d: "2026", u: "https://natachapolony2027.fr/natacha-polony/ma-vision" }
+};
+
+// [candidat, thème, mesure reformulée, clé source]
+var RAW = [
+  // ---------- Jean-Luc Mélenchon : L'Avenir en commun (édition 2027) ----------
+  ["melenchon","Écologie","Interdire les vols de nuit, entre 23 h et 6 h, dans tous les aéroports français.","melB3"],
+  ["melenchon","Écologie","Réduire de moitié la consommation moyenne de protéines animales (viande, poisson, laitages, œufs).","melB3"],
+  ["melenchon","Écologie","Laisser au moins 25 % de la forêt française en libre évolution, sans exploitation.","melF1"],
+  ["melenchon","Écologie","Proposer que la France accueille la deuxième COP « Océans » en 2028.","melF5"],
+  ["melenchon","Écologie","Réserver les 12 milles côtiers à la pêche artisanale et durable, en interdisant les navires-usines.","melF5"],
+  ["melenchon","Économie","Instaurer une taxe kilométrique aux frontières pour décourager les délocalisations et les produits venus de trop loin.","melB2"],
+  ["melenchon","Économie","Rattraper l’Allemagne en robotisation industrielle : 400 robots pour 10 000 salariés.","melB2"],
+  ["melenchon","Santé","Relocaliser en cinq ans la production de 80 principes actifs de médicaments stratégiques.","melB2"],
+  ["melenchon","Économie","Créer une filière textile française autour du lin.","melB2"],
+  ["melenchon","Économie","Mettre fin à la cotation continue des entreprises en Bourse.","melE3"],
+  ["melenchon","Économie","Garantir un euro numérique 100 % public, qui ne remplace pas l’argent liquide.","melE3"],
+  ["melenchon","Fiscalité","Plafonner les héritages à 12 millions d’euros.","melE2"],
+  ["melenchon","Fiscalité","Exonérer de droits de succession tous les héritages inférieurs à 150 000 euros.","melE2"],
+  ["melenchon","Travail","Imposer une durée minimale de travail de 3 heures par jour dans les secteurs qui abusent du temps partiel subi.","melE2"],
+  ["melenchon","Travail","Donner aux comités d’entreprise un droit de veto suspensif sur les plans de licenciement.","melE1"],
+  ["melenchon","Travail","Rétablir le 1er mai comme jour férié chômé et payé pour tous les travailleurs.","melS1"],
+  ["melenchon","Travail","Donner à chaque salarié 36 heures de formation par an, dans le domaine de son choix.","melS1"],
+  ["melenchon","Social","Indemniser les arrêts maladie à 100 % du salaire et supprimer les jours de carence.","melS1"],
+  ["melenchon","Social","Indemniser les chômeurs dès le premier jour suivant la fin du contrat.","melS1"],
+  ["melenchon","Santé","Rembourser les séances de psychothérapie pour les moins de 26 ans.","melS2"],
+  ["melenchon","Social","Créer un congé de 7 jours consécutifs pour le décès d’un proche, membre de la famille ou ami.","melS2"],
+  ["melenchon","Social","Ouvrir 10 000 places par an en Ehpad publics pendant cinq ans.","melS2"],
+  ["melenchon","Famille","Remplacer les congés maternité et paternité par un congé d’accueil de l’enfant identique et obligatoire de 20 semaines par parent.","melS3"],
+  ["melenchon","Famille","Ouvrir progressivement 500 000 places d’accueil pour les jeunes enfants.","melS3"],
+  ["melenchon","Société","Reconnaître le 17 octobre 1961 comme un crime d’État, avec une journée nationale de commémoration.","melS4"],
+  ["melenchon","Société","Faire du 2 août une journée de commémoration du génocide des Roms, Manouches, Sinti, Gitans, Yéniches et Voyageurs.","melS4"],
+  ["melenchon","Société","Créer une commission d’enquête sur le massacre des tirailleurs sénégalais à Thiaroye en 1944.","melS4"],
+  ["melenchon","Éducation","Étendre la scolarité obligatoire jusqu’à 18 ans.","melF2"],
+  ["melenchon","Éducation","Garantir à chaque famille une école publique à moins de 15 minutes du domicile.","melF2"],
+  ["melenchon","Éducation","Créer un statut de « parents d’élèves délégués ».","melF2"],
+  ["melenchon","Culture","Interdire la publicité pour les paris sportifs.","melF3"],
+  ["melenchon","Culture","Créer une redevance sur l’usage commercial des œuvres tombées dans le domaine public pour financer la création.","melF3"],
+  ["melenchon","Santé","Interdire les brevets sur les médicaments et équipements nécessaires à une urgence sanitaire.","melF4"],
+  ["melenchon","Défense","Nationaliser ArianeGroup et doter la France d’un avion spatial souverain.","melF6"],
+  ["melenchon","Défense","Concentrer les financements publics sur un seul nouveau lanceur spatial, MaiaSpace, en complément d’Ariane 6.","melF6"],
+  ["melenchon","Institutions","Remplacer les 500 parrainages d’élus par des parrainages citoyens pour se présenter à la présidentielle.","melR1"],
+  ["melenchon","Institutions","Reconnaître le vote blanc et rendre le vote obligatoire.","melR1"],
+  ["melenchon","Institutions","Obliger l’Assemblée nationale à débattre de toute pétition dépassant 500 000 signatures.","melR1"],
+  ["melenchon","Institutions","Organiser l’accession de la Kanaky-Nouvelle-Calédonie à l’indépendance au 1er janvier 2028, par référendum.","melR1"],
+  ["melenchon","Justice","Supprimer la taxe de 50 euros pour saisir la justice et rendre gratuites les procédures courantes comme le divorce.","melR2"],
+  ["melenchon","Sécurité","Interdire la technique de la « nasse » en manifestation et rendre le matricule RIO obligatoire pour tous les agents.","melR2"],
+  ["melenchon","Fiscalité","Rétablir une taxe d’habitation progressive selon les revenus, dont 80 % des ménages seraient exonérés.","melR3"],
+  ["melenchon","Institutions","Supprimer les métropoles et rendre aux communes le libre choix de leurs regroupements.","melR3"],
+  ["melenchon","Logement","Conditionner toute mise en location à l’obtention d’un « permis de louer ».","melR3"],
+  ["melenchon","International","Rejeter l’objectif, réclamé par les États-Unis, de consacrer 5 % du PIB à la défense.","melM2"],
+  ["melenchon","International","Aider les pays africains concernés à sortir du franc CFA au profit d’une monnaie souveraine.","melM3"],
+  ["melenchon","International","Créer une force méditerranéenne de sécurité civile contre les incendies et pour le secours en mer.","melM3"],
+  ["melenchon","Économie","Rendre effectif le droit de l’État de réquisitionner les usines et entreprises d’intérêt général.","melE1"],
+  ["melenchon","Économie","Séparer strictement les banques d’affaires et les banques de détail.","melE3"],
+  ["melenchon","Fiscalité","Supprimer la convention judiciaire qui permet aux entreprises de négocier leur sanction en cas de fraude fiscale.","melE2"],
+  ["melenchon","Fiscalité","Supprimer la flat tax et imposer les revenus du capital comme ceux du travail.","melE2"],
+  ["melenchon","Travail","Revaloriser de 10 % le point d’indice des fonctionnaires et inscrire son dégel dans la loi.","melE2"],
+  ["melenchon","Social","Réformer la Cades, la caisse de la dette sociale, qui prive la Sécurité sociale de 19 milliards d’euros par an.","melE3"],
+  ["melenchon","Santé","Intégrer l’aide médicale d’État (AME) au régime général de la Sécurité sociale.","melS1"],
+  ["melenchon","Social","Accompagner jusqu’à 25 ans les jeunes sortant de l’aide sociale à l’enfance.","melS2"],
+  ["melenchon","Famille","Viser en crèche un ratio moyen de 5 enfants par adulte.","melS3"],
+  ["melenchon","Société","Abroger la loi dite « contre le séparatisme » et le contrat d’engagement républicain.","melS4"],
+  ["melenchon","Énergie","Remplacer progressivement tous les chauffages au fioul et au gaz par des systèmes sans gaz à effet de serre, comme les pompes à chaleur.","melB3"],
+  ["melenchon","Écologie","Abolir l’obsolescence programmée et allonger la garantie légale des produits.","melB3"],
+  ["melenchon","Écologie","Lancer un plan de dépollution de la Méditerranée et des fonds marins de toutes les façades maritimes.","melB3"],
+  ["melenchon","Santé","Interdire les additifs alimentaires dangereux en limitant la liste à ceux autorisés en agriculture biologique.","melF4"],
+  ["melenchon","Santé","Rembourser à 100 % les séances de psychologue, au-delà de 12 par an.","melF4"],
+  ["melenchon","Numérique","Généraliser les logiciels libres dans les administrations et l’Éducation nationale.","melF7"],
+  ["melenchon","Numérique","Achever la couverture de tout le pays en fibre optique.","melF7"],
+  ["melenchon","Justice","Doubler les moyens de la police scientifique et recréer un corps de police judiciaire placé sous l’autorité des magistrats.","melR2"],
+  ["melenchon","Institutions","Garantir 50 % de recrutements locaux dans tous les corps de la fonction publique.","melR3"],
+  ["melenchon","Culture","Donner aux abonnés des journaux et aux usagers de l’audiovisuel public des droits sur la gouvernance de ces médias.","melR1"],
+  ["melenchon","Immigration","Refuser d’appliquer le pacte européen sur la migration et l’asile.","melM3"],
+
+  // ---------- Marine Le Pen ----------
+  ["lepen","Retraites","Revenir à un âge légal de départ à 62 ans, et à 60 ans après 40 annuités pour ceux qui ont commencé avant 20 ans.","lpRetr"],
+  ["lepen","Retraites","Alléger les cotisations pour inciter à continuer de travailler après l’âge de la retraite.","lpRetr"],
+  ["lepen","Europe","Plafonner à 5 milliards d’euros par an la contribution de la France au budget de l’Union européenne.","lpMedef"],
+  ["lepen","Budget","Réaliser 140 milliards d’euros nets d’économies d’ici 2032 et repasser sous les 3 % de déficit dès 2030.","lpCb"],
+  ["lepen","Immigration","Économiser 15 milliards d’euros sur l’immigration dès 2027, et 29 milliards en année pleine.","lp140"],
+  ["lepen","Budget","Économiser 3,4 milliards d’euros sur des opérateurs publics comme l’OFB, l’Anses, les Agences de l’eau et l’Ademe.","lpPge"],
+  ["lepen","Énergie","Arrêter les nouveaux projets éoliens et démanteler progressivement les parcs existants.","lp22"],
+  ["lepen","Énergie","Sortir la France du marché européen de l’électricité.","lp22"],
+  ["lepen","Énergie","Baisser la TVA de 20 % à 5,5 % sur les carburants, le fioul, le gaz et l’électricité.","lp22"],
+  ["lepen","Fiscalité","Exonérer d’impôt sur le revenu tous les jeunes actifs jusqu’à 30 ans.","lp22"],
+  ["lepen","Travail","Exonérer de cotisations patronales les hausses de salaire de 10 % accordées jusqu’à 3 Smic.","lp22"],
+  ["lepen","Immigration","Ne traiter les demandes d’asile que depuis l’étranger.","lp22"],
+  ["lepen","Sécurité","Inscrire les harceleurs de rue au fichier des délinquants sexuels.","lp22"],
+  ["lepen","Institutions","Créer un ministère d’État de la Mer et de l’Outre-mer.","lp22"],
+  ["lepen","Institutions","Supprimer les conseils économiques, sociaux et environnementaux régionaux (Ceser).","lp22"],
+  ["lepen","Santé","Lancer un plan d’urgence de 20 milliards d’euros pour la santé.","lp22"],
+  ["lepen","Social","Déconjugaliser l’allocation aux adultes handicapés, pour qu’elle ne dépende plus des revenus du conjoint.","lp22"],
+  ["lepen","Éducation","Construire 100 000 nouveaux logements étudiants en cinq ans.","lp22"],
+  ["lepen","Éducation","Augmenter les frais de scolarité des étudiants étrangers, sauf accords entre États.","lp22"],
+
+  // ---------- Édouard Philippe ----------
+  ["philippe","Retraites","Porter progressivement l’âge légal à 65 ans et la durée de cotisation à 45 annuités.","phEu"],
+  ["philippe","Budget","Ne pas remplacer un fonctionnaire sur trois partant à la retraite, soit environ 250 000 postes en cinq ans.","phEu"],
+  ["philippe","Travail","Ramener la durée maximale d’indemnisation du chômage de 18 à 12 mois pour les moins de 50 ans.","phEu"],
+  ["philippe","Famille","Créer une allocation familiale unique de 350 € par mois dès le premier enfant, dégressive selon les revenus.","phEu"],
+  ["philippe","Institutions","Présenter une vingtaine d’ordonnances au Parlement dès juillet 2027, et ne pas habiter à l’Élysée.","phEu"],
+  ["philippe","Immigration","Diviser par deux l’immigration légale, pour revenir nettement sous les 200 000 titres de séjour par an.","phEu"],
+  ["philippe","Défense","Porter le nombre de réservistes de 45 000 à 250 000 et le service militaire volontaire à 50 000 places par an.","phSite"],
+  ["philippe","Écologie","Lancer un plan baignade national pour rendre baignables toutes les rivières.","phSite"],
+  ["philippe","Sécurité","Créer un « état d’urgence narco », avec reconnaissance faciale ciblée et limitée dans le temps.","phSite"],
+  ["philippe","Sécurité","Créer un « droit de savoir » inspiré de la Sarah’s law britannique : les parents pourraient faire vérifier les antécédents d’un adulte au contact de leur enfant.","phSite"],
+  ["philippe","Économie","Un pacte fiscal avec les entreprises : 50 milliards de baisses d’impôts de production contre 50 milliards d’aides publiques en moins.","phSite"],
+  ["philippe","Travail","Laisser les entreprises fixer librement le temps de travail, avec zéro cotisation patronale au-delà de la 37e heure.","phSite"],
+  ["philippe","Éducation","Former 100 000 ingénieurs par an d’ici cinq ans, contre 40 000 aujourd’hui.","phSite"],
+  ["philippe","Éducation","Créer un service public du soutien scolaire avec un assistant IA et des brigades d’anciens professeurs et d’étudiants.","phSite"],
+  ["philippe","Éducation","Interdire strictement les téléphones portables en primaire et au collège, avec confiscation immédiate.","phSite"],
+  ["philippe","Défense","Massifier la production de drones tactiques, sur le modèle du programme américain de 300 000 drones.","phSite"],
+  ["philippe","Défense","Lancer un plan munitions pour passer de 100 000 obus par an à l’échelle des 700 000 produits par l’Allemagne.","phSite"],
+  ["philippe","Numérique","Doubler en cinq ans la capacité de calcul européenne pour l’intelligence artificielle.","phSite"],
+  ["philippe","Sécurité","Donner aux maires un pouvoir de sanction pénale pour réprimer les petites incivilités.","phSite"],
+  ["philippe","Famille","Créer un temps partiel parental : travailler à 80 % payé 100 % pendant deux mois après le congé parental.","phSite"],
+  ["philippe","Immigration","Faire voter chaque année par le Parlement une liste de pays sûrs et mettre fin à l’asile à vie.","phSite"],
+  ["philippe","Écologie","Réutiliser 10 % des eaux usées traitées pour les usages non potables, contre moins de 1 % aujourd’hui.","phSite"],
+  ["philippe","Immigration","Suspendre le regroupement familial pendant tout le quinquennat.","phSite"],
+
+  // ---------- Gabriel Attal ----------
+  ["attal","Retraites","Supprimer l’âge légal de départ : la retraite dépendrait de la durée de cotisation, avec décote et surcote.","atPs"],
+  ["attal","Retraites","Ouvrir à chaque naissance un plan d’épargne retraite de 1 000 euros, que parents et grands-parents pourront abonder.","atSite"],
+  ["attal","Travail","Un « choc » de 40 milliards d’euros de salaires nets, en supprimant la part salariale de la cotisation vieillesse.","atMvx"],
+  ["attal","Société","Interdire le port du voile dans l’espace public aux mineures de moins de 15 ans.","atMv"],
+  ["attal","Institutions","Instituer une journée référendaire annuelle sur les grands choix du pays.","atMv"],
+  ["attal","Budget","Ramener le déficit sous 3 % avant 2032, l’équilibre de la Sécurité sociale en 2032 et celui de tous les comptes publics en 2037.","atSite"],
+  ["attal","Europe","Créer des « États-Unis d’Europe » par un premier référendum européen, organisé le même jour dans les pays volontaires.","atSite"],
+  ["attal","Institutions","Ramener le nombre de députés à 350 et celui des sénateurs à 200.","atSite"],
+  ["attal","Justice","Instaurer la comparution immédiate pour les mineurs récidivistes.","atSite"],
+  ["attal","Justice","Recruter 3 000 magistrats et greffiers supplémentaires.","atSite"],
+  ["attal","Institutions","Supprimer un échelon de collectivité territoriale.","atSite"],
+  ["attal","Éducation","Sans le brevet, pas de seconde : une année de « prépa lycée » pour consolider.","atSite"],
+  ["attal","Justice","Lancer les premiers actes d’enquête dans les 48 heures après toute plainte pour pédocriminalité.","atSite"],
+  ["attal","Institutions","Inscrire dans la Constitution un délai maximal de deux mois pour répondre aux porteurs de projets ; sans réponse, le silence vaudra accord.","atSite"],
+  ["attal","Défense","Construire avec une coalition de pays volontaires un bouclier européen contre les missiles et drones russes.","atSite"],
+  ["attal","Éducation","Généraliser la méthode de Singapour pour enseigner les mathématiques.","atSite"],
+  ["attal","Numérique","Former 20 millions de salariés à l’intelligence artificielle d’ici 2030.","atSite"],
+  ["attal","Retraites","Flécher obligatoirement la moitié de l’intéressement et de la participation vers des plans d’épargne retraite.","atSite"],
+  ["attal","Famille","Former 200 000 professionnels de la petite enfance d’ici 2030.","atSite"],
+  ["attal","Énergie","Multiplier par cinq les capacités de géothermie d’ici 2035.","atSite"],
+  ["attal","Sécurité","Interconnecter complètement les fichiers de la police, de la gendarmerie, de la justice et de l’Éducation nationale.","atSite"],
+  ["attal","Social","Écrire à chaque Français éligible pour qu’aucun ne passe à côté des aides auxquelles il a droit.","atSite"],
+  ["attal","Société","Mieux encadrer la vente d’animaux sur les plateformes en ligne.","atSite"],
+
+  // ---------- Raphaël Glucksmann ----------
+  ["glucksmann","Fiscalité","Taxer les « méga-héritages » (le 1 % des plus grosses successions) pour reverser environ 15 milliards d’euros sur la fiche de paie.","glPs"],
+  ["glucksmann","Éducation","Un plan de sauvetage de l’école publique sur cinq ans : salaires des enseignants, moins d’élèves par classe en primaire, rénovation des bâtiments.","glPs"],
+  ["glucksmann","Transports","Un leasing social d’un million de voitures électriques à 100 € par mois, dont 100 000 tout de suite pour les auxiliaires de vie et soignants en zone rurale.","glActe"],
+  ["glucksmann","Jeunesse","Une rémunération minimale de 1 000 € par mois pour tout stage de plus de deux mois.","glWiki"],
+  ["glucksmann","Jeunesse","Un passeport « Colo pour tous » : un séjour collectif en colonie pour chaque enfant.","glWiki"],
+  ["glucksmann","Immigration","Confier la politique migratoire à une convention citoyenne dont les conclusions seraient soumises au Parlement.","glWiki"],
+  ["glucksmann","Famille","Créer un statut des familles monoparentales (logement, crèche, transports, pensions).","glWiki"],
+  ["glucksmann","Énergie","Financer par les superprofits des chèques énergie de 500 € et 200 €, et encadrer les marges pour baisser l’essence de 20 centimes.","glWiki"],
+  ["glucksmann","Travail","Instaurer un « chèque syndical » et faire entrer des salariés dans les conseils d’administration dès 100 salariés.","glActe"],
+  ["glucksmann","Immigration","Abroger la loi immigration de 2024.","glActe"],
+  ["glucksmann","Immigration","Créer une force européenne de sauvetage en mer et reconnaître un « devoir de sauver ».","glActe"],
+  ["glucksmann","Société","Organiser une convention citoyenne sur les drogues, notamment sur la légalisation du cannabis.","glActe"],
+  ["glucksmann","Éducation","Intégrer les établissements privés sous contrat à la carte scolaire pour renforcer la mixité sociale.","glActe"],
+  ["glucksmann","Transports","Doubler les déplacements à vélo en dix ans.","glActe"],
+  ["glucksmann","Écologie","Investir 200 milliards d’euros d’argent public dans la transition sur le quinquennat.","glActe"],
+  ["glucksmann","Énergie","Annuler la hausse de la taxe sur l’électricité décidée en 2024.","glActe"],
+  ["glucksmann","Immigration","Faire de la carte de séjour pluriannuelle le titre de séjour de référence.","glActe"],
+  ["glucksmann","Numérique","Lancer un traité international sur l’intelligence artificielle pour encadrer ses usages à très haut risque.","glActe"],
+  ["glucksmann","Sécurité","Lancer un plan national de sécurité routière centré sur la vitesse, l’alcool, les drogues, les usagers vulnérables et les mobilités.","glActe"],
+
+  // ---------- Bruno Retailleau ----------
+  ["retailleau","Retraites","Un âge minimal de départ à 63 ans, avec une décote de 7 % par an, et le taux plein automatique ramené de 67 à 65 ans.","rePs"],
+  ["retailleau","Retraites","Financer 25 à 30 % des retraites des nouveaux entrants sur le marché du travail par capitalisation.","rePs"],
+  ["retailleau","Travail","Passer à une durée annuelle de travail de 1 623 heures, contre 1 607 aujourd’hui : deux jours de plus, payés.","reSite"],
+  ["retailleau","Social","Plafonner l’ensemble des allocations à 70 % du Smic grâce à un compte social unique.","reMv"],
+  ["retailleau","Immigration","Soumettre la réduction de l’immigration à un référendum.","reFi"],
+  ["retailleau","Agriculture","Supprimer l’Office français de la biodiversité et autoriser en France tout produit déjà autorisé dans l’UE.","reMv"],
+  ["retailleau","Immigration","Allonger la rétention administrative jusqu’à 210 jours pour les étrangers jugés dangereux.","reMv"],
+  ["retailleau","Famille","Remplacer 12 dispositifs par un revenu familial de 240 € par mois dès le premier enfant, jusqu’à ses 18 ans.","reSite"],
+  ["retailleau","Logement","Supprimer l’encadrement des loyers et lever les interdictions de louer liées au diagnostic énergétique (DPE).","reSite"],
+  ["retailleau","Économie","Supprimer ou recentrer, dès le lendemain de l’élection, les 50 règles qui pénalisent le plus la production.","reSite"],
+  ["retailleau","Énergie","Autoriser d’emblée les centrales nucléaires pour 80 ans, au lieu d’un réexamen tous les dix ans.","reSite"],
+  ["retailleau","Numérique","Donner à chaque Français « Marianne », un assistant IA pour toutes ses démarches administratives.","reSite"],
+  ["retailleau","Éducation","Ramener les vacances scolaires à la moyenne européenne et remettre les diplômes chaque année le 14 juillet.","reSite"],
+  ["retailleau","Éducation","Créer une agence qui évalue et note publiquement chaque établissement, sur le modèle de l’Ofsted britannique.","reSite"],
+  ["retailleau","Sécurité","Tripler les moyens de Viginum, le service de lutte contre les ingérences numériques étrangères.","reSite"],
+  ["retailleau","Logement","Rendre les intérêts d’emprunt immobilier déductibles : 50 % avec un enfant, 75 % avec deux, 100 % à partir de trois.","reSite"],
+  ["retailleau","Travail","Supprimer le minimum légal de 24 heures par semaine pour les contrats à temps partiel.","reSite"],
+  ["retailleau","Immigration","Réserver l’hébergement d’urgence aux personnes en situation régulière.","reSite"],
+  ["retailleau","Budget","Redéployer 125 000 agents publics vers le terrain grâce à l’automatisation des tâches répétitives.","reSite"],
+  ["retailleau","Europe","Ne jamais imposer en France plus de règles que ce que l’Europe exige.","reSite"],
+
+  // ---------- Marine Tondelier ----------
+  ["tondelier","Écologie","Doter le plan d’adaptation au changement climatique de 7 milliards d’euros par an d’ici 2032.","toProg"],
+  ["tondelier","Travail","Passer le salaire minimum à 2 000 € brut par mois dès 2027.","toProg"],
+  ["tondelier","Santé","Ouvrir 2 000 nouveaux centres de santé d’ici 2030, en zone rurale et dans les quartiers prioritaires.","toProg"],
+  ["tondelier","Travail","Créer un « congé climatique » de 5 jours par an face aux canicules et aux catastrophes.","toProg"],
+  ["tondelier","Transports","Abaisser la vitesse maximale des voitures thermiques à 110 km/h sur autoroute.","toProg"],
+  ["tondelier","Justice","Créer 9 000 postes de magistrats en dix ans, 10 000 de greffiers et 7 000 d’attachés de justice.","toProg"],
+  ["tondelier","Écologie","Un moratoire sur le canal Seine-Nord Europe, l’autoroute A69, le Lyon-Turin et les extensions d’aéroport.","toProg"],
+  ["tondelier","Santé","Supprimer les franchises médicales et rembourser à 100 % les soins essentiels.","toMv"],
+  ["tondelier","Social","Porter à 4 jours le congé de deuil pour un proche (conjoint, parent, frère ou sœur).","toProg"],
+  ["tondelier","Éducation","Augmenter de 10 % dès la première année les salaires des personnels de la recherche publique.","toProg"],
+  ["tondelier","Social","Augmenter de 250 € l’allocation aux adultes handicapés.","toProg"],
+  ["tondelier","Europe","Porter le budget de l’Union européenne à 2 % du PIB européen en 2035, puis 5 % en 2050.","toProg"],
+  ["tondelier","Agriculture","Interdire les fermes-usines et l’élevage en cage.","toMv"],
+  ["tondelier","Europe","Démanteler Frontex et créer une agence de protection des droits des migrants.","toMv"],
+  ["tondelier","Institutions","Garantir un accueil physique des services publics à moins de 15 minutes partout en France.","toProg"],
+  ["tondelier","Immigration","Garantir le droit du sol aux enfants nés en France, quelle que soit la situation des parents.","toProg"],
+  ["tondelier","Retraites","Convoquer une conférence travail-retraite pour équilibrer le régime général d’ici 2050.","toProg"],
+
+  // ---------- Éric Zemmour ----------
+  ["zemmour","Immigration","Renvoyer tous les étrangers détenus dans les prisons françaises.","zeBfm"],
+  ["zemmour","Immigration","Renvoyer les étrangers chômeurs de longue durée et ceux qui vivent uniquement des aides sociales.","zeBfm"],
+  ["zemmour","Immigration","Porter à 10 ans la durée de résidence exigée pour être naturalisé.","zeMv"],
+  ["zemmour","Europe","Supprimer la Commission européenne et la remplacer par un simple secrétariat placé sous l’autorité des États.","zeEu"],
+  ["zemmour","Europe","Baisser de 20 % la contribution française au budget de l’UE, avec un plafond de 20 milliards d’euros par an.","zeEu"],
+  ["zemmour","Europe","Refuser tout nouvel élargissement de l’Union européenne.","zeEu"],
+  ["zemmour","Éducation","Réserver Erasmus aux jeunes Européens, avec un tarif avantageux pour les familles nombreuses.","zeEu"],
+  ["zemmour","Santé","Recruter en cinq ans 1 000 médecins salariés par l’État pour soigner dans les déserts médicaux.","zeEu"],
+  ["zemmour","Santé","Rétablir des gardes obligatoires pour les médecins sur tout le territoire.","zeEu"],
+  ["zemmour","Société","Obtenir l’abolition de la GPA dans tous les pays de l’Union européenne.","zeEu"],
+  ["zemmour","Économie","Imposer un moratoire sur les accords de libre-échange et auditer ceux qui existent.","zeEu"],
+
+  // ---------- Fabien Roussel ----------
+  ["roussel","Économie","Nationaliser TotalEnergies, par expropriation si nécessaire.","roPol"],
+  ["roussel","Écologie","Investir 500 milliards d’euros sur cinq ans dans un plan climat, via la Caisse des dépôts et Bpifrance.","roPol"],
+  ["roussel","Travail","Augmenter de 30 % le point d’indice des fonctionnaires.","roPol"],
+  ["roussel","Retraites","Garantir qu’aucune pension de retraite ne soit inférieure au Smic.","roPol"],
+  ["roussel","Transports","Mettre en vente un million de véhicules électriques à moins de 10 000 €.","roPol"],
+  ["roussel","Jeunesse","Verser un revenu de 850 euros par mois à tous les étudiants.","roJh"],
+  ["roussel","Institutions","Créer 500 000 emplois dans la fonction publique et les services publics.","roJh"],
+  ["roussel","Énergie","Bloquer le prix des carburants à 1,60 euro le litre.","roJh"],
+  ["roussel","Énergie","Baisser de 30 % les tarifs de l’électricité et du gaz pour les ménages et les entreprises.","roJh"],
+  ["roussel","Santé","Passer d’un médecin scolaire pour 13 000 élèves à un pour 3 000 dans le secondaire.","roJh"],
+  ["roussel","Institutions","Mettre fin au recours aux cabinets de conseil privés.","roJh"],
+
+  // ---------- David Lisnard ----------
+  ["lisnard","Immigration","Diviser par huit le nombre de titres de séjour délivrés.","liProg"],
+  ["lisnard","Éducation","Abroger la carte scolaire.","liProg"],
+  ["lisnard","Éducation","Créer un certificat de fin de primaire qui conditionne l’entrée au collège.","liProg"],
+  ["lisnard","Éducation","Initier les élèves au grec, au latin et à la philosophie dès le primaire.","liProg"],
+  ["lisnard","Travail","Créer un contrat de travail unique, fusionnant CDI et CDD, pour les nouveaux emplois.","liProg"],
+  ["lisnard","Logement","Supprimer l’obligation de 20 à 25 % de logements sociaux par commune (article 55 de la loi SRU).","liProg"],
+  ["lisnard","Santé","Doubler le nombre d’étudiants en médecine d’ici 2030.","liProg"],
+  ["lisnard","Travail","Des charges patronales négatives pour embaucher des personnes au RSA depuis plus de deux ans.","liProg"],
+  ["lisnard","Immigration","Construire plus de centres de rétention et allonger la rétention à 24 mois.","liProg"],
+  ["lisnard","Éducation","Confier l’éveil des enfants de 1 à 6 ans aux communes, l’Éducation nationale gardant le tronc commun de 6 à 16 ans.","liProg"],
+  ["lisnard","Santé","Créer un consortium pharmaceutique européen sur le modèle d’Airbus.","liProg"],
+  ["lisnard","Agriculture","Autoriser sans délai les nouvelles techniques de sélection végétale (NBT).","liProg"],
+  ["lisnard","Institutions","Un seul signalement (décès, déménagement, mariage) met à jour tous les fichiers administratifs en 48 heures.","liProg"],
+  ["lisnard","Institutions","Supprimer les 1 600 exceptions à la règle « le silence de l’administration vaut accord ».","liProg"],
+
+  // ---------- Xavier Bertrand ----------
+  ["bertrand","Justice","Fixer la majorité pénale à 15 ans, avec les mêmes sanctions qu’un adulte.","beSite"],
+  ["bertrand","Sécurité","Rendre la prison automatique pour toute agression d’un policier, d’un gendarme, d’un pompier ou d’un maire.","beSite"],
+  ["bertrand","Éducation","Interdire toute fermeture de classe en milieu rural sans l’accord du maire.","beSite"],
+  ["bertrand","Institutions","Instaurer un mandat présidentiel unique de cinq ans.","beSite"],
+  ["bertrand","Culture","Consacrer 1 % du budget de l’État à la culture d’ici 2032.","beSite"],
+  ["bertrand","Immigration","Exiger un « passeport républicain » (examen de langue et de valeurs) pour le regroupement familial.","beSite"],
+  ["bertrand","Justice","Rendre les auteurs d’attentats terroristes non libérables avant 50 ans de prison, au lieu de 30.","beSite"],
+  ["bertrand","Justice","Disposer d’au moins 80 000 places de prison.","beSite"],
+  ["bertrand","Immigration","Abroger la circulaire de 2012 : plus aucun étranger entré illégalement ne pourrait être régularisé.","beSite"],
+  ["bertrand","Économie","Fixer un objectif de 15 % de salariés actionnaires de leur entreprise.","beSite"],
+  ["bertrand","Travail","Rendre obligatoire le partage des bénéfices (prime, participation ou intéressement) dans les entreprises de 11 à 50 salariés.","beSite"],
+  ["bertrand","Culture","Garantir à chaque élève, de l’école au lycée, l’accès à au moins une œuvre ou un spectacle.","beSite"],
+
+  // ---------- François Ruffin ----------
+  ["ruffin","Transports","Interdire les vols intérieurs lorsqu’une alternative en train existe en moins de 4 heures.","ruSite"],
+  ["ruffin","Écologie","Interdire la publicité pour les voitures thermiques et les billets d’avion.","ruSite"],
+  ["ruffin","Écologie","Rétablir la consigne du verre.","ruSite"],
+  ["ruffin","Écologie","Ouvrir une Maison de la réparation et du réemploi dans chaque quartier et chaque canton.","ruSite"],
+  ["ruffin","Transports","Étendre le leasing social de petites voitures électriques françaises à 3 millions d’automobilistes.","ruSite"],
+  ["ruffin","Justice","Créer un délit de « faute systémique » pour les dirigeants dont les choix de rentabilité causent une pollution.","ruSite"],
+  ["ruffin","Institutions","Économiser 20 millions d’euros sur le budget de l’Élysée, à commencer par les commandes de vaisselle.","ruSite"],
+  ["ruffin","Travail","Payer double les heures travaillées avant 8 h et après 18 h.","ruSite"],
+  ["ruffin","Sécurité","Augmenter de 10 % le salaire des sapeurs-pompiers professionnels.","ruSite"],
+  ["ruffin","Institutions","Mettre fin à l’inviolabilité pénale et civile complète du président de la République.","ruSite"],
+  ["ruffin","Éducation","Réduire la place des notes sur 20 au profit d’autres méthodes d’évaluation en primaire et au collège.","ruSite"],
+  ["ruffin","Logement","En finir avec les passoires thermiques d’ici 2032.","ruSite"],
+  ["ruffin","Éducation","Créer un statut d’AESH (accompagnants d’élèves handicapés) intégré à la fonction publique.","ruSite"],
+  ["ruffin","Institutions","Interdire le « rétro-pantouflage » et encadrer strictement les allers-retours entre public et privé.","ruSite"],
+
+  // ---------- Petits candidats ----------
+  ["arthaud","Travail","Porter le Smic à 2 200 €.","arLo"],
+  ["arthaud","Travail","Interdire les licenciements et les suppressions d’emplois.","arLo"],
+  ["arthaud","Économie","Exproprier sans indemnité les actionnaires, à commencer par ceux du pétrole et de l’armement.","arLo"],
+  ["arthaud","Défense","Réquisitionner les profits des marchands d’armes pour financer les écoles et les hôpitaux.","arLo"],
+  ["arthaud","International","Retirer les troupes françaises d’Afrique.","arLo"],
+  ["arthaud","Numérique","Si l’IA remplace une partie du travail, réduire les horaires de tous sans licencier ni baisser les salaires.","arLo"],
+  ["arthaud","Santé","Interdire toute publicité pour l’alcool.","arLo"],
+
+  ["dupont","Immigration","Sortir de l’espace Schengen et recruter 10 000 agents pour contrôler les frontières.","ndDlf"],
+  ["dupont","Économie","Réserver 75 % de la commande publique à des produits fabriqués en France.","ndDlf"],
+  ["dupont","Défense","Porter la flotte de Rafale à 250 avions en 2030.","ndDlf"],
+  ["dupont","Éducation","Augmenter de 30 % les heures consacrées au français et aux mathématiques.","ndDlf"],
+  ["dupont","Institutions","Abroger la loi NOTRe de 2015 pour rendre leur autonomie aux communes.","ndDlf"],
+  ["dupont","Immigration","Interdire les mariages avec des étrangers en situation irrégulière.","ndDlf"],
+  ["dupont","Travail","Supprimer la directive sur les travailleurs détachés pour retrouver 500 000 emplois.","ndDlf"],
+  ["dupont","Énergie","Maintenir le nucléaire à au moins 70 % de la production d’électricité.","ndDlf"],
+  ["dupont","Social","Revaloriser d’environ 300 € l’allocation aux adultes handicapés pour les handicaps lourds.","ndDlf"],
+  ["dupont","Culture","Rapprocher RFI, France 24 et TV5 Monde pour créer un grand média de la francophonie.","ndDlf"],
+
+  ["philippot","Europe","Quitter l’Union européenne, l’euro, Schengen, la CEDH, l’Otan et l’OMS.","ptSite"],
+  ["philippot","Budget","Économiser 20 milliards d’euros par an grâce au Frexit.","ptSite"],
+  ["philippot","Éducation","En finir avec le collège unique et proposer des parcours différenciés dès 14 ans.","ptSite"],
+  ["philippot","Éducation","Consacrer la moitié du temps scolaire en primaire à la maîtrise du français.","ptSite"],
+  ["philippot","Institutions","Rendre inéligibles à vie les élus condamnés définitivement pour corruption.","ptSite"],
+  ["philippot","Justice","N’appliquer l’excuse de minorité que si le juge la motive spécialement.","ptSite"],
+
+  ["asselineau","Europe","Économiser 12 milliards d’euros par an en supprimant les coûts liés à l’appartenance à l’UE.","asUpr"],
+  ["asselineau","Institutions","Passer à 500 députés et environ 100 sénateurs.","asUpr"],
+  ["asselineau","Travail","Augmenter le Smic brut de 24 % sur le quinquennat.","asUpr"],
+  ["asselineau","Immigration","Porter à au moins 75 % le taux effectif d’exécution des expulsions.","asUpr"],
+  ["asselineau","Santé","Rouvrir 30 000 lits dans l’hôpital public pendant le quinquennat.","asUpr"],
+  ["asselineau","Éducation","Consacrer au moins 80 % du temps en primaire aux savoirs fondamentaux.","asUpr"],
+  ["asselineau","Économie","Un moratoire de 5 ans sur les nouvelles zones commerciales en périphérie des villes de moins de 30 000 habitants.","asUpr"],
+  ["asselineau","Institutions","Remplacer le Conseil constitutionnel par une Cour constitutionnelle de juristes élus pour 12 ans.","asUpr"],
+  ["asselineau","Économie","Diviser par deux les charges patronales des PME.","asUpr"],
+  ["asselineau","Immigration","Dénoncer le pacte de Marrakech sur les migrations.","asUpr"],
+
+  ["batho","Écologie","Créer une sécurité sociale climatique face aux dommages des catastrophes.","baSite"],
+  ["batho","Culture","Remplacer progressivement les publicités dans l’espace public par des œuvres d’art.","baSite"],
+  ["batho","Santé","Retirer immédiatement l’autorisation des pesticides cancérigènes, mutagènes, reprotoxiques et perturbateurs endocriniens.","baSite"],
+  ["batho","Santé","Rendre le Nutri-Score obligatoire et interdire la publicité pour les produits nocifs.","baSite"],
+  ["batho","Santé","Créer un Défenseur de la santé humaine et animale, que chaque citoyen pourrait saisir.","baSite"],
+  ["batho","Culture","Inscrire la liberté de création dans la Constitution.","baSite"],
+  ["batho","Santé","Réguler l’installation des médecins et créer des centres de santé.","baSite"],
+
+  ["kazib","Travail","Smic à 2 000 € net et hausse de 500 € de tous les salaires.","kaSite"],
+  ["kazib","Retraites","Retraite à 60 ans, et à 55 ans pour les métiers pénibles, sans condition d’annuités.","kaSite"],
+  ["kazib","Institutions","En finir avec la Ve République, le Sénat et la fonction présidentielle.","kaSite"],
+  ["kazib","Institutions","Créer une assemblée unique qui concentre les pouvoirs législatif et exécutif.","kaSite"],
+  ["kazib","Société","Abroger la loi de 2004 sur les signes religieux à l’école.","kaSite"],
+  ["kazib","Éducation","Dire non au SNU et à la militarisation des écoles et des facs.","kaSite"],
+  ["kazib","Défense","Démanteler l’industrie d’armement française, deuxième exportateur d’armes au monde.","kaSite"],
+
+  ["polony","Éducation","Voter une loi de programmation de dix ans pour l’école.","poSite"],
+];
+
+</script>
+<script>
 (function () {
 "use strict";
 
-/* ---------- Données ---------- */
-var C = [
-  { id: "attal", n: 1, name: "Gabriel Attal", ini: "GA", party: "Renaissance" },
-  { id: "bertrand", n: 2, name: "Xavier Bertrand", ini: "XB", party: "Nous France", flag: "annoncé" },
-  { id: "glucksmann", n: 3, name: "Raphaël Glucksmann", ini: "RG", party: "Place publique · PS" },
-  { id: "lepen", n: 4, name: "Marine Le Pen", ini: "MLP", party: "Rassemblement national" },
-  { id: "lisnard", n: 5, name: "David Lisnard", ini: "DL", party: "Nouvelle Énergie" },
-  { id: "melenchon", n: 6, name: "Jean-Luc Mélenchon", ini: "JLM", party: "La France insoumise" },
-  { id: "philippe", n: 7, name: "Édouard Philippe", ini: "EP", party: "Horizons" },
-  { id: "retailleau", n: 8, name: "Bruno Retailleau", ini: "BR", party: "Les Républicains" },
-  { id: "roussel", n: 9, name: "Fabien Roussel", ini: "FR", party: "Parti communiste" },
-  { id: "ruffin", n: 10, name: "François Ruffin", ini: "FRu", party: "Debout !" },
-  { id: "tondelier", n: 11, name: "Marine Tondelier", ini: "MT", party: "Les Écologistes", flag: "à valider" },
-  { id: "zemmour", n: 12, name: "Éric Zemmour", ini: "EZ", party: "Reconquête" }
-];
+/* ---------- Préparation ---------- */
+C.forEach(function (c, i) { c.n = i + 1; });
 var CBY = {}; C.forEach(function (c) { CBY[c.id] = c; });
-
-var S = {
-  psRetr: { s: "Public Sénat", d: "30 sept. 2026", u: "https://www.publicsenat.fr/actualites/politique/reculer-ou-avancer-lage-legal-avec-ou-sans-capitalisation-ce-que-proposent-les-principaux-candidats-a-lelection-presidentielle-sur-les-retraites" },
-  enMedef: { s: "Euronews (débat du Medef)", d: "28 août 2026", u: "https://fr.euronews.com/2026/08/28/presidentielle-de-2027-a-roland-garros-les-candidats-croisent-le-fer-sur-leconomie" },
-  enCb: { s: "Euronews (contre-budget du RN)", d: "7 oct. 2026", u: "https://fr.euronews.com/2026/10/07/france-le-gouvernement-tire-a-boulets-rouges-sur-le-contre-budget-de-marine-le-pen" },
-  ps140: { s: "Public Sénat", d: "oct. 2026", u: "https://www.publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f" },
-  pge: { s: "Planète Grandes Écoles (contre-budget du 6 oct.)", d: "oct. 2026", u: "https://www.planetegrandesecoles.com/?p=130999" },
-  vLp: { s: "Programme RN, recensé par Votons 2027", d: "maj. 2026", u: "https://votons-2027.fr/candidats/le-pen/programme" },
-  lcpMel: { s: "LCP (programme L’Avenir en commun)", d: "6 nov. 2026", u: "https://lcp.fr/actualites/presidentielle-2027-ce-qui-change-dans-le-nouveau-programme-de-jean-luc-melenchon-444841" },
-  psGlu: { s: "Public Sénat", d: "août 2026", u: "https://www.publicsenat.fr/actualites/politique/fiscalite-ecole-immigration-ce-que-propose-raphael-glucksmann" },
-  wgLeasing: { s: "AFP / France 24, recensé par wikiglucksmann.fr", d: "2 oct. 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
-  wgStage: { s: "Place publique sur X, recensé par wikiglucksmann.fr", d: "15 oct. 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
-  wgColo: { s: "AFP, recensé par wikiglucksmann.fr", d: "20 juin 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
-  wgConv: { s: "LCP, recensé par wikiglucksmann.fr", d: "26 mai 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
-  wgAvoirs: { s: "Débat LCI, recensé par wikiglucksmann.fr", d: "23 sept. 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
-  enPhil: { s: "Euronews (France 2)", d: "9 oct. 2026", u: "https://fr.euronews.com/2026/10/09/presidentielle-2027-edouard-philippe-mise-sur-le-travail-et-la-reduction-des-depenses-publ" },
-  vPhil: { s: "Programme officiel, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/philippe/programme" },
-  mvAttal: { s: "MonVote2027 (sources : Europe 1, franceinfo, JDD)", d: "2025-2026", u: "https://monvote2027.fr/candidat/attal" },
-  mvxAttal: { s: "Moneyvox", d: "30 juin 2025", u: "https://www.moneyvox.fr/retraite/actualites/104059/une-reforme-sans-age-legal-de-depart-dans-les-cartons-de-gabriel-attal" },
-  attalLetter: { s: "Site de campagne (Les Échos)", d: "15 oct. 2026", u: "https://attalpresident.fr/actualites" },
-  attalEurope: { s: "Site de campagne (L’Express)", d: "27 oct. 2026", u: "https://attalpresident.fr/actualites" },
-  mvRet: { s: "MonVote2027 (sources : Public Sénat, franceinfo, Terre-net)", d: "2026", u: "https://monvote2027.fr/candidat/retailleau" },
-  fiRet: { s: "franceinfo", d: "12 févr. 2026", u: "https://www.franceinfo.fr/politique/bruno-retailleau/presidentielle-2027-bruno-retailleau-annonce-sa-candidature_7802885.html" },
-  planetZ: { s: "Planet.fr (BFMTV)", d: "17 sept. 2026", u: "https://www.planet.fr/2027-officiellement-candidat-eric-zemmour-propose-dexpulser-tous-les-detenus-et-chomeurs-etrangers.2999311.817022.html" },
-  mvZ: { s: "MonVote2027", d: "2026", u: "https://monvote2027.fr/candidat/zemmour" },
-  pcZ: { s: "Programme-candidat.fr", d: "2026", u: "https://programme-candidat.fr/personnalites/eric-zemmour" },
-  mvT: { s: "Programme des Écologistes, via MonVote2027", d: "13 juil. 2026", u: "https://monvote2027.fr/candidat/tondelier" },
-  polR: { s: "Poligraph (programme PCF)", d: "revu le 30 oct. 2026", u: "https://poligraph.fr/elections/presidentielle-2027/candidats/fabien-roussel" },
-  vLis: { s: "Programme Nouvelle Énergie, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/lisnard/programme" },
-  vBer: { s: "Nous France, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/bertrand/programme" },
-  vRuf: { s: "Site de campagne, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/ruffin/programme/climat" }
-};
-
-// [candidat, thème, mesure, clé source, précision de page facultative]
-var RAW = [
-  ["lepen","Retraites","Revenir à un âge légal de départ à 62 ans, et à 60 ans après 40 annuités pour ceux qui ont commencé à travailler avant 20 ans.","psRetr"],
-  ["lepen","Europe","Plafonner à 5 milliards d’euros par an la contribution de la France au budget de l’Union européenne.","enMedef"],
-  ["lepen","Budget","Réaliser 140 milliards d’euros nets d’économies d’ici 2032 et repasser sous les 3 % de déficit public dès 2030.","enCb"],
-  ["lepen","Immigration","Économiser 15 milliards d’euros sur l’immigration dès 2027, et 29 milliards en année pleine.","ps140"],
-  ["lepen","Budget","Économiser 3,4 milliards d’euros sur des opérateurs publics comme l’OFB, l’Anses, les Agences de l’eau et l’Ademe.","pge"],
-  ["lepen","Retraites","Alléger les cotisations pour inciter à continuer de travailler après l’âge de la retraite.","psRetr"],
-  ["lepen","Énergie","Arrêter les nouveaux projets éoliens et démanteler progressivement les parcs existants.","vLp"],
-  ["lepen","Énergie","Sortir la France du marché européen de l’électricité.","vLp"],
-
-  ["melenchon","Écologie","Interdire les vols de nuit, entre 23 h et 6 h, dans tous les aéroports français.","lcpMel"],
-  ["melenchon","Fiscalité","Plafonner les héritages à 12 millions d’euros.","lcpMel"],
-  ["melenchon","Jeunesse","Créer un service civique écologique obligatoire, payé au Smic, pour les moins de 25 ans.","lcpMel"],
-  ["melenchon","Santé","Rembourser les séances de psychothérapie pour les moins de 26 ans.","lcpMel"],
-  ["melenchon","Institutions","Obliger l’Assemblée nationale à débattre de toute pétition dépassant 500 000 signatures.","lcpMel"],
-  ["melenchon","Institutions","Organiser un référendum sur l’indépendance de la Kanaky-Nouvelle-Calédonie le 1er janvier 2028.","lcpMel"],
-  ["melenchon","Société","Reconnaître le 17 octobre 1961 comme un crime d’État, avec une journée nationale de commémoration.","lcpMel"],
-  ["melenchon","Numérique","Interdire les intelligences artificielles conçues pour simuler une relation affective avec l’utilisateur.","lcpMel"],
-
-  ["glucksmann","Fiscalité","Taxer les « méga-héritages » (le 1 % des plus grosses successions) pour reverser environ 15 milliards d’euros directement sur la fiche de paie.","psGlu"],
-  ["glucksmann","Éducation","Un plan de sauvetage de l’école publique sur cinq ans : hausse du salaire des enseignants, moins d’élèves par classe en primaire, rénovation des bâtiments.","psGlu"],
-  ["glucksmann","Transports","Un leasing social d’un million de voitures électriques à 100 € par mois.","wgLeasing"],
-  ["glucksmann","Jeunesse","Une rémunération minimale de 1 000 € par mois pour tout stage de plus de deux mois.","wgStage"],
-  ["glucksmann","Jeunesse","Un passeport « Colo pour tous » : un séjour collectif en colonie pour chaque enfant.","wgColo"],
-  ["glucksmann","Immigration","Confier la question de l’immigration à une convention citoyenne dont les conclusions seraient soumises au Parlement.","wgConv"],
-  ["glucksmann","International","Saisir les quelque 210 milliards d’euros d’avoirs russes gelés en Europe.","wgAvoirs"],
-
-  ["philippe","Retraites","Porter progressivement l’âge légal de départ à 65 ans et la durée de cotisation à 45 annuités.","enPhil"],
-  ["philippe","Budget","Ne pas remplacer un fonctionnaire sur trois partant à la retraite, soit environ 250 000 postes en cinq ans.","enPhil"],
-  ["philippe","Travail","Ramener la durée maximale d’indemnisation du chômage de 18 à 12 mois pour les moins de 50 ans.","enPhil"],
-  ["philippe","Famille","Une allocation familiale unique de 350 € par mois dès le premier enfant, dégressive selon l’impôt sur le revenu.","enPhil"],
-  ["philippe","Institutions","Présenter une vingtaine d’ordonnances au Parlement dès juillet 2027, et ne pas habiter à l’Élysée.","enPhil"],
-  ["philippe","Immigration","Diviser par deux l’immigration légale, pour revenir nettement sous les 200 000 titres de séjour par an.","enPhil"],
-  ["philippe","Défense","Porter le nombre de réservistes de 45 000 à 250 000.","vPhil"],
-  ["philippe","Écologie","Lancer un plan national pour rendre les rivières baignables.","vPhil"],
-
-  ["attal","Retraites","Supprimer l’âge légal de départ : la retraite dépendrait de la durée de cotisation, avec une décote et une surcote.","psRetr"],
-  ["attal","Retraites","Verser 1 000 € à chaque naissance sur un fonds de retraite par capitalisation.","mvAttal"],
-  ["attal","Travail","Un « choc » de 40 milliards d’euros de hausse des salaires nets, en supprimant la part salariale de la cotisation vieillesse.","mvxAttal"],
-  ["attal","Société","Interdire le port du voile dans l’espace public aux mineures de moins de 15 ans.","mvAttal"],
-  ["attal","Institutions","Instituer une journée référendaire annuelle sur les grands choix du pays.","mvAttal"],
-  ["attal","Budget","Réaliser 150 milliards d’euros d’économies sur le quinquennat et revenir à l’équilibre budgétaire en 2037.","attalLetter"],
-  ["attal","Europe","Bâtir des « États-Unis d’Europe », avec une économie européenne commune.","attalEurope"],
-
-  ["retailleau","Retraites","Fixer un âge minimal de départ à 63 ans, avec une décote de 7 % par an, et abaisser de 67 à 65 ans l’âge du taux plein automatique.","psRetr"],
-  ["retailleau","Retraites","Financer 25 à 30 % des retraites des nouveaux entrants sur le marché du travail par capitalisation.","psRetr"],
-  ["retailleau","Travail","Supprimer les 35 heures et passer à une durée annuelle de travail de 1 623 heures.","mvRet"],
-  ["retailleau","Social","Plafonner l’ensemble des allocations à 70 % du Smic grâce à un compte social unique.","mvRet"],
-  ["retailleau","Immigration","Soumettre la réduction de l’immigration à un référendum.","fiRet"],
-  ["retailleau","Agriculture","Supprimer l’Office français de la biodiversité et autoriser en France tout produit déjà autorisé dans l’Union européenne.","mvRet"],
-  ["retailleau","Immigration","Allonger la rétention administrative jusqu’à 210 jours pour les étrangers jugés dangereux.","mvRet"],
-
-  ["zemmour","Immigration","Renvoyer tous les étrangers détenus dans les prisons françaises.","planetZ"],
-  ["zemmour","Immigration","Expulser les étrangers en situation régulière au chômage depuis plus d’un an.","planetZ"],
-  ["zemmour","Immigration","Porter à 10 ans la durée de résidence exigée pour être naturalisé.","mvZ"],
-  ["zemmour","Santé","Recruter des médecins généralistes fonctionnaires pour couvrir les déserts médicaux.","pcZ"],
-  ["zemmour","Sécurité","Instaurer une « défense excusable » pour les citoyens légitimement armés.","pcZ"],
-
-  ["tondelier","Institutions","Ouvrir le droit de vote à 16 ans.","mvT","p. 126"],
-  ["tondelier","Santé","Supprimer les franchises médicales et rembourser à 100 % les soins essentiels.","mvT","p. 111"],
-  ["tondelier","Santé","Ouvrir 2 000 centres de santé publics d’ici 2030.","mvT","p. 114"],
-  ["tondelier","Éducation","Limiter les classes à 19 élèves en 2032, et à 12 en éducation prioritaire (REP et REP+).","mvT","p. 90"],
-  ["tondelier","Agriculture","Interdire les fermes-usines et l’élevage en cage.","mvT","p. 37"],
-  ["tondelier","Europe","Démanteler Frontex et créer une agence de protection des droits des migrants.","mvT","p. 179"],
-  ["tondelier","Social","Expérimenter des caisses locales de Sécurité sociale de l’alimentation.","mvT","p. 45"],
-
-  ["roussel","Économie","Nationaliser TotalEnergies, par expropriation si nécessaire.","polR"],
-  ["roussel","Écologie","Un plan climat de 500 milliards d’euros sur cinq ans, porté par la Caisse des dépôts et Bpifrance.","polR"],
-  ["roussel","Travail","Augmenter de 30 % le point d’indice des fonctionnaires.","polR"],
-  ["roussel","Retraites","Garantir qu’aucune pension de retraite ne soit inférieure au Smic.","polR"],
-  ["roussel","Travail","Rétablir l’échelle mobile des salaires, indexés automatiquement sur les prix.","polR"],
-  ["roussel","Transports","Mettre en vente un million de véhicules électriques à moins de 10 000 €.","polR"],
-  ["roussel","Société","Voter une loi-cadre contre les violences sexistes et sexuelles dotée de 3 milliards d’euros.","polR"],
-
-  ["lisnard","Immigration","Diviser par huit le nombre de titres de séjour délivrés.","vLis"],
-  ["lisnard","Éducation","Abroger la carte scolaire.","vLis"],
-  ["lisnard","Éducation","Créer un certificat de fin de primaire qui conditionne l’entrée au collège.","vLis"],
-  ["lisnard","Éducation","Initier les élèves au grec, au latin et à la philosophie dès le primaire.","vLis"],
-  ["lisnard","Travail","Créer un contrat de travail unique, fusionnant CDI et CDD, pour les nouveaux emplois.","vLis"],
-  ["lisnard","Logement","Supprimer les quotas de logements sociaux imposés par l’article 55 de la loi SRU.","vLis"],
-  ["lisnard","Santé","Doubler le nombre d’étudiants en médecine d’ici 2030.","vLis"],
-
-  ["bertrand","Sécurité","Fixer la majorité pénale à 15 ans, avec les mêmes sanctions qu’un adulte.","vBer"],
-  ["bertrand","Sécurité","Rendre la prison automatique pour toute agression d’un policier, d’un gendarme, d’un pompier ou d’un maire.","vBer"],
-  ["bertrand","Éducation","Interdire toute fermeture de classe en milieu rural sans l’accord du maire.","vBer"],
-  ["bertrand","Institutions","Instaurer un mandat présidentiel unique de cinq ans.","vBer"],
-  ["bertrand","Culture","Consacrer 1 % du budget de l’État à la culture d’ici 2032.","vBer"],
-  ["bertrand","Immigration","Exiger un « passeport républicain » (examen de langue et de valeurs) pour le regroupement familial.","vBer"],
-
-  ["ruffin","Transports","Interdire les vols intérieurs lorsqu’une alternative en train existe en moins de 4 heures.","vRuf"],
-  ["ruffin","Écologie","Interdire la publicité pour les voitures thermiques et les billets d’avion.","vRuf"],
-  ["ruffin","Écologie","Rétablir la consigne du verre.","vRuf"],
-  ["ruffin","Écologie","Ouvrir une Maison de la réparation et du réemploi dans chaque quartier et chaque canton.","vRuf"],
-  ["ruffin","Transports","Étendre le leasing social de petites voitures électriques françaises à 3 millions d’automobilistes.","vRuf"],
-  ["ruffin","Justice","Créer un délit de « faute systémique » pour les dirigeants dont les choix de rentabilité causent une pollution.","vRuf"],
-  ["ruffin","Énergie","Revenir progressivement à une production d’électricité 100 % publique, pilotée par EDF.","vRuf"]
-];
-var M = RAW.map(function (r, i) {
-  return { id: i, c: r[0], t: r[1], m: r[2], src: S[r[3]], page: r[4] || "" };
-});
+var M = RAW.map(function (r, i) { return { id: i, c: r[0], t: r[1], m: r[2], src: S[r[3]] }; });
 var THEMES = Array.from(new Set(M.map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
+var MAIN = C.filter(function (c) { return c.main; }).map(function (c) { return c.id; });
+var ALL = C.map(function (c) { return c.id; });
+var DUELS = [["lepen","melenchon"],["philippe","attal"],["glucksmann","melenchon"],["retailleau","zemmour"],["tondelier","ruffin"],["arthaud","kazib"],["philippot","asselineau"],["lisnard","retailleau"]];
+
+/* ---------- Humour (vise le joueur, jamais les candidats) ---------- */
+var STAMP_OK = ["Adopté", "Bien vu", "Validé", "Élu"];
+var STAMP_KO = ["Vote nul", "Raté", "Rejeté", "Recalé"];
+var QUIP_OK = [
+  "Vous avez lu le programme. Vous êtes peut-être la seule personne en France.",
+  "Exact. Mettez-le sur votre CV, rubrique « centres d’intérêt ».",
+  "Juste. Le repas de famille de Noël n’a qu’à bien se tenir.",
+  "Bien vu. Même l’équipe de campagne a dû vérifier.",
+  "C’est ça. Vous pouvez postuler comme fact-checker.",
+  "Bonne réponse, et sans antisèche. On suppose.",
+  "Parfait. Votre bulletin est déjà rempli, et il est juste.",
+  "Gagné. Les éditorialistes vont devoir se méfier."
+];
+var QUIP_KO = [
+  "Raté. Promis, on ne le dira à personne au bureau de vote.",
+  "Non. C’était un piège, et vous avez sauté dedans à pieds joints.",
+  "Perdu. On mettra ça sur le compte de la fatigue électorale.",
+  "Pas du tout. Retour à la case « 20 heures ».",
+  "Faux. Mais l’abstention n’était pas une option.",
+  "Raté. Le programme fait parfois 1 000 mesures, ça excuse un peu.",
+  "Non. Votre intuition vient de voter blanc.",
+  "Perdu. Heureusement, il reste quelques mois avant le premier tour."
+];
+var STREAK_TOAST = { 3: "Série de 3 : ça sent le militant", 5: "Série de 5 : programmes sous l’oreiller ?", 8: "Série de 8 : porte-parole en vue", 12: "Série de 12 : ministre de la Mémoire", 20: "Série de 20 : c’est vous qui les écrivez ?" };
+function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 
 /* ---------- Utilitaires ---------- */
 function $(id) { return document.getElementById(id); }
@@ -518,38 +867,33 @@ function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { va
 function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); }
 function pct(a, b) { return b ? Math.round(100 * a / b) : 0; }
 function plural(n, one, many) { return n + " " + (n > 1 ? many : one); }
+function fmt(n) { return n.toLocaleString("fr-FR"); }
 function store(k, v) { try { if (v === undefined) { var x = localStorage.getItem(k); return x ? JSON.parse(x) : null; } localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
-function srcHtml(q) {
-  var s = q.src;
-  return "Source : <a href=\"" + esc(s.u) + "\" target=\"_blank\" rel=\"noopener\">" + esc(s.s) + (q.page ? ", " + esc(q.page) : "") + " ↗</a> <span>· " + esc(s.d) + "</span>";
-}
-function boardHtml(c, tag, extra) {
+function last(name) { return name.split(" ").slice(1).join(" "); }
+function srcHtml(m) { var s = m.src; return "Source : <a href=\"" + esc(s.u) + "\" target=\"_blank\" rel=\"noopener\">" + esc(s.s) + " ↗</a> · " + esc(s.d); }
+function boardHtml(c, tag, extra, key) {
   tag = tag || "div";
   return "<" + tag + (tag === "button" ? " type=\"button\"" : "") + " class=\"board\" " + (extra || "") + ">" +
-    "<span class=\"num\">" + c.n + "</span>" +
-    (c.flag ? "<span class=\"flag\">" + esc(c.flag) + "</span>" : "") +
-    "<span class=\"ini\">" + esc(c.ini) + "</span>" +
-    "<span class=\"nm\">" + esc(c.name) + "</span>" +
-    "<span class=\"pt\">" + esc(c.party) + "</span></" + tag + ">";
+    "<span class=\"num\">" + c.n + "</span>" + (key ? "<span class=\"key\">" + key + "</span>" : "") +
+    "<span class=\"ini\">" + esc(c.ini) + "</span><span class=\"nm\">" + esc(c.name) + "</span><span class=\"pt\">" + esc(c.party) + "</span></" + tag + ">";
 }
+function countOf(id) { return M.filter(function (x) { return x.c === id; }).length; }
 
 /* ---------- État ---------- */
-var cfg = { mode: "all", diff: "easy", len: "20", targets: [] };
-var game = null; // { qs: [...], i, answers: [], cfg }
+var cfg = { mode: "classic", pool: "main", diff: "easy", len: "20", duel: ["lepen", "melenchon"], targets: [] };
+var game = null;
+var timerId = null, autoId = null;
 
-/* ---------- Vues ---------- */
 var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer") };
 function show(v) {
   Object.keys(views).forEach(function (k) { views[k].hidden = (k !== v); });
-  var tab = v === "explorer" ? "explorer" : "jouer";
-  $("tab-jouer").setAttribute("aria-pressed", tab === "jouer");
-  $("tab-explorer").setAttribute("aria-pressed", tab === "explorer");
-  snapshotNow();
+  $("tab-jouer").setAttribute("aria-pressed", v !== "explorer");
+  $("tab-explorer").setAttribute("aria-pressed", v === "explorer");
 }
 document.querySelectorAll("nav.tabs button").forEach(function (b) {
   b.addEventListener("click", function () {
     if (b.dataset.view === "explorer") { location.hash = "explorer"; show("explorer"); renderExplorer(); }
-    else { if (location.hash) history.replaceState(null, "", location.pathname + location.search); show(game && game.i < game.qs.length ? "game" : "setup"); }
+    else { if (location.hash) history.replaceState(null, "", location.pathname + location.search); show(game && !game.over ? "game" : "setup"); }
   });
 });
 
@@ -560,116 +904,158 @@ function renderHome() {
   $("f-th").textContent = THEMES.length;
   $("boards-home").innerHTML = C.map(function (c) { return boardHtml(c); }).join("");
   $("cand-pick").innerHTML = C.map(function (c) {
-    var on = cfg.targets.indexOf(c.id) >= 0;
-    return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"" + on + "\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
+    return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"false\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
   }).join("");
+  var opts = C.map(function (c) { return "<option value=\"" + c.id + "\">" + c.n + ". " + esc(c.name) + " (" + countOf(c.id) + ")</option>"; }).join("");
+  $("duel-a").innerHTML = opts; $("duel-b").innerHTML = opts;
+  $("duel-chips").innerHTML = DUELS.map(function (d, i) { return "<button type=\"button\" data-i=\"" + i + "\">" + esc(last(CBY[d[0]].name)) + " / " + esc(last(CBY[d[1]].name)) + "</button>"; }).join("");
   syncSetup();
-  var best = store("qui2027-best");
-  $("best").textContent = best ? "Ton meilleur score : " + best.pct + " % (" + best.score + "/" + best.total + ", " + best.label + ")." : "";
 }
 function syncSetup() {
-  ["all", "target"].forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
+  ["classic", "duel", "blitz", "target"].forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
+  ["main", "all"].forEach(function (p) { $("p-" + p).setAttribute("aria-pressed", cfg.pool === p); });
   ["easy", "hard"].forEach(function (d) { $("d-" + d).setAttribute("aria-pressed", cfg.diff === d); });
-  ["10", "20", "40", "all"].forEach(function (l) { $("l-" + l).setAttribute("aria-pressed", cfg.len === l); });
+  ["10", "20", "50", "all"].forEach(function (l) { $("l-" + l).setAttribute("aria-pressed", cfg.len === l); });
+  var classicLike = cfg.mode === "classic" || cfg.mode === "blitz";
+  $("fld-pool").hidden = !classicLike;
+  $("fld-diff").hidden = !classicLike;
+  $("fld-len").hidden = cfg.mode !== "classic";
+  $("fld-duel").hidden = cfg.mode !== "duel";
   $("fld-cands").hidden = cfg.mode !== "target";
-  $("fld-diff").hidden = cfg.mode !== "all";
-  $("fld-len").hidden = cfg.mode !== "all";
+  $("d-hard").innerHTML = (cfg.pool === "main" ? "Les 7 panneaux" : "Les " + C.length + " panneaux") + "<small>Aucune aide</small>";
+  $("duel-a").value = cfg.duel[0]; $("duel-b").value = cfg.duel[1];
   C.forEach(function (c) { var b = $("pick-" + c.id); if (b) b.setAttribute("aria-pressed", cfg.targets.indexOf(c.id) >= 0); });
-  var startBtn = $("btn-start");
-  startBtn.disabled = cfg.mode === "target" && cfg.targets.length === 0;
+  var ok = true;
   if (cfg.mode === "target") {
     var n = cfg.targets.length;
     $("target-hint").textContent = n === 0 ? "Choisis au moins un candidat." :
-      n === 1 ? "Un seul candidat : pour chaque mesure, dis si c’est bien " + CBY[cfg.targets[0]].name + " qui la propose. La moitié sont des pièges." :
-      "Retrouve le bon candidat parmi les " + n + " choisis. Toutes leurs mesures y passent (" + M.filter(function (x) { return cfg.targets.indexOf(x.c) >= 0; }).length + ").";
+      n === 1 ? "Un seul candidat : dis si c’est bien " + CBY[cfg.targets[0]].name + " qui propose chaque mesure. La moitié sont des pièges." :
+      "Retrouve le bon candidat parmi les " + n + " choisis (" + M.filter(function (x) { return cfg.targets.indexOf(x.c) >= 0; }).length + " mesures).";
+    ok = n > 0;
   }
+  if (cfg.mode === "duel") ok = cfg.duel[0] !== cfg.duel[1];
+  $("btn-start").disabled = !ok;
+  $("btn-start").firstElementChild.textContent = cfg.mode === "duel" && !ok ? "Choisis deux candidats différents" : "Lancer la partie";
+  var best = store("qui2027-best-" + modeKey(cfg));
+  $("best").textContent = best ? "Ton record dans ce mode : " + fmt(best.pts) + " points (" + best.score + "/" + best.total + ")." : "Pas encore de record dans ce mode.";
 }
-$("seg-mode").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.mode = b.dataset.mode; syncSetup(); });
+function modeKey(c) { return c.mode === "classic" || c.mode === "blitz" ? c.mode + "-" + c.pool + "-" + c.diff : c.mode; }
+$("modes").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.mode = b.dataset.mode; syncSetup(); });
+$("seg-pool").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.pool = b.dataset.pool; syncSetup(); });
 $("seg-diff").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.diff = b.dataset.diff; syncSetup(); });
 $("seg-len").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.len = b.dataset.len; syncSetup(); });
+$("duel-a").addEventListener("change", function () { cfg.duel[0] = this.value; syncSetup(); });
+$("duel-b").addEventListener("change", function () { cfg.duel[1] = this.value; syncSetup(); });
+$("duel-chips").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.duel = DUELS[+b.dataset.i].slice(); syncSetup(); });
 $("cand-pick").addEventListener("click", function (e) {
   var b = e.target.closest("button"); if (!b) return;
-  var id = b.dataset.c, k = cfg.targets.indexOf(id);
-  if (k >= 0) cfg.targets.splice(k, 1); else cfg.targets.push(id);
+  var k = cfg.targets.indexOf(b.dataset.c);
+  if (k >= 0) cfg.targets.splice(k, 1); else cfg.targets.push(b.dataset.c);
   syncSetup();
 });
 $("btn-start").addEventListener("click", function () { startGame(buildQuestions(cfg), cfg); });
 
-/* ---------- Construction des questions ---------- */
+/* ---------- Questions ---------- */
+function optionsFor(x, conf) {
+  if (conf.mode === "duel") return conf.duel.slice();
+  if (conf.mode === "target") return C.filter(function (c) { return conf.targets.indexOf(c.id) >= 0; }).map(function (c) { return c.id; });
+  var pool = conf.pool === "main" ? MAIN : ALL;
+  if (conf.diff === "hard") return pool.slice();
+  return shuffle(pool.filter(function (id) { return id !== x.c; })).slice(0, 3).concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; });
+}
 function buildQuestions(conf, onlyIds) {
-  var qs = [];
+  var only = function (x) { return !onlyIds || onlyIds.indexOf(x.id) >= 0; };
   if (conf.mode === "target" && conf.targets.length === 1) {
     var who = conf.targets[0];
-    var mine = M.filter(function (x) { return x.c === who; });
-    var others = M.filter(function (x) { return x.c !== who; });
-    if (onlyIds) { mine = mine.filter(function (x) { return onlyIds.indexOf(x.id) >= 0; }); others = others.filter(function (x) { return onlyIds.indexOf(x.id) >= 0; }); }
-    else { others = shuffle(others).slice(0, mine.length); }
-    qs = shuffle(mine.concat(others)).map(function (x) { return { mid: x.id, type: "vf", who: who }; });
-    return qs;
+    var mine = M.filter(function (x) { return x.c === who && only(x); });
+    var others = M.filter(function (x) { return x.c !== who && only(x); });
+    if (!onlyIds) others = shuffle(others).slice(0, Math.max(mine.length, 4));
+    return shuffle(mine.concat(others)).map(function (x) { return { mid: x.id, type: "vf", who: who }; });
   }
-  var pool = M;
-  if (conf.mode === "target") pool = M.filter(function (x) { return conf.targets.indexOf(x.c) >= 0; });
-  if (onlyIds) pool = pool.filter(function (x) { return onlyIds.indexOf(x.id) >= 0; });
-  pool = shuffle(pool);
-  if (conf.mode === "all" && !onlyIds && conf.len !== "all") pool = pool.slice(0, parseInt(conf.len, 10));
-  return pool.map(function (x) {
-    var opts;
-    if (conf.mode === "target") opts = C.filter(function (c) { return conf.targets.indexOf(c.id) >= 0; }).map(function (c) { return c.id; });
-    else if (conf.diff === "hard") opts = C.map(function (c) { return c.id; });
-    else {
-      var decoys = shuffle(C.filter(function (c) { return c.id !== x.c; })).slice(0, 3).map(function (c) { return c.id; });
-      opts = decoys.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; });
-    }
-    return { mid: x.id, type: "pick", opts: opts };
-  });
+  var pool;
+  if (conf.mode === "duel") pool = M.filter(function (x) { return conf.duel.indexOf(x.c) >= 0; });
+  else if (conf.mode === "target") pool = M.filter(function (x) { return conf.targets.indexOf(x.c) >= 0; });
+  else { var ids = conf.pool === "main" ? MAIN : ALL; pool = M.filter(function (x) { return ids.indexOf(x.c) >= 0; }); }
+  pool = shuffle(pool.filter(only));
+  if (conf.mode === "duel" && !onlyIds) {
+    // équilibre : autant de mesures de chaque côté (max 10 chacun)
+    var a = pool.filter(function (x) { return x.c === conf.duel[0]; }), b = pool.filter(function (x) { return x.c === conf.duel[1]; });
+    var k = Math.min(10, Math.max(a.length, b.length));
+    pool = shuffle(a.slice(0, k).concat(b.slice(0, k)));
+  }
+  if (conf.mode === "classic" && !onlyIds && conf.len !== "all") pool = pool.slice(0, parseInt(conf.len, 10));
+  return pool.map(function (x) { return { mid: x.id, type: "pick", opts: optionsFor(x, conf) }; });
 }
 
 /* ---------- Partie ---------- */
 function startGame(qs, conf) {
-  game = { qs: qs, i: 0, answers: [], cfg: JSON.parse(JSON.stringify(conf)) };
+  clearInterval(timerId); clearTimeout(autoId);
+  game = { qs: qs, i: 0, answers: [], cfg: JSON.parse(JSON.stringify(conf)), pts: 0, streak: 0, bestStreak: 0, over: false, t0: Date.now() };
+  if (conf.mode === "blitz") { game.timeLeft = 60; startTimer(); }
   show("game");
   renderQ();
   window.scrollTo({ top: 0, behavior: "auto" });
 }
-function score() { return game.answers.filter(function (a) { return a.ok; }).length; }
+function startTimer() {
+  $("g-barwrap").classList.add("timer");
+  $("g-bar").style.width = "100%";
+  timerId = setInterval(function () {
+    game.timeLeft--;
+    $("g-bar").style.width = Math.max(0, game.timeLeft / 60 * 100) + "%";
+    $("g-prog").textContent = game.timeLeft + " s";
+    if (game.timeLeft <= 0) { clearInterval(timerId); clearTimeout(autoId); finish(); }
+  }, 1000);
+}
+function hudUpdate() {
+  $("g-pts").textContent = fmt(game.pts);
+  var s = $("g-streak"); s.textContent = "Série ×" + game.streak; s.classList.toggle("hot", game.streak >= 3);
+}
 function renderQ() {
-  var q = game.qs[game.i], m = M[q.mid], n = game.qs.length;
-  $("g-prog").textContent = "Mesure " + (game.i + 1) + " / " + n;
-  $("g-bar").style.width = pct(game.i, n) + "%";
-  var sc = score();
-  $("g-score").textContent = plural(sc, "bonne réponse", "bonnes réponses");
+  var q = game.qs[game.i], m = M[q.mid], n = game.qs.length, blitz = game.cfg.mode === "blitz";
+  if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = "Mesure " + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
+  else $("g-prog").textContent = game.timeLeft + " s";
+  hudUpdate();
   $("g-theme").textContent = m.t;
   $("g-text").textContent = "« " + m.m + " »";
   $("g-src").hidden = true; $("g-src").innerHTML = "";
-  var st = $("g-stamp"); st.hidden = true; st.className = "stamp";
+  $("g-stamp").hidden = true; $("g-toast").hidden = true;
   $("g-next").hidden = true;
-  var answered = game.answers[game.i];
+  $("g-keys").hidden = blitz;
   if (q.type === "vf") {
     var w = CBY[q.who];
     $("g-ask").textContent = "Est-ce bien " + w.name + " qui propose cette mesure ?";
-    $("g-opts").innerHTML = "<div class=\"vf\"><button type=\"button\" id=\"vf-yes\" data-v=\"yes\">Oui, c’est " + esc(w.name.split(" ").slice(-1)[0]) + "</button><button type=\"button\" id=\"vf-no\" data-v=\"no\">Non, un autre</button></div>";
+    $("g-opts").innerHTML = "<div class=\"vf\"><button type=\"button\" id=\"vf-yes\" data-v=\"yes\">Oui, c’est " + esc(last(w.name)) + "</button><button type=\"button\" id=\"vf-no\" data-v=\"no\">Non, quelqu’un d’autre</button></div>";
   } else {
-    $("g-ask").textContent = "Qui propose cette mesure ?";
-    $("g-opts").innerHTML = "<div class=\"boards\">" + q.opts.map(function (cid, k) {
-      return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" data-k=\"" + k + "\" aria-label=\"" + esc(CBY[cid].name) + "\"");
+    $("g-ask").textContent = game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?";
+    var keys = "123456789";
+    $("g-opts").innerHTML = "<div class=\"boards" + (q.opts.length === 2 ? " two" : "") + "\">" + q.opts.map(function (cid, k) {
+      return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" aria-label=\"" + esc(CBY[cid].name) + "\"", k < 9 ? keys[k] : "");
     }).join("") + "</div>";
   }
-  if (answered) reveal(answered, false);
+  game.qStart = Date.now();
+  if (game.answers[game.i]) reveal(game.answers[game.i], false);
 }
 $("g-opts").addEventListener("click", function (e) {
-  var b = e.target.closest("button"); if (!b || b.disabled) return;
-  if (game.answers[game.i]) return;
+  var b = e.target.closest("button"); if (!b || b.disabled || !game || game.over || game.answers[game.i]) return;
   var q = game.qs[game.i], m = M[q.mid], a;
-  if (q.type === "vf") { var yes = b.dataset.v === "yes"; var truth = m.c === q.who; a = { mid: q.mid, pick: yes ? q.who : "other", ok: yes === truth, type: "vf", who: q.who }; }
-  else { a = { mid: q.mid, pick: b.dataset.c, ok: b.dataset.c === m.c, type: "pick" }; }
+  if (q.type === "vf") { var yes = b.dataset.v === "yes"; a = { mid: q.mid, pick: yes ? q.who : "other", ok: yes === (m.c === q.who), type: "vf", who: q.who }; }
+  else a = { mid: q.mid, pick: b.dataset.c, ok: b.dataset.c === m.c, type: "pick" };
+  var secs = (Date.now() - game.qStart) / 1000;
+  if (a.ok) {
+    game.streak++; game.bestStreak = Math.max(game.bestStreak, game.streak);
+    var base = 100, streakB = Math.min(150, 25 * (game.streak - 1)), speedB = secs < 4 ? 50 : (secs < 8 ? 25 : 0);
+    if (game.cfg.diff === "hard" && (game.cfg.mode === "classic" || game.cfg.mode === "blitz")) base = 150;
+    a.gain = base + streakB + speedB; a.detail = { base: base, streak: streakB, speed: speedB };
+  } else { game.streak = 0; a.gain = 0; }
+  game.pts += a.gain;
   game.answers[game.i] = a;
   reveal(a, true);
-  snapshotNow();
+  if (game.cfg.mode === "blitz") autoId = setTimeout(next, a.ok ? 650 : 1300);
 });
 function reveal(a, animate) {
   var q = game.qs[game.i], m = M[q.mid], cand = CBY[m.c];
   var st = $("g-stamp");
-  st.textContent = a.ok ? "Bien vu" : "Raté";
+  st.textContent = pick(a.ok ? STAMP_OK : STAMP_KO);
   st.className = "stamp " + (a.ok ? "ok" : "ko") + (animate ? " thump" : "");
   st.hidden = false;
   if (q.type === "vf") {
@@ -681,40 +1067,48 @@ function reveal(a, animate) {
     q.opts.forEach(function (cid) {
       var el = $("opt-" + cid); if (!el) return;
       el.disabled = true;
-      if (cid === m.c) el.classList.add("is-ok");
-      else if (cid === a.pick) el.classList.add("is-ko");
-      else el.classList.add("dim");
+      if (cid === m.c) el.classList.add("is-ok"); else if (cid === a.pick) el.classList.add("is-ko"); else el.classList.add("dim");
     });
   }
-  var lead = "<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + (a.ok ? "Exact : " : "C’était ") + esc(cand.name) + " (" + esc(cand.party) + ").</span>";
-  $("g-src").innerHTML = lead + " " + srcHtml(m);
+  var parts = [];
+  parts.push("<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + (a.ok ? "Exact : " : "C’était ") + esc(cand.name) + " (" + esc(cand.party) + ")." +
+    (a.ok ? " <span class=\"gain\">+" + a.gain + " pts" + bonusTxt(a.detail) + "</span>" : "") + "</span>");
+  if (game.cfg.mode !== "blitz") parts.push("<span class=\"quip\">" + esc(pick(a.ok ? QUIP_OK : QUIP_KO)) + "</span>");
+  parts.push("<span>" + srcHtml(m) + "</span>");
+  $("g-src").innerHTML = parts.join("");
   $("g-src").hidden = false;
-  var sc = score();
-  $("g-score").textContent = plural(sc, "bonne réponse", "bonnes réponses");
-  var nx = $("g-next");
-  nx.textContent = game.i + 1 < game.qs.length ? "Mesure suivante →" : "Voir mon résultat →";
-  nx.hidden = false;
-  if (animate) nx.focus({ preventScroll: true });
+  if (a.ok && animate && STREAK_TOAST[game.streak]) { $("g-toast").textContent = STREAK_TOAST[game.streak]; $("g-toast").hidden = false; }
+  hudUpdate();
+  if (game.cfg.mode !== "blitz") {
+    var nx = $("g-next");
+    nx.textContent = game.i + 1 < game.qs.length ? "Mesure suivante →" : "Voir mon résultat →";
+    nx.hidden = false;
+    if (animate) nx.focus({ preventScroll: true });
+  }
 }
+function bonusTxt(d) { if (!d) return ""; var b = []; if (d.streak) b.push("série +" + d.streak); if (d.speed) b.push("rapidité +" + d.speed); return b.length ? " (" + b.join(", ") + ")" : ""; }
 $("g-next").addEventListener("click", next);
 function next() {
-  if (!game || !game.answers[game.i]) return;
+  if (!game || game.over || !game.answers[game.i]) return;
   game.i++;
-  if (game.i >= game.qs.length) { finish(); return; }
-  renderQ(); snapshotNow();
+  if (game.i >= game.qs.length) {
+    if (game.cfg.mode === "blitz") { game.qs = game.qs.concat(buildQuestions(game.cfg)); } // on ne tombe jamais à court
+    else { finish(); return; }
+  }
+  renderQ();
 }
 $("g-quit").addEventListener("click", function () {
-  if (game && game.answers.filter(Boolean).length > 0) { game.qs = game.qs.slice(0, game.answers.filter(Boolean).length); finish(); }
-  else { game = null; show("setup"); renderHome(); }
+  clearInterval(timerId); clearTimeout(autoId);
+  if (game && game.answers.filter(Boolean).length > 0) finish();
+  else { game = null; show("setup"); syncSetup(); }
 });
 document.addEventListener("keydown", function (e) {
-  if (views.game.hidden || !game) return;
+  if (views.game.hidden || !game || game.over) return;
   if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
   var q = game.qs[game.i];
-  if ((e.key === "Enter" || e.key === " ") && game.answers[game.i]) { if (document.activeElement && document.activeElement.id === "g-next") return; e.preventDefault(); next(); return; }
+  if ((e.key === "Enter" || e.key === " ") && game.answers[game.i] && game.cfg.mode !== "blitz") { if (document.activeElement && document.activeElement.id === "g-next") return; e.preventDefault(); next(); return; }
   if (game.answers[game.i]) return;
-  var keys = ["1","2","3","4","5","6","7","8","9","0","-","="];
-  var k = keys.indexOf(e.key);
+  var k = "123456789".indexOf(e.key);
   if (k < 0) return;
   if (q.type === "vf") { if (k === 0) $("vf-yes").click(); if (k === 1) $("vf-no").click(); }
   else if (q.opts[k]) $("opt-" + q.opts[k]).click();
@@ -722,28 +1116,42 @@ document.addEventListener("keydown", function (e) {
 
 /* ---------- Résultats ---------- */
 function tier(p) {
-  if (p >= 85) return { label: "Éditorialiste politique", text: "Tu reconnais les programmes à la virgule près. Les plateaux du dimanche soir n’ont plus de secret pour toi." };
-  if (p >= 65) return { label: "Électeur bien informé", text: "Tu situes la plupart des mesures. Quelques candidats se ressemblent encore à tes yeux : regarde tes confusions ci-dessous." };
-  if (p >= 40) return { label: "Spectateur du 20 heures", text: "Tu as les grandes lignes, mais beaucoup de mesures pourraient venir de n’importe qui. L’onglet « Toutes les mesures » est fait pour toi." };
-  return { label: "Programmes à découvrir", text: "Les mesures se mélangent encore. Pas de panique : il reste plusieurs mois avant le premier tour, et chaque mesure a sa source." };
+  if (p >= 90) return { label: "Spin doctor", text: "Vous connaissez les programmes mieux que certains de leurs auteurs. Les cellules riposte des partis cherchent déjà votre numéro." };
+  if (p >= 75) return { label: "Éditorialiste du dimanche soir", text: "Vous situez presque tout. Encore deux ou trois confusions et vous aurez votre rond de serviette sur les plateaux." };
+  if (p >= 55) return { label: "Électeur éclairé", text: "Solide. Quelques candidats se ressemblent encore à vos yeux : regardez vos confusions ci-dessous." };
+  if (p >= 35) return { label: "Spectateur du 20 heures", text: "Les grandes lignes sont là, les détails beaucoup moins. L’onglet « Toutes les mesures » vous tend les bras." };
+  return { label: "Champion du pile ou face", text: "Pour l’instant, un dé à six faces ferait à peu près aussi bien. Bonne nouvelle : c’est en jouant qu’on apprend, et chaque mesure a sa source." };
 }
 function finish() {
+  clearInterval(timerId); clearTimeout(autoId);
+  game.over = true;
   var ans = game.answers.filter(Boolean);
   var total = ans.length, sc = ans.filter(function (a) { return a.ok; }).length, p = pct(sc, total), t = tier(p);
-  game.result = { score: sc, total: total, pct: p, label: t.label };
-  $("r-score").innerHTML = sc + "<small>/" + total + "</small>";
-  $("r-title").textContent = t.label + " · " + p + " %";
-  $("r-text").textContent = t.text;
-  var best = store("qui2027-best");
-  if (total >= 10 && (!best || p > best.pct)) store("qui2027-best", game.result);
+  var key = modeKey(game.cfg);
+  game.result = { pts: game.pts, score: sc, total: total, pct: p, label: t.label, streak: game.bestStreak };
+  $("r-pts").textContent = fmt(game.pts);
+  $("r-sub").textContent = "points · " + sc + "/" + total + " (" + p + " %) · meilleure série ×" + game.bestStreak;
+  var duel = game.cfg.mode === "duel";
+  var title = t.label, text = t.text;
+  if (duel && total) {
+    var A = CBY[game.cfg.duel[0]], B = CBY[game.cfg.duel[1]];
+    var ra = ans.filter(function (a) { return M[a.mid].c === A.id; }), rb = ans.filter(function (a) { return M[a.mid].c === B.id; });
+    var pa = pct(ra.filter(function (a) { return a.ok; }).length, ra.length), pb = pct(rb.filter(function (a) { return a.ok; }).length, rb.length);
+    text = (pa === pb ? "Match nul : vous connaissez aussi bien (ou aussi mal) " + A.name + " que " + B.name + "." :
+      "Vous reconnaissez mieux les mesures de " + (pa > pb ? A.name : B.name) + " (" + Math.max(pa, pb) + " %) que celles de " + (pa > pb ? B.name : A.name) + " (" + Math.min(pa, pb) + " %).") + " " + t.text;
+  }
+  if (game.cfg.mode === "blitz") text = plural(sc, "bonne réponse", "bonnes réponses") + " en 60 secondes. " + text;
+  $("r-title").textContent = title;
+  $("r-text").textContent = text;
+  var best = store("qui2027-best-" + key);
+  var isRecord = total >= 5 && (!best || game.pts > best.pts);
+  if (isRecord) store("qui2027-best-" + key, game.result);
+  $("r-record").hidden = !isRecord;
 
-  var vf = game.cfg.mode === "target" && game.cfg.targets.length === 1;
-  // Par candidat
-  var rows = [];
+  var vf = game.cfg.mode === "target" && game.cfg.targets.length === 1, rows = [];
   if (vf) {
     var who = game.cfg.targets[0];
-    var mine = ans.filter(function (a) { return M[a.mid].c === who; });
-    var oth = ans.filter(function (a) { return M[a.mid].c !== who; });
+    var mine = ans.filter(function (a) { return M[a.mid].c === who; }), oth = ans.filter(function (a) { return M[a.mid].c !== who; });
     $("r-cand-sub").textContent = "Mesures de " + CBY[who].name + " reconnues, et pièges évités.";
     rows.push({ l: "Ses mesures reconnues", a: mine.filter(function (a) { return a.ok; }).length, b: mine.length });
     rows.push({ l: "Pièges évités", a: oth.filter(function (a) { return a.ok; }).length, b: oth.length });
@@ -756,33 +1164,28 @@ function finish() {
     rows.sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
   }
   $("r-cand").innerHTML = rows.map(rowHtml).join("");
-  // Par thème
   var trows = THEMES.map(function (th) {
     var l = ans.filter(function (a) { return M[a.mid].t === th; });
     return { l: th, a: l.filter(function (a) { return a.ok; }).length, b: l.length };
   }).filter(function (r) { return r.b > 0; }).sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
   $("r-theme").innerHTML = trows.map(rowHtml).join("");
-  // Confusions
   var conf = {};
   ans.forEach(function (a) {
     if (a.ok) return;
-    var real = M[a.mid].c, key;
-    if (a.type === "vf") key = a.pick === "other" ? "miss|" + real : "fake|" + real;
-    else key = a.pick + "|" + real;
-    conf[key] = (conf[key] || 0) + 1;
+    var real = M[a.mid].c, k2 = a.type === "vf" ? (a.pick === "other" ? "miss|" + real : "fake|" + real) : a.pick + "|" + real;
+    conf[k2] = (conf[k2] || 0) + 1;
   });
-  var confList = Object.keys(conf).map(function (k) { return { k: k, n: conf[k] }; }).sort(function (x, y) { return y.n - x.n; }).slice(0, 4);
-  $("r-conf").innerHTML = confList.length ? confList.map(function (o) {
+  var cl = Object.keys(conf).map(function (k2) { return { k: k2, n: conf[k2] }; }).sort(function (x, y) { return y.n - x.n; }).slice(0, 5);
+  $("r-conf").innerHTML = cl.length ? cl.map(function (o) {
     var p2 = o.k.split("|"), times = o.n > 1 ? " (" + o.n + " fois)" : "";
-    if (p2[0] === "miss") return "<li>Tu n’as pas reconnu une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
-    if (p2[0] === "fake") return "<li>Tu as cru reconnaître une mesure qui venait en fait de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
-    return "<li>Tu as attribué à <b>" + esc(CBY[p2[0]].name) + "</b> une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
-  }).join("") : "<li style=\"border-color:var(--ok)\">Aucune confusion. Sans faute.</li>";
-  // Ratées
+    if (p2[0] === "miss") return "<li>Vous n’avez pas reconnu une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
+    if (p2[0] === "fake") return "<li>Vous avez cru reconnaître une mesure qui venait de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
+    return "<li>Vous avez attribué à <b>" + esc(CBY[p2[0]].name) + "</b> une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
+  }).join("") : "<li style=\"border-color:var(--ok)\">Aucune confusion. Sans faute, chapeau.</li>";
   var missed = ans.filter(function (a) { return !a.ok; });
   $("r-missed").innerHTML = missed.length ? missed.slice(0, 12).map(function (a) {
-    var m = M[a.mid], c = CBY[m.c];
-    return "<li><q>" + esc(m.m) + "</q><div class=\"meta\"><b>" + esc(c.name) + "</b> · " + esc(m.t) + " · " + srcHtml(m) + "</div></li>";
+    var m = M[a.mid];
+    return "<li><q>" + esc(m.m) + "</q><div class=\"meta\"><b>" + esc(CBY[m.c].name) + "</b> · " + esc(m.t) + " · " + srcHtml(m) + "</div></li>";
   }).join("") + (missed.length > 12 ? "<li class=\"meta\">… et " + (missed.length - 12) + " autres.</li>" : "") : "<li>Rien à revoir.</li>";
   $("r-retry").disabled = missed.length === 0;
   $("r-copied").hidden = true;
@@ -797,20 +1200,21 @@ $("r-again").addEventListener("click", function () { startGame(buildQuestions(ga
 $("r-retry").addEventListener("click", function () {
   var ids = game.answers.filter(function (a) { return a && !a.ok; }).map(function (a) { return a.mid; });
   if (!ids.length) return;
-  startGame(buildQuestions(game.cfg, ids), game.cfg);
+  var c2 = JSON.parse(JSON.stringify(game.cfg)); if (c2.mode === "blitz") c2.mode = "classic";
+  startGame(buildQuestions(c2, ids), c2);
 });
-$("r-setup").addEventListener("click", function () { game = null; show("setup"); renderHome(); });
+$("r-setup").addEventListener("click", function () { game = null; show("setup"); syncSetup(); });
 $("r-copy").addEventListener("click", function () {
-  var r = game.result;
-  var txt = "Qui a proposé ça ? Présidentielle 2027 : " + r.score + "/" + r.total + " (" + r.pct + " %), " + r.label + ".";
-  try {
-    navigator.clipboard.writeText(txt).then(function () { $("r-copied").textContent = "Copié."; $("r-copied").hidden = false; }, function () { $("r-copied").textContent = txt; $("r-copied").hidden = false; });
-  } catch (e) { $("r-copied").textContent = txt; $("r-copied").hidden = false; }
+  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé" }[game.cfg.mode];
+  var extra = game.cfg.mode === "duel" ? " (" + last(CBY[game.cfg.duel[0]].name) + " / " + last(CBY[game.cfg.duel[1]].name) + ")" : "";
+  var txt = "Qui a proposé ça ? Présidentielle 2027, " + lab + extra + " : " + fmt(r.pts) + " points, " + r.score + "/" + r.total + " (" + r.pct + " %), « " + r.label + " ». À toi : " + location.href.split("#")[0];
+  var done = function (msg) { $("r-copied").textContent = msg; $("r-copied").hidden = false; };
+  try { navigator.clipboard.writeText(txt).then(function () { done("Copié, à coller où tu veux."); }, function () { done(txt); }); } catch (e) { done(txt); }
 });
 
 /* ---------- Explorer ---------- */
 function initExplorer() {
-  $("ex-c").innerHTML = "<option value=\"\">Tous les candidats</option>" + C.map(function (c) { return "<option value=\"" + c.id + "\">" + c.n + ". " + esc(c.name) + "</option>"; }).join("");
+  $("ex-c").innerHTML = "<option value=\"\">Tous les candidats</option><option value=\"__main\">Les 7 principaux</option>" + C.map(function (c) { return "<option value=\"" + c.id + "\">" + c.n + ". " + esc(c.name) + "</option>"; }).join("");
   $("ex-t").innerHTML = "<option value=\"\">Tous les thèmes</option>" + THEMES.map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("");
   ["ex-q", "ex-c", "ex-t"].forEach(function (id) { $(id).addEventListener("input", renderExplorer); });
 }
@@ -818,42 +1222,24 @@ function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 function renderExplorer() {
   var q = norm($("ex-q").value.trim()), fc = $("ex-c").value, ft = $("ex-t").value;
   var list = M.filter(function (x) {
-    return (!fc || x.c === fc) && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + CBY[x.c].name).indexOf(q) >= 0);
+    var okc = !fc || (fc === "__main" ? MAIN.indexOf(x.c) >= 0 : x.c === fc);
+    return okc && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + CBY[x.c].name).indexOf(q) >= 0);
   });
   $("ex-count").textContent = plural(list.length, "mesure", "mesures");
   var html = C.map(function (c) {
     var mine = list.filter(function (x) { return x.c === c.id; });
     if (!mine.length) return "";
-    return "<section class=\"ex-group\"><h3><span class=\"num\">" + c.n + "</span>" + esc(c.name) + "<small>" + esc(c.party) + (c.flag ? " · candidature " + esc(c.flag) : "") + "</small></h3><div class=\"ex-list\">" +
-      mine.map(function (x) {
-        return "<article class=\"card ex-item\"><p>" + esc(x.m) + "</p><div class=\"meta\"><span class=\"th\">" + esc(x.t) + "</span><span>" + srcHtml(x) + "</span></div></article>";
-      }).join("") + "</div></section>";
+    return "<section class=\"ex-group\"><h3><span class=\"num\">" + c.n + "</span>" + esc(c.name) + "<small>" + esc(c.party) + " · " + plural(mine.length, "mesure", "mesures") + "</small></h3><div class=\"ex-list\">" +
+      mine.map(function (x) { return "<article class=\"card ex-item\"><p>" + esc(x.m) + "</p><div class=\"meta\"><span class=\"th\">" + esc(x.t) + "</span><span>" + srcHtml(x) + "</span></div></article>"; }).join("") + "</div></section>";
   }).join("");
   $("ex-out").innerHTML = html || "<p>Aucune mesure ne correspond. Essaie un autre mot.</p>";
 }
 
-/* ---------- Reprise après mise à jour ---------- */
-function snapshotNow() { /* état lu par le snapshot à la demande */ }
-function currentView() { var v = "setup"; Object.keys(views).forEach(function (k) { if (!views[k].hidden) v = k; }); return v; }
-if (window.claude && window.claude.hot && window.claude.hot.snapshot) {
-  try { window.claude.hot.snapshot(function () { return { cfg: cfg, game: game, view: currentView() }; }); } catch (e) {}
-}
-function start(data) {
-  data = data || {};
-  if (data.cfg) cfg = data.cfg;
-  initExplorer();
-  renderHome();
-  if (data.game && data.game.qs && data.game.qs.length) {
-    game = data.game;
-    if (data.view === "res" && game.result) { finish(); return; }
-    if (data.view === "game" && game.i < game.qs.length) { show("game"); renderQ(); return; }
-  }
-  if (location.hash === "#explorer" || data.view === "explorer") { show("explorer"); renderExplorer(); return; }
-  show("setup");
-}
+/* ---------- Démarrage ---------- */
+initExplorer();
+renderHome();
+if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else show("setup");
 window.addEventListener("hashchange", function () { if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } });
-if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(start);
-else start((window.claude && window.claude.hot && window.claude.hot.data) || {});
 })();
 </script>
 </body>
