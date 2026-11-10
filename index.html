@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qui a proposé ça ? Présidentielle 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea : des panneaux électoraux numérotés (1 à 12) face à une mesure imprimée comme un bulletin ; un tampon d'encre juge chaque réponse. */
+:root {
+  --paper: #e9ecf0;
+  --sheet: #ffffff;
+  --ink: #13203a;
+  --muted: #5a6478;
+  --line: #cfd5de;
+  --accent: #2443c4;
+  --accent-soft: #e3e8fb;
+  --ok: #17784a;
+  --ok-soft: #dff2e8;
+  --ko: #b3261e;
+  --ko-soft: #fbe3e1;
+  --shadow: 0 1px 0 rgba(19,32,58,.06), 0 8px 24px -12px rgba(19,32,58,.25);
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-read: "Newsreader", Georgia, "Times New Roman", serif;
+  --f-ui: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e1320; --sheet: #161d2c; --ink: #e8ecf5; --muted: #98a2b7; --line: #2a3347;
+    --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e1320; --sheet: #161d2c; --ink: #e8ecf5; --muted: #98a2b7; --line: #2a3347;
+  --accent: #8aa2ff; --accent-soft: #1f2a4d; --ok: #4fc58d; --ok-soft: #12301f; --ko: #ff8073; --ko-soft: #3a1a18;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.5 var(--f-ui); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+/* Masthead */
+header.mast { border-bottom: 2px solid var(--ink); }
+.mast .wrap { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-top: 22px; padding-bottom: 14px; flex-wrap: wrap; }
+.brand { display: flex; flex-direction: column; gap: 2px; }
+.brand .kicker { font: 600 12px/1 var(--f-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.brand h1 { margin: 0; font: 900 clamp(40px, 7vw, 76px)/.86 var(--f-display); letter-spacing: -.01em; text-transform: uppercase; text-wrap: balance; }
+.brand h1 em { font-style: normal; color: var(--accent); }
+nav.tabs { display: flex; gap: 4px; }
+nav.tabs button { border: 1.5px solid var(--ink); background: transparent; padding: 8px 14px; font-weight: 600; font-size: 14px; cursor: pointer; border-radius: 2px; }
+nav.tabs button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+main { padding: 28px 0 56px; }
+.view[hidden] { display: none; }
+
+/* Setup */
+.setup { display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: start; }
+@media (max-width: 820px) { .setup { grid-template-columns: 1fr; } }
+.lede { font: 400 21px/1.45 var(--f-read); max-width: 34em; margin: 0 0 18px; text-wrap: pretty; }
+.facts { display: flex; gap: 22px; flex-wrap: wrap; margin: 0 0 24px; padding: 0; list-style: none; }
+.facts li { display: flex; flex-direction: column; }
+.facts b { font: 800 40px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+.facts span { font-size: 13px; color: var(--muted); }
+.card { background: var(--sheet); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 4px; }
+.modebox { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+.modebox h2 { margin: 0; font: 800 26px/1 var(--f-display); text-transform: uppercase; letter-spacing: .01em; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field > .lab { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { border: 1.5px solid var(--line); background: var(--sheet); padding: 8px 12px; border-radius: 3px; cursor: pointer; font-size: 14px; font-weight: 600; }
+.seg button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.seg button small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.cand-pick { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; }
+.cand-pick button { display: flex; gap: 8px; align-items: center; text-align: left; border: 1.5px solid var(--line); background: var(--sheet); padding: 6px 8px; border-radius: 3px; cursor: pointer; font-size: 13px; line-height: 1.2; }
+.cand-pick button .n { font: 800 18px/1 var(--f-display); width: 24px; height: 24px; display: grid; place-items: center; border: 1.5px solid currentColor; flex: none; }
+.cand-pick button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.hint { font-size: 13px; color: var(--muted); margin: 0; }
+.go { appearance: none; border: 0; background: var(--accent); color: #fff; font: 800 24px/1 var(--f-display); text-transform: uppercase; letter-spacing: .04em; padding: 16px 20px; border-radius: 3px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+:root[data-theme="dark"] .go { color: #0e1320; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .go { color: #0e1320; } }
+.go:hover { filter: brightness(1.08); }
+.go:disabled { opacity: .45; cursor: not-allowed; }
+.best { font-size: 13px; color: var(--muted); }
+
+/* Panneaux (candidats) */
+.boards-intro { margin: 0 0 10px; font-size: 13px; color: var(--muted); }
+.boards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+@media (max-width: 820px) { .boards { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 460px) { .boards { grid-template-columns: repeat(3, 1fr); } }
+.board { position: relative; background: var(--sheet); border: 1.5px solid var(--ink); border-radius: 2px; padding: 26px 8px 8px; min-height: 104px; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; text-align: left; }
+.board .num { position: absolute; top: 0; left: 0; font: 800 15px/1 var(--f-display); background: var(--ink); color: var(--paper); padding: 4px 7px 3px; font-variant-numeric: tabular-nums; }
+.board .ini { font: 900 34px/.9 var(--f-display); letter-spacing: -.01em; }
+.board .nm { font-weight: 700; font-size: 13px; line-height: 1.15; }
+.board .pt { font-size: 11px; color: var(--muted); line-height: 1.2; }
+.board .flag { position: absolute; top: 4px; right: 5px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+button.board { cursor: pointer; transition: transform .12s ease, background .12s ease; }
+button.board:hover:not(:disabled) { transform: translateY(-2px); background: var(--accent-soft); }
+button.board:disabled { cursor: default; }
+button.board.is-ok { background: var(--ok-soft); border-color: var(--ok); }
+button.board.is-ok .num { background: var(--ok); }
+button.board.is-ko { background: var(--ko-soft); border-color: var(--ko); }
+button.board.is-ko .num { background: var(--ko); }
+button.board.dim { opacity: .45; }
+
+/* Jeu */
+.hud { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.hud .prog { font: 800 22px/1 var(--f-display); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.bar { flex: 1 1 200px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; min-width: 120px; }
+.bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s ease; }
+.hud .sc { font-weight: 700; font-variant-numeric: tabular-nums; }
+.hud .quit { background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 14px; }
+.bulletin { position: relative; padding: 30px 32px 24px; margin-bottom: 18px; overflow: hidden; }
+.bulletin .theme { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); border: 1.5px solid currentColor; padding: 3px 8px; border-radius: 2px; }
+.bulletin blockquote { margin: 16px 0 6px; font: 500 clamp(22px, 3.3vw, 32px)/1.3 var(--f-read); text-wrap: balance; max-width: 30em; }
+.bulletin .ask { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
+.bulletin .src { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 14px; display: flex; gap: 6px 14px; flex-wrap: wrap; align-items: baseline; }
+.bulletin .src[hidden] { display: none; }
+.verdict { font-weight: 700; }
+.verdict.ok { color: var(--ok); }
+.verdict.ko { color: var(--ko); }
+.stamp { position: absolute; right: 22px; top: 18px; font: 900 34px/1 var(--f-display); text-transform: uppercase; letter-spacing: .06em; padding: 6px 12px 4px; border: 4px solid currentColor; border-radius: 6px; transform: rotate(-9deg) scale(1); opacity: .85; pointer-events: none; mix-blend-mode: multiply; }
+:root[data-theme="dark"] .stamp { mix-blend-mode: normal; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .stamp { mix-blend-mode: normal; } }
+.stamp.ok { color: var(--ok); }
+.stamp.ko { color: var(--ko); }
+.stamp.thump { animation: thump .32s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes thump { 0% { transform: rotate(-9deg) scale(2.2); opacity: 0; } 100% { transform: rotate(-9deg) scale(1); opacity: .85; } }
+.vf { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.vf button { border: 1.5px solid var(--ink); background: var(--sheet); padding: 18px; font: 800 24px/1.1 var(--f-display); text-transform: uppercase; cursor: pointer; border-radius: 2px; }
+.vf button:hover:not(:disabled) { background: var(--accent-soft); }
+.vf button.is-ok { background: var(--ok-soft); border-color: var(--ok); }
+.vf button.is-ko { background: var(--ko-soft); border-color: var(--ko); }
+.next-row { display: flex; justify-content: flex-end; margin-top: 16px; }
+.next-row button { border: 0; background: var(--ink); color: var(--paper); font: 800 20px/1 var(--f-display); text-transform: uppercase; letter-spacing: .04em; padding: 14px 22px; border-radius: 3px; cursor: pointer; }
+.next-row button[hidden] { display: none; }
+.keys { font-size: 12px; color: var(--muted); margin-top: 10px; }
+.keys kbd { font: 600 11px/1 var(--f-ui); border: 1px solid var(--line); border-bottom-width: 2px; padding: 2px 5px; border-radius: 3px; background: var(--sheet); }
+
+/* Résultats */
+.res-top { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; padding: 26px; margin-bottom: 20px; }
+@media (max-width: 640px) { .res-top { grid-template-columns: 1fr; } }
+.bigscore { font: 900 clamp(72px, 13vw, 128px)/.85 var(--f-display); font-variant-numeric: tabular-nums; }
+.bigscore small { font-size: .4em; color: var(--muted); }
+.res-top h2 { margin: 0 0 6px; font: 800 34px/1 var(--f-display); text-transform: uppercase; text-wrap: balance; }
+.res-top p { margin: 0; font: 400 18px/1.45 var(--f-read); max-width: 36em; }
+.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 820px) { .res-grid { grid-template-columns: 1fr; } }
+.panel { padding: 20px; }
+.panel h3 { margin: 0 0 4px; font: 800 22px/1 var(--f-display); text-transform: uppercase; }
+.panel .sub { margin: 0 0 14px; font-size: 13px; color: var(--muted); }
+.rows { display: flex; flex-direction: column; gap: 8px; }
+.row { display: grid; grid-template-columns: 150px 1fr 54px; gap: 10px; align-items: center; font-size: 14px; }
+@media (max-width: 460px) { .row { grid-template-columns: 110px 1fr 48px; } }
+.row .lbl { overflow-wrap: anywhere; line-height: 1.2; }
+.row .trk { height: 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 2px; overflow: hidden; }
+.row .trk i { display: block; height: 100%; background: var(--accent); }
+.row .trk i.lo { background: var(--ko); }
+.row .trk i.hi { background: var(--ok); }
+.row .val { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.confusions { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.confusions li { font-size: 15px; padding: 10px 12px; border-left: 3px solid var(--ko); background: var(--paper); }
+.missed { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.missed li { padding: 12px 14px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); }
+.missed q { font: 400 17px/1.4 var(--f-read); display: block; quotes: "« " " »"; }
+.missed .meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.res-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 22px 0; }
+.btn { border: 1.5px solid var(--ink); background: var(--sheet); padding: 11px 16px; font-weight: 700; font-size: 15px; border-radius: 3px; cursor: pointer; }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.copied { font-size: 13px; color: var(--ok); align-self: center; }
+
+/* Explorer */
+.ex-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+.ex-bar input, .ex-bar select { font: inherit; font-size: 15px; padding: 9px 12px; border: 1.5px solid var(--line); border-radius: 3px; background: var(--sheet); color: var(--ink); }
+.ex-bar input { flex: 1 1 240px; }
+.ex-count { font-size: 14px; color: var(--muted); }
+.ex-group { margin-bottom: 26px; }
+.ex-group h3 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 10px; font: 800 26px/1 var(--f-display); text-transform: uppercase; border-bottom: 2px solid var(--ink); padding-bottom: 6px; flex-wrap: wrap; }
+.ex-group h3 .num { font-size: 16px; background: var(--ink); color: var(--paper); padding: 3px 7px 2px; }
+.ex-group h3 small { font: 500 13px/1.3 var(--f-ui); text-transform: none; color: var(--muted); }
+.ex-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.ex-item { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.ex-item p { margin: 0; font: 400 17px/1.4 var(--f-read); }
+.ex-item .meta { font-size: 12.5px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; }
+.ex-item .meta .th { font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
+
+/* Méthode */
+footer.method { border-top: 2px solid var(--ink); padding: 22px 0 40px; font-size: 14px; color: var(--muted); }
+footer.method h2 { font: 800 20px/1 var(--f-display); text-transform: uppercase; color: var(--ink); margin: 0 0 10px; }
+footer.method ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; max-width: 70ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div class="brand">
+      <span class="kicker">Présidentielle des 18 avril et 2 mai 2027</span>
+      <h1>Qui a <em>proposé</em> ça&nbsp;?</h1>
+    </div>
+    <nav class="tabs" aria-label="Sections">
+      <button type="button" id="tab-jouer" data-view="jouer" aria-pressed="true">Jouer</button>
+      <button type="button" id="tab-explorer" data-view="explorer" aria-pressed="false">Toutes les mesures</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- SETUP -->
+  <section class="view" id="v-setup">
+    <div class="setup">
+      <div>
+        <p class="lede">Une mesure tirée des programmes, des sites et des plateaux. À toi de retrouver le candidat qui la porte. À la fin, tu sais à quel point tu connais vraiment les programmes.</p>
+        <ul class="facts">
+          <li><b id="f-mes">0</b><span>mesures sourcées</span></li>
+          <li><b id="f-cand">0</b><span>candidats</span></li>
+          <li><b id="f-th">0</b><span>thèmes</span></li>
+        </ul>
+        <p class="boards-intro">Les panneaux sont numérotés par ordre alphabétique.</p>
+        <div class="boards" id="boards-home"></div>
+      </div>
+      <div class="card modebox">
+        <h2>Choisis ta partie</h2>
+        <div class="field">
+          <span class="lab" id="lab-mode">Mode</span>
+          <div class="seg" role="group" aria-labelledby="lab-mode" id="seg-mode">
+            <button type="button" id="m-all" data-mode="all" aria-pressed="true">Tous les candidats<small>Devine qui a dit quoi</small></button>
+            <button type="button" id="m-target" data-mode="target" aria-pressed="false">Cibler des candidats<small>Teste-toi sur certains</small></button>
+          </div>
+        </div>
+        <div class="field" id="fld-diff">
+          <span class="lab" id="lab-diff">Difficulté</span>
+          <div class="seg" role="group" aria-labelledby="lab-diff" id="seg-diff">
+            <button type="button" id="d-easy" data-diff="easy" aria-pressed="true">4 panneaux<small>Un bon et trois leurres</small></button>
+            <button type="button" id="d-hard" data-diff="hard" aria-pressed="false">12 panneaux<small>Tous les candidats</small></button>
+          </div>
+        </div>
+        <div class="field" id="fld-len">
+          <span class="lab" id="lab-len">Nombre de mesures</span>
+          <div class="seg" role="group" aria-labelledby="lab-len" id="seg-len">
+            <button type="button" id="l-10" data-len="10" aria-pressed="false">10</button>
+            <button type="button" id="l-20" data-len="20" aria-pressed="true">20</button>
+            <button type="button" id="l-40" data-len="40" aria-pressed="false">40</button>
+            <button type="button" id="l-all" data-len="all" aria-pressed="false">Toutes</button>
+          </div>
+        </div>
+        <div class="field" id="fld-cands" hidden>
+          <span class="lab" id="lab-cands">Candidats ciblés</span>
+          <div class="cand-pick" id="cand-pick" role="group" aria-labelledby="lab-cands"></div>
+          <p class="hint" id="target-hint">Un seul candidat : réponds par oui ou non (« Est-ce bien lui ou elle ? »). Plusieurs : retrouve le bon parmi eux.</p>
+        </div>
+        <button type="button" class="go" id="btn-start"><span>Lancer la partie</span><span aria-hidden="true">→</span></button>
+        <span class="best" id="best"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section class="view" id="v-game" hidden>
+    <div class="hud">
+      <span class="prog" id="g-prog">Mesure 1 / 20</span>
+      <div class="bar" aria-hidden="true"><i id="g-bar"></i></div>
+      <span class="sc" id="g-score">0 bonne réponse</span>
+      <button type="button" class="quit" id="g-quit">Abandonner</button>
+    </div>
+    <article class="card bulletin" id="g-card" aria-live="polite">
+      <span class="theme" id="g-theme">Thème</span>
+      <blockquote id="g-text"></blockquote>
+      <p class="ask" id="g-ask">Qui propose cette mesure ?</p>
+      <div class="src" id="g-src" hidden></div>
+      <div class="stamp" id="g-stamp" hidden></div>
+    </article>
+    <div id="g-opts"></div>
+    <div class="next-row"><button type="button" id="g-next" hidden>Mesure suivante →</button></div>
+    <p class="keys">Raccourcis : <kbd>1</kbd> à <kbd>9</kbd>, <kbd>0</kbd> <kbd>-</kbd> <kbd>=</kbd> pour répondre, <kbd>Entrée</kbd> pour continuer.</p>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="view" id="v-res" hidden>
+    <div class="card res-top">
+      <div class="bigscore" id="r-score">0<small>/0</small></div>
+      <div>
+        <h2 id="r-title">Résultat</h2>
+        <p id="r-text"></p>
+      </div>
+    </div>
+    <div class="res-actions">
+      <button type="button" class="btn primary" id="r-again">Rejouer</button>
+      <button type="button" class="btn" id="r-retry">Rejouer mes erreurs</button>
+      <button type="button" class="btn" id="r-setup">Changer de mode</button>
+      <button type="button" class="btn" id="r-copy">Copier mon score</button>
+      <span class="copied" id="r-copied" hidden>Copié.</span>
+    </div>
+    <div class="res-grid">
+      <div class="card panel">
+        <h3>Par candidat</h3>
+        <p class="sub" id="r-cand-sub">Part des mesures de chaque candidat que tu as bien attribuées.</p>
+        <div class="rows" id="r-cand"></div>
+      </div>
+      <div class="card panel">
+        <h3>Par thème</h3>
+        <p class="sub">Taux de bonnes réponses selon le sujet de la mesure.</p>
+        <div class="rows" id="r-theme"></div>
+      </div>
+      <div class="card panel">
+        <h3>Tes confusions</h3>
+        <p class="sub">Les attributions erronées qui reviennent le plus.</p>
+        <ul class="confusions" id="r-conf"></ul>
+      </div>
+      <div class="card panel">
+        <h3>À revoir</h3>
+        <p class="sub">Les mesures ratées, avec leur source.</p>
+        <ul class="missed" id="r-missed"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORER -->
+  <section class="view" id="v-explorer" hidden>
+    <div class="ex-bar">
+      <label for="ex-q" class="sr-only" style="position:absolute;left:-9999px">Rechercher</label>
+      <input id="ex-q" type="search" placeholder="Rechercher une mesure (retraites, Smic, immigration…)">
+      <label for="ex-c" style="position:absolute;left:-9999px">Candidat</label>
+      <select id="ex-c"><option value="">Tous les candidats</option></select>
+      <label for="ex-t" style="position:absolute;left:-9999px">Thème</label>
+      <select id="ex-t"><option value="">Tous les thèmes</option></select>
+      <span class="ex-count" id="ex-count"></span>
+    </div>
+    <div id="ex-out"></div>
+  </section>
+</main>
+
+<footer class="method">
+  <div class="wrap">
+    <h2>Méthode et limites</h2>
+    <ul>
+      <li>État au 10 novembre 2026. Les mesures sont reformulées de façon neutre à partir de programmes, de déclarations et d’articles de presse ; chaque mesure renvoie à la source consultée, avec sa date quand elle est connue.</li>
+      <li>Candidats retenus : les principales personnalités déclarées ou annoncées. La candidature de Marine Tondelier doit encore être validée par les adhérents des Écologistes (13 décembre 2026) ; Xavier Bertrand a annoncé sa candidature sans l’avoir encore officialisée.</li>
+      <li>Éric Zemmour n’a pas publié de programme : ses mesures viennent de ses déclarations et de recensements de positions.</li>
+      <li>Les mesures partagées par plusieurs candidats (Smic à 1 700 €, peines planchers, majorité pénale à 16 ans…) ont été écartées pour qu’une seule réponse soit juste.</li>
+      <li>Les programmes évoluent jusqu’au dépôt des candidatures (12 mars 2027) : vérifie toujours la source avant de citer une mesure.</li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+"use strict";
+
+/* ---------- Données ---------- */
+var C = [
+  { id: "attal", n: 1, name: "Gabriel Attal", ini: "GA", party: "Renaissance" },
+  { id: "bertrand", n: 2, name: "Xavier Bertrand", ini: "XB", party: "Nous France", flag: "annoncé" },
+  { id: "glucksmann", n: 3, name: "Raphaël Glucksmann", ini: "RG", party: "Place publique · PS" },
+  { id: "lepen", n: 4, name: "Marine Le Pen", ini: "MLP", party: "Rassemblement national" },
+  { id: "lisnard", n: 5, name: "David Lisnard", ini: "DL", party: "Nouvelle Énergie" },
+  { id: "melenchon", n: 6, name: "Jean-Luc Mélenchon", ini: "JLM", party: "La France insoumise" },
+  { id: "philippe", n: 7, name: "Édouard Philippe", ini: "EP", party: "Horizons" },
+  { id: "retailleau", n: 8, name: "Bruno Retailleau", ini: "BR", party: "Les Républicains" },
+  { id: "roussel", n: 9, name: "Fabien Roussel", ini: "FR", party: "Parti communiste" },
+  { id: "ruffin", n: 10, name: "François Ruffin", ini: "FRu", party: "Debout !" },
+  { id: "tondelier", n: 11, name: "Marine Tondelier", ini: "MT", party: "Les Écologistes", flag: "à valider" },
+  { id: "zemmour", n: 12, name: "Éric Zemmour", ini: "EZ", party: "Reconquête" }
+];
+var CBY = {}; C.forEach(function (c) { CBY[c.id] = c; });
+
+var S = {
+  psRetr: { s: "Public Sénat", d: "30 sept. 2026", u: "https://www.publicsenat.fr/actualites/politique/reculer-ou-avancer-lage-legal-avec-ou-sans-capitalisation-ce-que-proposent-les-principaux-candidats-a-lelection-presidentielle-sur-les-retraites" },
+  enMedef: { s: "Euronews (débat du Medef)", d: "28 août 2026", u: "https://fr.euronews.com/2026/08/28/presidentielle-de-2027-a-roland-garros-les-candidats-croisent-le-fer-sur-leconomie" },
+  enCb: { s: "Euronews (contre-budget du RN)", d: "7 oct. 2026", u: "https://fr.euronews.com/2026/10/07/france-le-gouvernement-tire-a-boulets-rouges-sur-le-contre-budget-de-marine-le-pen" },
+  ps140: { s: "Public Sénat", d: "oct. 2026", u: "https://www.publicsenat.fr/actualites/politique/140-milliards-deuros-deconomies-dici-2032-leffort-radical-propose-par-marine-le-pen-pour-redresser-les-f" },
+  pge: { s: "Planète Grandes Écoles (contre-budget du 6 oct.)", d: "oct. 2026", u: "https://www.planetegrandesecoles.com/?p=130999" },
+  vLp: { s: "Programme RN, recensé par Votons 2027", d: "maj. 2026", u: "https://votons-2027.fr/candidats/le-pen/programme" },
+  lcpMel: { s: "LCP (programme L’Avenir en commun)", d: "6 nov. 2026", u: "https://lcp.fr/actualites/presidentielle-2027-ce-qui-change-dans-le-nouveau-programme-de-jean-luc-melenchon-444841" },
+  psGlu: { s: "Public Sénat", d: "août 2026", u: "https://www.publicsenat.fr/actualites/politique/fiscalite-ecole-immigration-ce-que-propose-raphael-glucksmann" },
+  wgLeasing: { s: "AFP / France 24, recensé par wikiglucksmann.fr", d: "2 oct. 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
+  wgStage: { s: "Place publique sur X, recensé par wikiglucksmann.fr", d: "15 oct. 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
+  wgColo: { s: "AFP, recensé par wikiglucksmann.fr", d: "20 juin 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
+  wgConv: { s: "LCP, recensé par wikiglucksmann.fr", d: "26 mai 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
+  wgAvoirs: { s: "Débat LCI, recensé par wikiglucksmann.fr", d: "23 sept. 2026", u: "https://www.wikiglucksmann.fr/programme-raphael-glucksmann-2027.pdf" },
+  enPhil: { s: "Euronews (France 2)", d: "9 oct. 2026", u: "https://fr.euronews.com/2026/10/09/presidentielle-2027-edouard-philippe-mise-sur-le-travail-et-la-reduction-des-depenses-publ" },
+  vPhil: { s: "Programme officiel, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/philippe/programme" },
+  mvAttal: { s: "MonVote2027 (sources : Europe 1, franceinfo, JDD)", d: "2025-2026", u: "https://monvote2027.fr/candidat/attal" },
+  mvxAttal: { s: "Moneyvox", d: "30 juin 2025", u: "https://www.moneyvox.fr/retraite/actualites/104059/une-reforme-sans-age-legal-de-depart-dans-les-cartons-de-gabriel-attal" },
+  attalLetter: { s: "Site de campagne (Les Échos)", d: "15 oct. 2026", u: "https://attalpresident.fr/actualites" },
+  attalEurope: { s: "Site de campagne (L’Express)", d: "27 oct. 2026", u: "https://attalpresident.fr/actualites" },
+  mvRet: { s: "MonVote2027 (sources : Public Sénat, franceinfo, Terre-net)", d: "2026", u: "https://monvote2027.fr/candidat/retailleau" },
+  fiRet: { s: "franceinfo", d: "12 févr. 2026", u: "https://www.franceinfo.fr/politique/bruno-retailleau/presidentielle-2027-bruno-retailleau-annonce-sa-candidature_7802885.html" },
+  planetZ: { s: "Planet.fr (BFMTV)", d: "17 sept. 2026", u: "https://www.planet.fr/2027-officiellement-candidat-eric-zemmour-propose-dexpulser-tous-les-detenus-et-chomeurs-etrangers.2999311.817022.html" },
+  mvZ: { s: "MonVote2027", d: "2026", u: "https://monvote2027.fr/candidat/zemmour" },
+  pcZ: { s: "Programme-candidat.fr", d: "2026", u: "https://programme-candidat.fr/personnalites/eric-zemmour" },
+  mvT: { s: "Programme des Écologistes, via MonVote2027", d: "13 juil. 2026", u: "https://monvote2027.fr/candidat/tondelier" },
+  polR: { s: "Poligraph (programme PCF)", d: "revu le 30 oct. 2026", u: "https://poligraph.fr/elections/presidentielle-2027/candidats/fabien-roussel" },
+  vLis: { s: "Programme Nouvelle Énergie, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/lisnard/programme" },
+  vBer: { s: "Nous France, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/bertrand/programme" },
+  vRuf: { s: "Site de campagne, recensé par Votons 2027", d: "2026", u: "https://votons-2027.fr/candidats/ruffin/programme/climat" }
+};
+
+// [candidat, thème, mesure, clé source, précision de page facultative]
+var RAW = [
+  ["lepen","Retraites","Revenir à un âge légal de départ à 62 ans, et à 60 ans après 40 annuités pour ceux qui ont commencé à travailler avant 20 ans.","psRetr"],
+  ["lepen","Europe","Plafonner à 5 milliards d’euros par an la contribution de la France au budget de l’Union européenne.","enMedef"],
+  ["lepen","Budget","Réaliser 140 milliards d’euros nets d’économies d’ici 2032 et repasser sous les 3 % de déficit public dès 2030.","enCb"],
+  ["lepen","Immigration","Économiser 15 milliards d’euros sur l’immigration dès 2027, et 29 milliards en année pleine.","ps140"],
+  ["lepen","Budget","Économiser 3,4 milliards d’euros sur des opérateurs publics comme l’OFB, l’Anses, les Agences de l’eau et l’Ademe.","pge"],
+  ["lepen","Retraites","Alléger les cotisations pour inciter à continuer de travailler après l’âge de la retraite.","psRetr"],
+  ["lepen","Énergie","Arrêter les nouveaux projets éoliens et démanteler progressivement les parcs existants.","vLp"],
+  ["lepen","Énergie","Sortir la France du marché européen de l’électricité.","vLp"],
+
+  ["melenchon","Écologie","Interdire les vols de nuit, entre 23 h et 6 h, dans tous les aéroports français.","lcpMel"],
+  ["melenchon","Fiscalité","Plafonner les héritages à 12 millions d’euros.","lcpMel"],
+  ["melenchon","Jeunesse","Créer un service civique écologique obligatoire, payé au Smic, pour les moins de 25 ans.","lcpMel"],
+  ["melenchon","Santé","Rembourser les séances de psychothérapie pour les moins de 26 ans.","lcpMel"],
+  ["melenchon","Institutions","Obliger l’Assemblée nationale à débattre de toute pétition dépassant 500 000 signatures.","lcpMel"],
+  ["melenchon","Institutions","Organiser un référendum sur l’indépendance de la Kanaky-Nouvelle-Calédonie le 1er janvier 2028.","lcpMel"],
+  ["melenchon","Société","Reconnaître le 17 octobre 1961 comme un crime d’État, avec une journée nationale de commémoration.","lcpMel"],
+  ["melenchon","Numérique","Interdire les intelligences artificielles conçues pour simuler une relation affective avec l’utilisateur.","lcpMel"],
+
+  ["glucksmann","Fiscalité","Taxer les « méga-héritages » (le 1 % des plus grosses successions) pour reverser environ 15 milliards d’euros directement sur la fiche de paie.","psGlu"],
+  ["glucksmann","Éducation","Un plan de sauvetage de l’école publique sur cinq ans : hausse du salaire des enseignants, moins d’élèves par classe en primaire, rénovation des bâtiments.","psGlu"],
+  ["glucksmann","Transports","Un leasing social d’un million de voitures électriques à 100 € par mois.","wgLeasing"],
+  ["glucksmann","Jeunesse","Une rémunération minimale de 1 000 € par mois pour tout stage de plus de deux mois.","wgStage"],
+  ["glucksmann","Jeunesse","Un passeport « Colo pour tous » : un séjour collectif en colonie pour chaque enfant.","wgColo"],
+  ["glucksmann","Immigration","Confier la question de l’immigration à une convention citoyenne dont les conclusions seraient soumises au Parlement.","wgConv"],
+  ["glucksmann","International","Saisir les quelque 210 milliards d’euros d’avoirs russes gelés en Europe.","wgAvoirs"],
+
+  ["philippe","Retraites","Porter progressivement l’âge légal de départ à 65 ans et la durée de cotisation à 45 annuités.","enPhil"],
+  ["philippe","Budget","Ne pas remplacer un fonctionnaire sur trois partant à la retraite, soit environ 250 000 postes en cinq ans.","enPhil"],
+  ["philippe","Travail","Ramener la durée maximale d’indemnisation du chômage de 18 à 12 mois pour les moins de 50 ans.","enPhil"],
+  ["philippe","Famille","Une allocation familiale unique de 350 € par mois dès le premier enfant, dégressive selon l’impôt sur le revenu.","enPhil"],
+  ["philippe","Institutions","Présenter une vingtaine d’ordonnances au Parlement dès juillet 2027, et ne pas habiter à l’Élysée.","enPhil"],
+  ["philippe","Immigration","Diviser par deux l’immigration légale, pour revenir nettement sous les 200 000 titres de séjour par an.","enPhil"],
+  ["philippe","Défense","Porter le nombre de réservistes de 45 000 à 250 000.","vPhil"],
+  ["philippe","Écologie","Lancer un plan national pour rendre les rivières baignables.","vPhil"],
+
+  ["attal","Retraites","Supprimer l’âge légal de départ : la retraite dépendrait de la durée de cotisation, avec une décote et une surcote.","psRetr"],
+  ["attal","Retraites","Verser 1 000 € à chaque naissance sur un fonds de retraite par capitalisation.","mvAttal"],
+  ["attal","Travail","Un « choc » de 40 milliards d’euros de hausse des salaires nets, en supprimant la part salariale de la cotisation vieillesse.","mvxAttal"],
+  ["attal","Société","Interdire le port du voile dans l’espace public aux mineures de moins de 15 ans.","mvAttal"],
+  ["attal","Institutions","Instituer une journée référendaire annuelle sur les grands choix du pays.","mvAttal"],
+  ["attal","Budget","Réaliser 150 milliards d’euros d’économies sur le quinquennat et revenir à l’équilibre budgétaire en 2037.","attalLetter"],
+  ["attal","Europe","Bâtir des « États-Unis d’Europe », avec une économie européenne commune.","attalEurope"],
+
+  ["retailleau","Retraites","Fixer un âge minimal de départ à 63 ans, avec une décote de 7 % par an, et abaisser de 67 à 65 ans l’âge du taux plein automatique.","psRetr"],
+  ["retailleau","Retraites","Financer 25 à 30 % des retraites des nouveaux entrants sur le marché du travail par capitalisation.","psRetr"],
+  ["retailleau","Travail","Supprimer les 35 heures et passer à une durée annuelle de travail de 1 623 heures.","mvRet"],
+  ["retailleau","Social","Plafonner l’ensemble des allocations à 70 % du Smic grâce à un compte social unique.","mvRet"],
+  ["retailleau","Immigration","Soumettre la réduction de l’immigration à un référendum.","fiRet"],
+  ["retailleau","Agriculture","Supprimer l’Office français de la biodiversité et autoriser en France tout produit déjà autorisé dans l’Union européenne.","mvRet"],
+  ["retailleau","Immigration","Allonger la rétention administrative jusqu’à 210 jours pour les étrangers jugés dangereux.","mvRet"],
+
+  ["zemmour","Immigration","Renvoyer tous les étrangers détenus dans les prisons françaises.","planetZ"],
+  ["zemmour","Immigration","Expulser les étrangers en situation régulière au chômage depuis plus d’un an.","planetZ"],
+  ["zemmour","Immigration","Porter à 10 ans la durée de résidence exigée pour être naturalisé.","mvZ"],
+  ["zemmour","Santé","Recruter des médecins généralistes fonctionnaires pour couvrir les déserts médicaux.","pcZ"],
+  ["zemmour","Sécurité","Instaurer une « défense excusable » pour les citoyens légitimement armés.","pcZ"],
+
+  ["tondelier","Institutions","Ouvrir le droit de vote à 16 ans.","mvT","p. 126"],
+  ["tondelier","Santé","Supprimer les franchises médicales et rembourser à 100 % les soins essentiels.","mvT","p. 111"],
+  ["tondelier","Santé","Ouvrir 2 000 centres de santé publics d’ici 2030.","mvT","p. 114"],
+  ["tondelier","Éducation","Limiter les classes à 19 élèves en 2032, et à 12 en éducation prioritaire (REP et REP+).","mvT","p. 90"],
+  ["tondelier","Agriculture","Interdire les fermes-usines et l’élevage en cage.","mvT","p. 37"],
+  ["tondelier","Europe","Démanteler Frontex et créer une agence de protection des droits des migrants.","mvT","p. 179"],
+  ["tondelier","Social","Expérimenter des caisses locales de Sécurité sociale de l’alimentation.","mvT","p. 45"],
+
+  ["roussel","Économie","Nationaliser TotalEnergies, par expropriation si nécessaire.","polR"],
+  ["roussel","Écologie","Un plan climat de 500 milliards d’euros sur cinq ans, porté par la Caisse des dépôts et Bpifrance.","polR"],
+  ["roussel","Travail","Augmenter de 30 % le point d’indice des fonctionnaires.","polR"],
+  ["roussel","Retraites","Garantir qu’aucune pension de retraite ne soit inférieure au Smic.","polR"],
+  ["roussel","Travail","Rétablir l’échelle mobile des salaires, indexés automatiquement sur les prix.","polR"],
+  ["roussel","Transports","Mettre en vente un million de véhicules électriques à moins de 10 000 €.","polR"],
+  ["roussel","Société","Voter une loi-cadre contre les violences sexistes et sexuelles dotée de 3 milliards d’euros.","polR"],
+
+  ["lisnard","Immigration","Diviser par huit le nombre de titres de séjour délivrés.","vLis"],
+  ["lisnard","Éducation","Abroger la carte scolaire.","vLis"],
+  ["lisnard","Éducation","Créer un certificat de fin de primaire qui conditionne l’entrée au collège.","vLis"],
+  ["lisnard","Éducation","Initier les élèves au grec, au latin et à la philosophie dès le primaire.","vLis"],
+  ["lisnard","Travail","Créer un contrat de travail unique, fusionnant CDI et CDD, pour les nouveaux emplois.","vLis"],
+  ["lisnard","Logement","Supprimer les quotas de logements sociaux imposés par l’article 55 de la loi SRU.","vLis"],
+  ["lisnard","Santé","Doubler le nombre d’étudiants en médecine d’ici 2030.","vLis"],
+
+  ["bertrand","Sécurité","Fixer la majorité pénale à 15 ans, avec les mêmes sanctions qu’un adulte.","vBer"],
+  ["bertrand","Sécurité","Rendre la prison automatique pour toute agression d’un policier, d’un gendarme, d’un pompier ou d’un maire.","vBer"],
+  ["bertrand","Éducation","Interdire toute fermeture de classe en milieu rural sans l’accord du maire.","vBer"],
+  ["bertrand","Institutions","Instaurer un mandat présidentiel unique de cinq ans.","vBer"],
+  ["bertrand","Culture","Consacrer 1 % du budget de l’État à la culture d’ici 2032.","vBer"],
+  ["bertrand","Immigration","Exiger un « passeport républicain » (examen de langue et de valeurs) pour le regroupement familial.","vBer"],
+
+  ["ruffin","Transports","Interdire les vols intérieurs lorsqu’une alternative en train existe en moins de 4 heures.","vRuf"],
+  ["ruffin","Écologie","Interdire la publicité pour les voitures thermiques et les billets d’avion.","vRuf"],
+  ["ruffin","Écologie","Rétablir la consigne du verre.","vRuf"],
+  ["ruffin","Écologie","Ouvrir une Maison de la réparation et du réemploi dans chaque quartier et chaque canton.","vRuf"],
+  ["ruffin","Transports","Étendre le leasing social de petites voitures électriques françaises à 3 millions d’automobilistes.","vRuf"],
+  ["ruffin","Justice","Créer un délit de « faute systémique » pour les dirigeants dont les choix de rentabilité causent une pollution.","vRuf"],
+  ["ruffin","Énergie","Revenir progressivement à une production d’électricité 100 % publique, pilotée par EDF.","vRuf"]
+];
+var M = RAW.map(function (r, i) {
+  return { id: i, c: r[0], t: r[1], m: r[2], src: S[r[3]], page: r[4] || "" };
+});
+var THEMES = Array.from(new Set(M.map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
+
+/* ---------- Utilitaires ---------- */
+function $(id) { return document.getElementById(id); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); }
+function pct(a, b) { return b ? Math.round(100 * a / b) : 0; }
+function plural(n, one, many) { return n + " " + (n > 1 ? many : one); }
+function store(k, v) { try { if (v === undefined) { var x = localStorage.getItem(k); return x ? JSON.parse(x) : null; } localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+function srcHtml(q) {
+  var s = q.src;
+  return "Source : <a href=\"" + esc(s.u) + "\" target=\"_blank\" rel=\"noopener\">" + esc(s.s) + (q.page ? ", " + esc(q.page) : "") + " ↗</a> <span>· " + esc(s.d) + "</span>";
+}
+function boardHtml(c, tag, extra) {
+  tag = tag || "div";
+  return "<" + tag + (tag === "button" ? " type=\"button\"" : "") + " class=\"board\" " + (extra || "") + ">" +
+    "<span class=\"num\">" + c.n + "</span>" +
+    (c.flag ? "<span class=\"flag\">" + esc(c.flag) + "</span>" : "") +
+    "<span class=\"ini\">" + esc(c.ini) + "</span>" +
+    "<span class=\"nm\">" + esc(c.name) + "</span>" +
+    "<span class=\"pt\">" + esc(c.party) + "</span></" + tag + ">";
+}
+
+/* ---------- État ---------- */
+var cfg = { mode: "all", diff: "easy", len: "20", targets: [] };
+var game = null; // { qs: [...], i, answers: [], cfg }
+
+/* ---------- Vues ---------- */
+var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer") };
+function show(v) {
+  Object.keys(views).forEach(function (k) { views[k].hidden = (k !== v); });
+  var tab = v === "explorer" ? "explorer" : "jouer";
+  $("tab-jouer").setAttribute("aria-pressed", tab === "jouer");
+  $("tab-explorer").setAttribute("aria-pressed", tab === "explorer");
+  snapshotNow();
+}
+document.querySelectorAll("nav.tabs button").forEach(function (b) {
+  b.addEventListener("click", function () {
+    if (b.dataset.view === "explorer") { location.hash = "explorer"; show("explorer"); renderExplorer(); }
+    else { if (location.hash) history.replaceState(null, "", location.pathname + location.search); show(game && game.i < game.qs.length ? "game" : "setup"); }
+  });
+});
+
+/* ---------- Accueil ---------- */
+function renderHome() {
+  $("f-mes").textContent = M.length;
+  $("f-cand").textContent = C.length;
+  $("f-th").textContent = THEMES.length;
+  $("boards-home").innerHTML = C.map(function (c) { return boardHtml(c); }).join("");
+  $("cand-pick").innerHTML = C.map(function (c) {
+    var on = cfg.targets.indexOf(c.id) >= 0;
+    return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"" + on + "\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
+  }).join("");
+  syncSetup();
+  var best = store("qui2027-best");
+  $("best").textContent = best ? "Ton meilleur score : " + best.pct + " % (" + best.score + "/" + best.total + ", " + best.label + ")." : "";
+}
+function syncSetup() {
+  ["all", "target"].forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
+  ["easy", "hard"].forEach(function (d) { $("d-" + d).setAttribute("aria-pressed", cfg.diff === d); });
+  ["10", "20", "40", "all"].forEach(function (l) { $("l-" + l).setAttribute("aria-pressed", cfg.len === l); });
+  $("fld-cands").hidden = cfg.mode !== "target";
+  $("fld-diff").hidden = cfg.mode !== "all";
+  $("fld-len").hidden = cfg.mode !== "all";
+  C.forEach(function (c) { var b = $("pick-" + c.id); if (b) b.setAttribute("aria-pressed", cfg.targets.indexOf(c.id) >= 0); });
+  var startBtn = $("btn-start");
+  startBtn.disabled = cfg.mode === "target" && cfg.targets.length === 0;
+  if (cfg.mode === "target") {
+    var n = cfg.targets.length;
+    $("target-hint").textContent = n === 0 ? "Choisis au moins un candidat." :
+      n === 1 ? "Un seul candidat : pour chaque mesure, dis si c’est bien " + CBY[cfg.targets[0]].name + " qui la propose. La moitié sont des pièges." :
+      "Retrouve le bon candidat parmi les " + n + " choisis. Toutes leurs mesures y passent (" + M.filter(function (x) { return cfg.targets.indexOf(x.c) >= 0; }).length + ").";
+  }
+}
+$("seg-mode").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.mode = b.dataset.mode; syncSetup(); });
+$("seg-diff").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.diff = b.dataset.diff; syncSetup(); });
+$("seg-len").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; cfg.len = b.dataset.len; syncSetup(); });
+$("cand-pick").addEventListener("click", function (e) {
+  var b = e.target.closest("button"); if (!b) return;
+  var id = b.dataset.c, k = cfg.targets.indexOf(id);
+  if (k >= 0) cfg.targets.splice(k, 1); else cfg.targets.push(id);
+  syncSetup();
+});
+$("btn-start").addEventListener("click", function () { startGame(buildQuestions(cfg), cfg); });
+
+/* ---------- Construction des questions ---------- */
+function buildQuestions(conf, onlyIds) {
+  var qs = [];
+  if (conf.mode === "target" && conf.targets.length === 1) {
+    var who = conf.targets[0];
+    var mine = M.filter(function (x) { return x.c === who; });
+    var others = M.filter(function (x) { return x.c !== who; });
+    if (onlyIds) { mine = mine.filter(function (x) { return onlyIds.indexOf(x.id) >= 0; }); others = others.filter(function (x) { return onlyIds.indexOf(x.id) >= 0; }); }
+    else { others = shuffle(others).slice(0, mine.length); }
+    qs = shuffle(mine.concat(others)).map(function (x) { return { mid: x.id, type: "vf", who: who }; });
+    return qs;
+  }
+  var pool = M;
+  if (conf.mode === "target") pool = M.filter(function (x) { return conf.targets.indexOf(x.c) >= 0; });
+  if (onlyIds) pool = pool.filter(function (x) { return onlyIds.indexOf(x.id) >= 0; });
+  pool = shuffle(pool);
+  if (conf.mode === "all" && !onlyIds && conf.len !== "all") pool = pool.slice(0, parseInt(conf.len, 10));
+  return pool.map(function (x) {
+    var opts;
+    if (conf.mode === "target") opts = C.filter(function (c) { return conf.targets.indexOf(c.id) >= 0; }).map(function (c) { return c.id; });
+    else if (conf.diff === "hard") opts = C.map(function (c) { return c.id; });
+    else {
+      var decoys = shuffle(C.filter(function (c) { return c.id !== x.c; })).slice(0, 3).map(function (c) { return c.id; });
+      opts = decoys.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; });
+    }
+    return { mid: x.id, type: "pick", opts: opts };
+  });
+}
+
+/* ---------- Partie ---------- */
+function startGame(qs, conf) {
+  game = { qs: qs, i: 0, answers: [], cfg: JSON.parse(JSON.stringify(conf)) };
+  show("game");
+  renderQ();
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+function score() { return game.answers.filter(function (a) { return a.ok; }).length; }
+function renderQ() {
+  var q = game.qs[game.i], m = M[q.mid], n = game.qs.length;
+  $("g-prog").textContent = "Mesure " + (game.i + 1) + " / " + n;
+  $("g-bar").style.width = pct(game.i, n) + "%";
+  var sc = score();
+  $("g-score").textContent = plural(sc, "bonne réponse", "bonnes réponses");
+  $("g-theme").textContent = m.t;
+  $("g-text").textContent = "« " + m.m + " »";
+  $("g-src").hidden = true; $("g-src").innerHTML = "";
+  var st = $("g-stamp"); st.hidden = true; st.className = "stamp";
+  $("g-next").hidden = true;
+  var answered = game.answers[game.i];
+  if (q.type === "vf") {
+    var w = CBY[q.who];
+    $("g-ask").textContent = "Est-ce bien " + w.name + " qui propose cette mesure ?";
+    $("g-opts").innerHTML = "<div class=\"vf\"><button type=\"button\" id=\"vf-yes\" data-v=\"yes\">Oui, c’est " + esc(w.name.split(" ").slice(-1)[0]) + "</button><button type=\"button\" id=\"vf-no\" data-v=\"no\">Non, un autre</button></div>";
+  } else {
+    $("g-ask").textContent = "Qui propose cette mesure ?";
+    $("g-opts").innerHTML = "<div class=\"boards\">" + q.opts.map(function (cid, k) {
+      return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" data-k=\"" + k + "\" aria-label=\"" + esc(CBY[cid].name) + "\"");
+    }).join("") + "</div>";
+  }
+  if (answered) reveal(answered, false);
+}
+$("g-opts").addEventListener("click", function (e) {
+  var b = e.target.closest("button"); if (!b || b.disabled) return;
+  if (game.answers[game.i]) return;
+  var q = game.qs[game.i], m = M[q.mid], a;
+  if (q.type === "vf") { var yes = b.dataset.v === "yes"; var truth = m.c === q.who; a = { mid: q.mid, pick: yes ? q.who : "other", ok: yes === truth, type: "vf", who: q.who }; }
+  else { a = { mid: q.mid, pick: b.dataset.c, ok: b.dataset.c === m.c, type: "pick" }; }
+  game.answers[game.i] = a;
+  reveal(a, true);
+  snapshotNow();
+});
+function reveal(a, animate) {
+  var q = game.qs[game.i], m = M[q.mid], cand = CBY[m.c];
+  var st = $("g-stamp");
+  st.textContent = a.ok ? "Bien vu" : "Raté";
+  st.className = "stamp " + (a.ok ? "ok" : "ko") + (animate ? " thump" : "");
+  st.hidden = false;
+  if (q.type === "vf") {
+    var truth = m.c === q.who;
+    $("vf-yes").disabled = true; $("vf-no").disabled = true;
+    (truth ? $("vf-yes") : $("vf-no")).classList.add("is-ok");
+    if (!a.ok) (truth ? $("vf-no") : $("vf-yes")).classList.add("is-ko");
+  } else {
+    q.opts.forEach(function (cid) {
+      var el = $("opt-" + cid); if (!el) return;
+      el.disabled = true;
+      if (cid === m.c) el.classList.add("is-ok");
+      else if (cid === a.pick) el.classList.add("is-ko");
+      else el.classList.add("dim");
+    });
+  }
+  var lead = "<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + (a.ok ? "Exact : " : "C’était ") + esc(cand.name) + " (" + esc(cand.party) + ").</span>";
+  $("g-src").innerHTML = lead + " " + srcHtml(m);
+  $("g-src").hidden = false;
+  var sc = score();
+  $("g-score").textContent = plural(sc, "bonne réponse", "bonnes réponses");
+  var nx = $("g-next");
+  nx.textContent = game.i + 1 < game.qs.length ? "Mesure suivante →" : "Voir mon résultat →";
+  nx.hidden = false;
+  if (animate) nx.focus({ preventScroll: true });
+}
+$("g-next").addEventListener("click", next);
+function next() {
+  if (!game || !game.answers[game.i]) return;
+  game.i++;
+  if (game.i >= game.qs.length) { finish(); return; }
+  renderQ(); snapshotNow();
+}
+$("g-quit").addEventListener("click", function () {
+  if (game && game.answers.filter(Boolean).length > 0) { game.qs = game.qs.slice(0, game.answers.filter(Boolean).length); finish(); }
+  else { game = null; show("setup"); renderHome(); }
+});
+document.addEventListener("keydown", function (e) {
+  if (views.game.hidden || !game) return;
+  if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
+  var q = game.qs[game.i];
+  if ((e.key === "Enter" || e.key === " ") && game.answers[game.i]) { if (document.activeElement && document.activeElement.id === "g-next") return; e.preventDefault(); next(); return; }
+  if (game.answers[game.i]) return;
+  var keys = ["1","2","3","4","5","6","7","8","9","0","-","="];
+  var k = keys.indexOf(e.key);
+  if (k < 0) return;
+  if (q.type === "vf") { if (k === 0) $("vf-yes").click(); if (k === 1) $("vf-no").click(); }
+  else if (q.opts[k]) $("opt-" + q.opts[k]).click();
+});
+
+/* ---------- Résultats ---------- */
+function tier(p) {
+  if (p >= 85) return { label: "Éditorialiste politique", text: "Tu reconnais les programmes à la virgule près. Les plateaux du dimanche soir n’ont plus de secret pour toi." };
+  if (p >= 65) return { label: "Électeur bien informé", text: "Tu situes la plupart des mesures. Quelques candidats se ressemblent encore à tes yeux : regarde tes confusions ci-dessous." };
+  if (p >= 40) return { label: "Spectateur du 20 heures", text: "Tu as les grandes lignes, mais beaucoup de mesures pourraient venir de n’importe qui. L’onglet « Toutes les mesures » est fait pour toi." };
+  return { label: "Programmes à découvrir", text: "Les mesures se mélangent encore. Pas de panique : il reste plusieurs mois avant le premier tour, et chaque mesure a sa source." };
+}
+function finish() {
+  var ans = game.answers.filter(Boolean);
+  var total = ans.length, sc = ans.filter(function (a) { return a.ok; }).length, p = pct(sc, total), t = tier(p);
+  game.result = { score: sc, total: total, pct: p, label: t.label };
+  $("r-score").innerHTML = sc + "<small>/" + total + "</small>";
+  $("r-title").textContent = t.label + " · " + p + " %";
+  $("r-text").textContent = t.text;
+  var best = store("qui2027-best");
+  if (total >= 10 && (!best || p > best.pct)) store("qui2027-best", game.result);
+
+  var vf = game.cfg.mode === "target" && game.cfg.targets.length === 1;
+  // Par candidat
+  var rows = [];
+  if (vf) {
+    var who = game.cfg.targets[0];
+    var mine = ans.filter(function (a) { return M[a.mid].c === who; });
+    var oth = ans.filter(function (a) { return M[a.mid].c !== who; });
+    $("r-cand-sub").textContent = "Mesures de " + CBY[who].name + " reconnues, et pièges évités.";
+    rows.push({ l: "Ses mesures reconnues", a: mine.filter(function (a) { return a.ok; }).length, b: mine.length });
+    rows.push({ l: "Pièges évités", a: oth.filter(function (a) { return a.ok; }).length, b: oth.length });
+  } else {
+    $("r-cand-sub").textContent = "Part des mesures de chaque candidat que tu as bien attribuées.";
+    C.forEach(function (c) {
+      var mine = ans.filter(function (a) { return M[a.mid].c === c.id; });
+      if (mine.length) rows.push({ l: c.n + ". " + c.name, a: mine.filter(function (a) { return a.ok; }).length, b: mine.length });
+    });
+    rows.sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
+  }
+  $("r-cand").innerHTML = rows.map(rowHtml).join("");
+  // Par thème
+  var trows = THEMES.map(function (th) {
+    var l = ans.filter(function (a) { return M[a.mid].t === th; });
+    return { l: th, a: l.filter(function (a) { return a.ok; }).length, b: l.length };
+  }).filter(function (r) { return r.b > 0; }).sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
+  $("r-theme").innerHTML = trows.map(rowHtml).join("");
+  // Confusions
+  var conf = {};
+  ans.forEach(function (a) {
+    if (a.ok) return;
+    var real = M[a.mid].c, key;
+    if (a.type === "vf") key = a.pick === "other" ? "miss|" + real : "fake|" + real;
+    else key = a.pick + "|" + real;
+    conf[key] = (conf[key] || 0) + 1;
+  });
+  var confList = Object.keys(conf).map(function (k) { return { k: k, n: conf[k] }; }).sort(function (x, y) { return y.n - x.n; }).slice(0, 4);
+  $("r-conf").innerHTML = confList.length ? confList.map(function (o) {
+    var p2 = o.k.split("|"), times = o.n > 1 ? " (" + o.n + " fois)" : "";
+    if (p2[0] === "miss") return "<li>Tu n’as pas reconnu une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
+    if (p2[0] === "fake") return "<li>Tu as cru reconnaître une mesure qui venait en fait de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
+    return "<li>Tu as attribué à <b>" + esc(CBY[p2[0]].name) + "</b> une mesure de <b>" + esc(CBY[p2[1]].name) + "</b>" + times + ".</li>";
+  }).join("") : "<li style=\"border-color:var(--ok)\">Aucune confusion. Sans faute.</li>";
+  // Ratées
+  var missed = ans.filter(function (a) { return !a.ok; });
+  $("r-missed").innerHTML = missed.length ? missed.slice(0, 12).map(function (a) {
+    var m = M[a.mid], c = CBY[m.c];
+    return "<li><q>" + esc(m.m) + "</q><div class=\"meta\"><b>" + esc(c.name) + "</b> · " + esc(m.t) + " · " + srcHtml(m) + "</div></li>";
+  }).join("") + (missed.length > 12 ? "<li class=\"meta\">… et " + (missed.length - 12) + " autres.</li>" : "") : "<li>Rien à revoir.</li>";
+  $("r-retry").disabled = missed.length === 0;
+  $("r-copied").hidden = true;
+  show("res");
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+function rowHtml(r) {
+  var p = pct(r.a, r.b), cls = p >= 75 ? "hi" : (p < 40 ? "lo" : "");
+  return "<div class=\"row\"><span class=\"lbl\">" + esc(r.l) + "</span><span class=\"trk\" role=\"img\" aria-label=\"" + p + " %\"><i class=\"" + cls + "\" style=\"width:" + Math.max(p, 2) + "%\"></i></span><span class=\"val\">" + r.a + "/" + r.b + "</span></div>";
+}
+$("r-again").addEventListener("click", function () { startGame(buildQuestions(game.cfg), game.cfg); });
+$("r-retry").addEventListener("click", function () {
+  var ids = game.answers.filter(function (a) { return a && !a.ok; }).map(function (a) { return a.mid; });
+  if (!ids.length) return;
+  startGame(buildQuestions(game.cfg, ids), game.cfg);
+});
+$("r-setup").addEventListener("click", function () { game = null; show("setup"); renderHome(); });
+$("r-copy").addEventListener("click", function () {
+  var r = game.result;
+  var txt = "Qui a proposé ça ? Présidentielle 2027 : " + r.score + "/" + r.total + " (" + r.pct + " %), " + r.label + ".";
+  try {
+    navigator.clipboard.writeText(txt).then(function () { $("r-copied").textContent = "Copié."; $("r-copied").hidden = false; }, function () { $("r-copied").textContent = txt; $("r-copied").hidden = false; });
+  } catch (e) { $("r-copied").textContent = txt; $("r-copied").hidden = false; }
+});
+
+/* ---------- Explorer ---------- */
+function initExplorer() {
+  $("ex-c").innerHTML = "<option value=\"\">Tous les candidats</option>" + C.map(function (c) { return "<option value=\"" + c.id + "\">" + c.n + ". " + esc(c.name) + "</option>"; }).join("");
+  $("ex-t").innerHTML = "<option value=\"\">Tous les thèmes</option>" + THEMES.map(function (t) { return "<option>" + esc(t) + "</option>"; }).join("");
+  ["ex-q", "ex-c", "ex-t"].forEach(function (id) { $(id).addEventListener("input", renderExplorer); });
+}
+function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+function renderExplorer() {
+  var q = norm($("ex-q").value.trim()), fc = $("ex-c").value, ft = $("ex-t").value;
+  var list = M.filter(function (x) {
+    return (!fc || x.c === fc) && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + CBY[x.c].name).indexOf(q) >= 0);
+  });
+  $("ex-count").textContent = plural(list.length, "mesure", "mesures");
+  var html = C.map(function (c) {
+    var mine = list.filter(function (x) { return x.c === c.id; });
+    if (!mine.length) return "";
+    return "<section class=\"ex-group\"><h3><span class=\"num\">" + c.n + "</span>" + esc(c.name) + "<small>" + esc(c.party) + (c.flag ? " · candidature " + esc(c.flag) : "") + "</small></h3><div class=\"ex-list\">" +
+      mine.map(function (x) {
+        return "<article class=\"card ex-item\"><p>" + esc(x.m) + "</p><div class=\"meta\"><span class=\"th\">" + esc(x.t) + "</span><span>" + srcHtml(x) + "</span></div></article>";
+      }).join("") + "</div></section>";
+  }).join("");
+  $("ex-out").innerHTML = html || "<p>Aucune mesure ne correspond. Essaie un autre mot.</p>";
+}
+
+/* ---------- Reprise après mise à jour ---------- */
+function snapshotNow() { /* état lu par le snapshot à la demande */ }
+function currentView() { var v = "setup"; Object.keys(views).forEach(function (k) { if (!views[k].hidden) v = k; }); return v; }
+if (window.claude && window.claude.hot && window.claude.hot.snapshot) {
+  try { window.claude.hot.snapshot(function () { return { cfg: cfg, game: game, view: currentView() }; }); } catch (e) {}
+}
+function start(data) {
+  data = data || {};
+  if (data.cfg) cfg = data.cfg;
+  initExplorer();
+  renderHome();
+  if (data.game && data.game.qs && data.game.qs.length) {
+    game = data.game;
+    if (data.view === "res" && game.result) { finish(); return; }
+    if (data.view === "game" && game.i < game.qs.length) { show("game"); renderQ(); return; }
+  }
+  if (location.hash === "#explorer" || data.view === "explorer") { show("explorer"); renderExplorer(); return; }
+  show("setup");
+}
+window.addEventListener("hashchange", function () { if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } });
+if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(start);
+else start((window.claude && window.claude.hot && window.claude.hot.data) || {});
+})();
+</script>
+</body>
+</html>
