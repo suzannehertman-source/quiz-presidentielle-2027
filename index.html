@@ -394,14 +394,6 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
 .kind.imp { background: var(--ink); }
 
 /* ---- Gimmick Koh-Lanta ---- */
-.kl { display: flex; gap: 14px; align-items: center; margin: 4px 0 16px; padding: 14px 16px; border-radius: 4px; background: linear-gradient(100deg, #2b1a0e, #4a2a12 60%, #6b3a12); color: #fbe9c8; box-shadow: var(--shadow); position: relative; overflow: hidden; }
-.kl::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 34px 50%, rgba(255,170,60,.35), transparent 120px); animation: glowkl 2.2s ease-in-out infinite alternate; pointer-events: none; }
-@keyframes glowkl { from { opacity: .55; } to { opacity: 1; } }
-.kl .torch { font-size: 38px; line-height: 1; display: inline-block; transform-origin: 50% 90%; animation: flicker 1.3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(255,140,0,.8)); position: relative; z-index: 1; }
-@keyframes flicker { 0%, 100% { transform: rotate(-3deg) scale(1); } 30% { transform: rotate(2deg) scale(1.06, .97); } 60% { transform: rotate(-1deg) scale(.97, 1.04); } }
-.kl-t { margin: 0; font: 900 clamp(20px, 2.6vw, 26px)/1.1 var(--f-display); text-transform: uppercase; letter-spacing: .02em; position: relative; z-index: 1; }
-.kl-t b { color: #ffb347; font-variant-numeric: tabular-nums; }
-.kl-s { margin: 6px 0 0; font: italic 400 14px/1.35 var(--f-read); opacity: .9; position: relative; z-index: 1; }
 
 /* ---- Plus graphique ---- */
 body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.3px), radial-gradient(rgba(225,0,15,.05) 1.2px, transparent 1.3px); background-size: 26px 26px, 26px 26px; background-position: 0 0, 13px 13px; }
@@ -429,6 +421,57 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
 .trail i.cur { border-color: var(--accent); border-width: 2.5px; animation: pulse 1s ease-in-out infinite alternate; }
 @keyframes pulse { to { transform: translateY(-3px); } }
 .bigscore .medal { font-size: 60px; color: inherit; line-height: 1; display: block; margin-bottom: 6px; animation: pop .6s .2s cubic-bezier(.2,1.6,.4,1) backwards; }
+
+/* ---- Épure ---- */
+.more { margin: 4px 0 8px; }
+.more > summary { cursor: pointer; list-style: none; font: 800 15px/1 var(--f-display); text-transform: uppercase; letter-spacing: .06em; color: var(--accent); padding: 12px 14px; border: 1.5px dashed var(--line); border-radius: 4px; background: var(--sheet); }
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary::after { content: " +"; }
+.more[open] > summary::after { content: " –"; }
+.more > summary small { font: 400 12px/1 var(--f-ui); text-transform: none; letter-spacing: 0; color: var(--muted); margin-left: 6px; }
+.more[open] > summary { margin-bottom: 12px; }
+.modes button span { font-size: 12.5px; }
+/* ---- Contexte des citations ---- */
+.pre { margin: 10px 44px 0 0; padding: 10px 12px; background: #fff6e0; border-left: 4px solid var(--rouge); font-size: 14.5px; line-height: 1.45; border-radius: 2px; }
+.pre b { display: block; font: 800 11.5px/1.2 var(--f-ui); text-transform: uppercase; letter-spacing: .1em; color: var(--rouge); margin-bottom: 3px; }
+:root[data-theme="dark"] .pre { background: rgba(225,0,15,.12); }
+/* ---- Bouton i ---- */
+.bulletin { position: relative; }
+.info-btn { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--accent); background: var(--sheet); color: var(--accent); font: italic 800 17px/1 Georgia, serif; cursor: pointer; display: grid; place-items: center; padding: 0; transition: transform .15s ease, background .15s ease; }
+.info-btn[hidden] { display: none; }
+.info-btn:hover { transform: scale(1.1); }
+.info-btn[aria-expanded="true"] { background: var(--accent); color: #fff; }
+.infobox { margin: 12px 0 4px; padding: 12px 14px; background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 2px; font-size: 14px; line-height: 1.45; animation: pop .3s ease backwards; }
+.infobox .ih { margin: 0 0 4px; font: 800 12px/1.2 var(--f-ui); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.infobox p, .infobox ul { margin: 0 0 8px; }
+.infobox ul { padding-left: 18px; }
+.infobox > :last-child { margin-bottom: 0; }
+/* ---- Splash d’ouverture ---- */
+#intro { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: var(--sheet); overflow: hidden; cursor: pointer; transition: opacity .45s ease, transform .45s ease; }
+#intro::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bleu) 0 33.3%, #fff 33.3% 66.6%, var(--rouge) 66.6%); opacity: .07; }
+#intro::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: linear-gradient(90deg, var(--bleu) 0 33.3%, #fff 33.3% 66.6%, var(--rouge) 66.6%); }
+#intro.out { opacity: 0; transform: scale(1.04); pointer-events: none; }
+#intro .skip { position: absolute; top: 20px; right: 16px; z-index: 2; background: none; border: 1.5px solid var(--line); border-radius: 99px; padding: 6px 12px; font: 600 13px/1 var(--f-ui); color: var(--muted); cursor: pointer; }
+.ibox { position: relative; z-index: 1; text-align: center; padding: 24px 18px; max-width: 620px; }
+.it1 { margin: 0; font: 800 clamp(22px, 5vw, 34px)/1 var(--f-display); text-transform: uppercase; color: var(--ink); animation: dropin .5s cubic-bezier(.2,1.4,.4,1) backwards; }
+.inum { margin: 0; font: 900 clamp(96px, 26vw, 180px)/.9 var(--f-display); color: var(--bleu); font-variant-numeric: tabular-nums; animation: dropin .6s .15s cubic-bezier(.2,1.6,.4,1) backwards; text-shadow: 6px 6px 0 rgba(225,0,15,.18); }
+#intro.end .inum { color: var(--rouge); animation: thump .5s ease; }
+.itok { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 14px auto 6px; max-width: 520px; }
+.itok span { width: 40px; height: 40px; border-radius: 50%; background: var(--c); color: #fff; font: 800 13px/40px var(--f-display); display: inline-block; animation: tokin .4s var(--d) cubic-bezier(.2,1.6,.4,1) backwards; transition: transform .35s ease, opacity .35s ease, filter .35s ease; position: relative; }
+.itok span.ko { transform: translateY(26px) rotate(-30deg) scale(.4); opacity: 0; filter: grayscale(1); }
+.itok span.win { transform: scale(1.9); background: var(--rouge); box-shadow: 0 0 0 4px #fff, 0 0 0 8px var(--bleu); font-size: 22px; z-index: 2; animation: wobble .9s .2s ease-in-out infinite alternate; }
+#intro.end .itok span.ko { width: 0; margin: 0 -3px; }
+#intro.end .itok { margin: 40px auto 34px; }
+.istep { margin: 8px 0 0; min-height: 20px; font: 700 13px/1.2 var(--f-ui); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+.it2 { margin: 14px 0 0; font: 900 clamp(26px, 6vw, 44px)/1 var(--f-display); text-transform: uppercase; color: var(--ink); opacity: 0; transform: translateY(14px); transition: all .45s cubic-bezier(.2,1.4,.4,1); }
+.it2 em { font-style: normal; color: var(--rouge); }
+.it3 { margin: 10px 0 0; font: italic 16px/1.4 var(--f-read); color: var(--muted); opacity: 0; transition: opacity .45s .25s ease; }
+#intro.end .it2 { opacity: 1; transform: none; }
+#intro.end .it3 { opacity: 1; }
+@keyframes dropin { from { opacity: 0; transform: translateY(-30px) scale(.8); } }
+@keyframes tokin { from { opacity: 0; transform: scale(0); } }
+@keyframes thump { 40% { transform: scale(1.18); } }
+@keyframes wobble { from { transform: scale(1.9) rotate(-6deg); } to { transform: scale(1.9) rotate(6deg); } }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
@@ -466,7 +509,7 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
           </div>
           <span class="quipcd" id="cd-quip"></span>
         </div>
-        <p class="lede">Une mesure tirée des programmes. À toi de retrouver qui la propose. Bonnes réponses, séries et rapidité rapportent des points. Les mauvaises rapportent surtout de l’humilité, ce qui est déjà plus que certaines promesses.</p>
+        <p class="lede">Une mesure, un candidat. À toi de retrouver qui a proposé quoi.</p>
         <ul class="facts">
           <li><b id="f-mes">0</b><span>mesures sourcées</span></li>
           <li><b id="f-cand">0</b><span>candidats</span></li>
@@ -474,30 +517,26 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
         </ul>
         <div class="card hemi">
           <h3>L’hémicycle des candidats</h3>
-          <p>De la gauche à la droite, selon le classement usuel de la presse. Clique sur un siège pour réviser ce candidat.</p>
+          <p>Clique sur un siège pour réviser un candidat.</p>
           <svg id="hemi" viewBox="0 0 420 235" role="group" aria-label="Hémicycle des candidats"></svg>
         </div>
-        <div class="kl" id="kl">
-          <span class="torch" aria-hidden="true">🔥</span>
-          <div>
-            <p class="kl-t">Au début, ils étaient <b id="kl-n">29</b>.<br>À la fin, il n’en restera qu’un.</p>
-            <p class="kl-s" id="kl-s">Première épreuve d’immunité : les 500 parrainages. Le conseil de la tribu, c’est vous, le 18 avril.</p>
-          </div>
-        </div>
-        <p class="boards-intro">Panneaux numérotés par ordre alphabétique. En bas, bandeau <span class="soon-l">À venir</span> : programme 2027 incomplet, ou candidature déclarée sans programme pour l’instant (panneaux « ? », pas encore jouables). On complète dès que ça sort.</p>
-        <div class="boards" id="boards-home"></div>
+        <details class="more">
+          <summary>Voir les <span id="more-n">tous les</span> panneaux <small id="more-s"></small></summary>
+          <p class="boards-intro">Bandeau <span class="soon-l">À venir</span> : programme 2027 incomplet, ou candidature déclarée sans programme pour l’instant. On complète dès que ça sort.</p>
+          <div class="boards" id="boards-home"></div>
+        </details>
       </div>
       <div class="card modebox">
         <h2>Choisis ta partie</h2>
         <div class="modes" role="group" aria-label="Mode de jeu" id="modes">
-          <button type="button" id="m-classic" data-mode="classic" aria-pressed="true"><b>Classique</b><span>Une mesure, retrouve le bon candidat.</span></button>
-          <button type="button" id="m-duel" data-mode="duel" aria-pressed="false"><b>Confrontation</b><span>Deux candidats face à face : à qui est la mesure ?</span></button>
-          <button type="button" id="m-blitz" data-mode="blitz" aria-pressed="false"><b>Éclair 60 s</b><span>Un maximum de bonnes réponses en une minute.</span></button>
-          <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Teste-toi sur un ou plusieurs candidats.</span></button>
-          <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Les mesures que des rivaux partagent. Oui, ça arrive.</span></button>
-          <button type="button" id="m-citations" data-mode="citations" aria-pressed="false"><b>Qui a dit ça&nbsp;?<i class="new">Nouveau</i></b><span>10 petites phrases de meetings, de débats et d’interviews. À qui les rendre ?</span></button>
-          <button type="button" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>10 dossiers : condamnations, procès, relaxes et polémiques. Statut judiciaire et source à chaque fois.</span></button>
-          <button type="button" id="m-conseil" data-mode="conseil" aria-pressed="false"><b>Le Conseil constitutionnel tousse<i class="new">Nouveau</i></b><span>Mesures qui se heurtent à la Constitution, à la jurisprudence ou aux traités. Devine qui les propose, puis découvre l’obstacle (sourcé).</span></button>
+          <button type="button" id="m-classic" data-mode="classic" aria-pressed="true"><b>Classique</b><span>Une mesure, un candidat.</span></button>
+          <button type="button" id="m-duel" data-mode="duel" aria-pressed="false"><b>Confrontation</b><span>Deux candidats, une mesure.</span></button>
+          <button type="button" id="m-blitz" data-mode="blitz" aria-pressed="false"><b>Éclair 60 s</b><span>Une minute, un max de points.</span></button>
+          <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Révise qui tu veux.</span></button>
+          <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Quand des rivaux pensent pareil.</span></button>
+          <button type="button" id="m-citations" data-mode="citations" aria-pressed="false"><b>Qui a dit ça&nbsp;?</b><span>10 phrases chocs, avec contexte.</span></button>
+          <button type="button" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques</b><span>10 dossiers judiciaires, sourcés.</span></button>
+          <button type="button" id="m-conseil" data-mode="conseil" aria-pressed="false"><b>Le Conseil constit’ tousse</b><span>Les mesures qui coincent en droit.</span></button>
         </div>
 
         <div class="field" id="fld-pool">
@@ -535,7 +574,7 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
           <div class="chips" id="duel-chips" aria-label="Affiches suggérées"></div>
         </div>
         <div class="field" id="fld-citations" hidden>
-          <p class="notice">Citations courtes, telles que rapportées par la presse, avec leur contexte et leur source affichés après ta réponse.</p>
+          <p class="notice">Des phrases chocs de meetings, débats et interviews. Le contexte est donné avant de répondre, le qui, quand et où après, avec la source.</p>
         </div>
         <div class="field" id="fld-conseil" hidden>
           <p class="notice">Ici, pas de jugement sur le fond : chaque fiche indique seulement l’obstacle juridique identifié par le Conseil constitutionnel, des juristes ou les textes, avec sa source. Une Constitution, ça se révise, et certains candidats le proposent.</p>
@@ -566,8 +605,10 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
     <p class="notice" id="g-notice" hidden>Présomption d’innocence : une procédure en cours n’est pas une condamnation. Le statut exact s’affiche après ta réponse.</p>
     <article class="card bulletin" id="g-card" aria-live="polite">
       <span class="toast" id="g-toast" hidden></span>
-      <span class="theme" id="g-theme">Thème</span><span class="kind" id="g-kind" hidden></span>
+      <span class="theme" id="g-theme">Thème</span><span class="kind" id="g-kind" hidden></span><button type="button" class="info-btn" id="g-info" aria-expanded="false" aria-controls="g-infobox" title="Comprendre la mesure" hidden><span aria-hidden="true">i</span><span class="vh">Comprendre la mesure</span></button>
+      <p class="pre" id="g-pre" hidden></p>
       <blockquote id="g-text"></blockquote>
+      <div class="infobox" id="g-infobox" hidden></div>
       <p class="ask" id="g-ask">Qui propose cette mesure ?</p>
       <div class="src" id="g-src" hidden></div>
       <div class="stamp" id="g-stamp" hidden></div>
@@ -665,11 +706,12 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
       <li>Mode « Casier &amp; polémiques » : uniquement des faits publics rapportés par la presse ou les juridictions, avec le statut exact de chaque procédure à la date de mise à jour (définitif, appel, cassation en cours, relaxe, non-lieu). Une procédure en cours n’est pas une condamnation. Ici, l’humour ne porte jamais sur les affaires.</li>
       <li>Mode « Le Conseil constitutionnel tousse » : uniquement des obstacles juridiques documentés (décision du Conseil constitutionnel, texte de la Constitution, analyse de juristes rapportée par la presse). Cela ne préjuge pas d’une révision de la Constitution, que certains candidats proposent justement.</li>
       <li>Antisèches : la famille politique reprend le classement usuel de la presse ; c’est un repère simplifié, que les intéressés contestent parfois.</li>
-      <li>Mode « Qui a dit ça ? » : citations courtes d’interviews, de meetings et de débats, telles que rapportées par la presse ; le contexte et la source s’affichent après chaque réponse.</li>
-      <li>Candidats déclarés sans programme recensé (affichés « À venir » sur l’accueil, pas encore jouables) : d’après le décompte de Public Sénat du 14 octobre 2026, complété par la déclaration de Teddy Riner le 9 novembre 2026 (France 24, franceinfo). Liste non exhaustive.</li>
+      <li>Mode « Qui a dit ça ? » : phrases marquantes d’interviews, de meetings et de débats, telles que rapportées par la presse ; un contexte neutre (sans nom) s’affiche avant la réponse, l’auteur, le lieu, la date et la source après.</li>
+      <li>Candidats déclarés sans programme recensé (affichés « À venir » sur l’accueil, pas encore jouables) : d’après les décomptes de Public Sénat d’octobre et du 9 novembre 2026. Les personnalités seulement « pressenties » (François Hollande, Bernard Cazeneuve, Dominique de Villepin…) ne sont pas listées tant qu’elles ne se sont pas déclarées. Juan Branco devient jouable avec le projet des Ruches.</li>
       <li>Le compte à rebours vise l’ouverture des bureaux de vote le dimanche 18 avril 2027 à 8 h (heure de Paris), date retenue par le Conseil des ministres du 1er juillet 2026.</li>
       <li>L’humour vise le joueur, jamais les candidats. Aucun candidat n’a été maltraité pendant la fabrication de ce quiz. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
-    </ul>
+      <li>Le petit « i » sur chaque question : les sigles et termes techniques de la mesure sont expliqués par un lexique neutre, plus un repère général sur le thème. Il ne révèle jamais le candidat.</li>
+      </ul>
     </details>
   </div>
 </footer>
@@ -682,6 +724,7 @@ var C = [
   { id: "attal", name: "Gabriel Attal", ini: "GA", party: "Renaissance", main: true },
   { id: "batho", name: "Delphine Batho", ini: "DB", party: "Génération écologie" },
   { id: "bertrand", name: "Xavier Bertrand", ini: "XB", party: "Nous France" },
+  { id: "branco", name: "Juan Branco", ini: "JBr", party: "Les Ruches" },
   { id: "dupont", name: "Nicolas Dupont-Aignan", ini: "NDA", party: "Debout la France" },
   { id: "glucksmann", name: "Raphaël Glucksmann", ini: "RG", party: "Place publique · PS", main: true },
   { id: "kazib", name: "Anasse Kazib", ini: "AK", party: "Révolution permanente" },
@@ -760,6 +803,8 @@ var S = {
   ndDlf: { s: "Projet de Debout la France (via Votons 2027)", d: "2026", u: "https://www.debout-la-france.fr/notre-projet/" },
   kaSite: { s: "Programme d’Anasse Kazib (via Votons 2027)", d: "2026", u: "https://anasse2027.fr/programme" },
   ptSite: { s: "Projet des Patriotes (via Votons 2027)", d: "2026", u: "https://les-patriotes.fr/projetpourlafrance/" },
+  melLivre: { s: "L’Avenir en commun, le livre (via Votons 2027)", d: "2026", u: LAEC },
+  brRu: { s: "Les Ruches, « Le projet » (via Votons 2027)", d: "2026", u: "https://ruches.org/le-projet" },
   poSite: { s: "Site de Natacha Polony (via Votons 2027)", d: "2026", u: "https://natachapolony2027.fr/natacha-polony/ma-vision" }
 };
 
@@ -1408,7 +1453,208 @@ var RAW = [
   ["bertrand","Sécurité","Généraliser la saisie des biens des dealers.","beSite"],
   ["ruffin","Travail","Compter le temps de trajet entre deux interventions comme du temps de travail.","ruSite"],
   ["ruffin","Économie","Relocaliser la production de 100 produits jugés prioritaires.","ruSite"],
-  ["ruffin","Jeunesse","Rendre le Bafa gratuit.","ruSite"]
+  ["ruffin","Jeunesse","Rendre le Bafa gratuit.","ruSite"],
+  // ---- Vague 11 novembre 2026 (Votons 2027, mesures « phares ») ----
+  ["philippe","Budget","Inscrire dans la Constitution, par référendum, une règle d’or de maîtrise des déficits et ramener le déficit à 2 % du PIB en fin de quinquennat.","phSite"],
+  ["philippe","Justice","Instaurer un « devoir de redevabilité » des juges envers les victimes et revoir la composition du Conseil supérieur de la magistrature.","phSite"],
+  ["philippe","Éducation","Confisquer immédiatement le téléphone utilisé à l’école primaire ou au collège, et ne le rendre qu’aux parents.","phSite"],
+  ["philippe","Sécurité","Créer des réserves communales de sécurité civile rassemblant des dizaines de milliers de volontaires.","phSite"],
+  ["philippe","Immigration","Aligner les aides sociales versées aux étrangers sur la moyenne européenne.","phSite"],
+  ["melenchon","Fiscalité","Rétablir une « exit tax » renforcée contre l’exil fiscal.","melLivre"],
+  ["melenchon","Culture","Démanteler les empires médiatiques des milliardaires.","melLivre"],
+  ["melenchon","Santé","Sortir l’hôpital de la tarification à l’acte (T2A).","melLivre"],
+  ["melenchon","Santé","Instaurer le « 100 % Sécu » en intégrant les complémentaires santé dans la Sécurité sociale.","melLivre"],
+  ["melenchon","Éducation","Abroger la loi Carle et interdire les subventions facultatives des collectivités aux écoles privées.","melLivre"],
+  ["melenchon","Éducation","Rendre l’université gratuite de la licence au doctorat, quelle que soit la nationalité des étudiants.","melLivre"],
+  ["melenchon","Immigration","Faire de la carte de séjour de dix ans le titre de séjour de référence.","melLivre"],
+  ["arthaud","Économie","Rendre publiques les comptabilités des entreprises et les fortunes privées.","arLo"],
+  ["asselineau","Institutions","Rétablir le septennat et ramener le mandat des députés à quatre ans.","asUpr"],
+  ["asselineau","Économie","Établir un contrôle des changes et des mouvements de capitaux contre l’évasion fiscale.","asUpr"],
+  ["asselineau","Justice","Augmenter de 20 % les budgets de la justice et de la police.","asUpr"],
+  ["asselineau","Justice","Rendre obligatoire le travail ou la formation en prison et supprimer les crédits automatiques de réduction de peine.","asUpr"],
+  ["asselineau","Justice","Créer une perpétuité incompressible pour les auteurs de crimes terroristes.","asUpr"],
+  ["asselineau","Santé","Augmenter de 15 % le budget de l’hôpital public dès le premier budget.","asUpr"],
+  ["asselineau","Social","Revaloriser de 20 % l’allocation aux adultes handicapés (AAH) et la déconjugaliser.","asUpr"],
+  ["asselineau","Éducation","Rétablir le cadre national du baccalauréat, avec notation et classement.","asUpr"],
+  ["asselineau","Agriculture","Interdire les élevages en batterie et les « fermes des 1 000 vaches ».","asUpr"],
+  ["attal","Éducation","Viser moins de 20 élèves par classe.","atSite"],
+  ["attal","Défense","Diviser au moins par deux la dépendance de nos armées aux fournisseurs non européens.","atSite"],
+  ["attal","Écologie","Tripler le rythme annuel de baisse des émissions de gaz à effet de serre, de 1,8 % à 5 % par an.","atSite"],
+  ["branco","Institutions","Créer un référendum d’initiative citoyenne (RIC) en toutes matières.","brRu"],
+  ["branco","Institutions","Instaurer des mandats révocables à toutes les échelles.","brRu"],
+  ["branco","Institutions","Fusionner Conseil constitutionnel, Cour de cassation et Conseil d’État en une « Cour des peuples ».","brRu"],
+  ["branco","Institutions","Supprimer le poste de Premier ministre et transformer Matignon en ministère de la présidence.","brRu"],
+  ["branco","Institutions","Abroger l’article 49.3 de la Constitution.","brRu"],
+  ["branco","Institutions","Interdire tout pantouflage des hauts fonctionnaires vers le privé.","brRu"],
+  ["branco","Économie","Faire élire le gouverneur de la Banque de France et rétablir le circuit du Trésor.","brRu"],
+  ["branco","Social","Supprimer les conditions du RSA et verser automatiquement les minima sociaux.","brRu"],
+  ["branco","Travail","Porter le Smic à 1 500 euros net minimum, avec des Smic régionaux au-dessus.","brRu"],
+  ["branco","Économie","Réserver au moins 75 % des marchés publics à des entreprises nationales.","brRu"],
+  ["branco","Europe","Sortir de l’Union européenne, de l’euro, du Conseil de l’Europe et de l’espace Schengen.","brRu"],
+  ["branco","Défense","Sortir de l’OTAN.","brRu"],
+  ["branco","International","Créer une Union des pays francophones sur le modèle du Commonwealth.","brRu"],
+  ["branco","Défense","Produire un million de drones par an d’ici 2032.","brRu"],
+  ["branco","International","Arrêter les livraisons d’armes à l’Ukraine.","brRu"],
+  ["branco","Sécurité","Confier la police nationale aux communes, hors police judiciaire et maintien de l’ordre.","brRu"],
+  ["branco","Sécurité","Supprimer les brigades anticriminalité (BAC) au profit d’une police de proximité.","brRu"],
+  ["branco","Sécurité","Créer un récépissé pour chaque contrôle d’identité et rendre le port du matricule obligatoire.","brRu"],
+  ["branco","Sécurité","Doubler le nombre de douaniers et contrôler 10 % des marchandises.","brRu"],
+  ["branco","Justice","En finir avec le « modèle Badinter » : peines réelles et exécution des courtes peines.","brRu"],
+  ["branco","Justice","Construire des cellules collectives de 6 à 12 détenus dans un plan pénitentiaire.","brRu"],
+  ["branco","Santé","Supprimer les agences régionales de santé (ARS).","brRu"],
+  ["branco","Santé","Rembourser intégralement les soins dentaires.","brRu"],
+  ["branco","Santé","Confier la direction des hôpitaux à un corps de médecins.","brRu"],
+  ["branco","Éducation","Augmenter de 30 % les budgets des universités et de la recherche, financés par la suppression du crédit d’impôt recherche.","brRu"],
+  ["branco","Éducation","Supprimer Parcoursup et le SNU.","brRu"],
+  ["branco","Éducation","Revenir au baccalauréat classique, national et en épreuves terminales.","brRu"],
+  ["branco","Éducation","Intégrer les écoles privées à l’enseignement public.","brRu"],
+  ["branco","Immigration","Traiter les demandes d’asile dans les consulats, à l’étranger.","brRu"],
+  ["branco","Immigration","Réduire la durée de la rétention administrative et punir le séjour irrégulier par des travaux d’intérêt général.","brRu"],
+  ["branco","Énergie","Nationaliser la distribution d’électricité et mettre fin à la concurrence dans l’énergie.","brRu"],
+  ["branco","Énergie","Construire 14 réacteurs EPR2.","brRu"],
+  ["branco","Agriculture","Rétablir des prix planchers garantis pour les agriculteurs.","brRu"],
+  ["branco","Agriculture","Interdire en cinq ans les pesticides cancérigènes de catégorie 1 et les perturbateurs endocriniens.","brRu"],
+  ["dupont","Institutions","Revenir au septennat, avec un référendum révocatoire d’initiative citoyenne à mi-mandat.","ndDlf"],
+  ["dupont","Économie","Inscrire l’argent liquide dans la Constitution pour garantir l’anonymat des dépenses.","ndDlf"],
+  ["dupont","Institutions","Supprimer les régions et répartir leurs compétences entre départements et État.","ndDlf"],
+  ["dupont","Sécurité","Recruter 10 000 policiers et gendarmes supplémentaires en cinq ans.","ndDlf"],
+  ["dupont","Justice","Soumettre à référendum le rétablissement de la peine de mort pour les meurtres d’enfants.","ndDlf"],
+  ["dupont","Justice","Abaisser la majorité pénale à 16 ans.","ndDlf"],
+  ["dupont","Immigration","Conditionner l’immigration économique au taux de chômage.","ndDlf"],
+  ["dupont","Santé","Remplacer l’AME par un dispensaire d’urgence par département pour les étrangers en situation irrégulière.","ndDlf"],
+  ["dupont","Immigration","Supprimer le droit du sol par référendum.","ndDlf"],
+  ["dupont","Europe","Sortir de l’Union européenne.","ndDlf"],
+  ["dupont","International","Relancer un partenariat avec la Russie après la paix en Ukraine.","ndDlf"],
+  ["dupont","Éducation","Imposer l’uniforme et le vouvoiement à l’école.","ndDlf"],
+  ["dupont","Éducation","Revenir à la méthode syllabique pour apprendre à lire.","ndDlf"],
+  ["dupont","Éducation","Réserver l’entrée au lycée aux élèves ayant obtenu le brevet.","ndDlf"],
+  ["dupont","Énergie","Supprimer les aides publiques aux éoliennes et aux panneaux solaires.","ndDlf"],
+  ["dupont","Écologie","Classer 30 % des eaux françaises en aires marines protégées.","ndDlf"],
+  ["dupont","Transports","Supprimer l’interdiction des voitures thermiques neuves en 2035.","ndDlf"],
+  ["lepen","Social","Réserver les aides sociales aux Français et exiger cinq ans de travail en France pour les prestations de solidarité.","lp22"],
+  ["lepen","Immigration","Expulser systématiquement les clandestins et les délinquants étrangers.","lp22"],
+  ["lepen","Justice","Supprimer toute réduction ou aménagement de peine, surtout pour les violences contre les personnes.","lp22"],
+  ["lepen","Justice","Atteindre 85 000 places de prison.","lp22"],
+  ["lepen","Culture","Privatiser l’audiovisuel public.","lp22"],
+  ["lepen","Logement","Abroger la loi SRU et les amendes infligées aux communes.","lp22"],
+  ["lepen","Défense","Porter le budget de la défense à 55 milliards d’euros.","lp22"],
+  ["lepen","Santé","Supprimer les ARS et réduire à 10 % les postes administratifs à l’hôpital.","lp22"],
+  ["lepen","Santé","Délivrer les médicaments à l’unité.","lp22"],
+  ["philippot","Immigration","Mettre fin à l’immigration de travail et aux travailleurs détachés.","ptSite"],
+  ["philippot","Famille","Conditionner les prestations sociales des parents de mineurs récidivistes.","ptSite"],
+  ["philippot","Culture","Mener de grandes campagnes nationales pour restaurer les édifices en péril.","ptSite"],
+  ["philippot","Économie","Sortir des accords de libre-échange.","ptSite"],
+  ["philippot","Numérique","Refuser l’identité numérique européenne.","ptSite"],
+  ["philippot","Société","Interdire l’abattage rituel sans étourdissement.","ptSite"],
+  ["retailleau","Sécurité","Autoriser la vidéosurveillance « intelligente » dans les lieux publics.","reSite"],
+  ["retailleau","Défense","Multiplier par cinq les moyens de l’IA de défense : cyber, drones, robotique, quantique.","reSite"],
+  ["retailleau","Numérique","Créer « Marianne », un assistant numérique qui remplace les formulaires administratifs.","reSite"],
+  ["retailleau","Europe","Imposer des clauses de réciprocité dans tous les accords commerciaux européens.","reSite"],
+  ["retailleau","Éducation","Instaurer un examen d’entrée en sixième et des groupes de niveau au collège.","reSite"],
+  ["ruffin","Travail","Indexer les salaires sur l’inflation, comme jusqu’en 1982.","ruSite"],
+  ["ruffin","Agriculture","Imposer aux acheteurs des prix minimums garantis pour les agriculteurs.","ruSite"],
+  ["ruffin","Énergie","Confier à EDF toutes les nouvelles grandes centrales, nucléaires comme renouvelables.","ruSite"],
+  ["ruffin","Sécurité","Revenir à au moins 5 000 camions-citernes feux de forêts.","ruSite"],
+  ["ruffin","Institutions","Voter une grande loi de séparation de l’État et de l’Argent.","ruSite"],
+  ["ruffin","Justice","Retirer au gouvernement la nomination des magistrats du parquet.","ruSite"],
+  ["tondelier","Agriculture","Décréter un moratoire sur toutes les mégabassines.","toProg"],
+  ["tondelier","Logement","Généraliser et pérenniser l’encadrement des loyers.","toProg"],
+  ["tondelier","Éducation","Augmenter de 15 % le salaire des enseignants en cinq ans.","toProg"],
+  ["tondelier","Éducation","Construire 150 000 logements étudiants et places en foyers de jeunes travailleurs.","toProg"],
+  ["tondelier","Sécurité","Interdire les contrôles d’identité aléatoires.","toProg"],
+  ["tondelier","International","Arrêter immédiatement toute importation de gaz, d’uranium et d’engrais russes.","toProg"],
+  ["tondelier","Justice","Instaurer un numerus clausus dans les prisons contre la surpopulation.","toProg"],
+  ["tondelier","Société","Légaliser et encadrer la production, la vente et la consommation de cannabis.","toProg"],
+  ["lisnard","Immigration","Supprimer l’AME et la remplacer par une aide d’urgence.","liProg"],
+  ["lisnard","Social","Réserver les prestations non contributives aux étrangers résidant en France depuis au moins cinq ans.","liProg"],
+  ["lisnard","Institutions","Remplacer le principe de précaution par un « principe de responsabilité » dans la Constitution.","liProg"],
+  ["lisnard","Institutions","Nommer un gouvernement de douze ministres seulement.","liProg"],
+  ["lisnard","Économie","Supprimer deux normes pour chaque nouvelle norme créée.","liProg"],
+  ["glucksmann","Europe","Porter un « Buy European Act » pour privilégier les productions européennes dans les marchés publics.","glActe"],
+  ["glucksmann","International","Reconnaître l’État de Palestine aux côtés d’Israël.","glActe"],
+  ["glucksmann","Travail","Porter le Smic à 1 600 euros net dans les deux ans.","glActe"],
+  ["roussel","Travail","Passer à la semaine de 32 heures sans baisse de salaire.","roJh"],
+  ["roussel","Économie","Nationaliser BNP Paribas, la Société générale et Axa pour créer un pôle financier public.","roJh"],
+  ["roussel","Fiscalité","Rétablir un ISF plus progressif et supprimer ses niches fiscales.","roJh"],
+  ["roussel","Éducation","Généraliser le repas à un euro dans toutes les cantines scolaires.","roJh"],
+  ["roussel","Défense","Créer un pôle public des industries d’armement.","roJh"],
+  ["roussel","Défense","Signer le traité d’interdiction des armes nucléaires.","roJh"],
+  ["roussel","Défense","Quitter l’OTAN et demander sa dissolution.","roJh"],
+  ["roussel","Europe","Mettre fin à l’indépendance de la Banque centrale européenne.","roJh"],
+  ["zemmour","Immigration","Supprimer toute subvention aux ONG d’aide aux migrants.","zeEu"],
+  ["zemmour","Défense","Refuser tout partage de la dissuasion nucléaire et du siège français à l’ONU.","zeEu"],
+  ["zemmour","Travail","Passer à trois jours de carence pour les arrêts maladie des fonctionnaires.","zeEu"],
+  ["kazib","Logement","Exproprier les logements vides et geler les loyers.","kaSite"],
+  ["kazib","Institutions","Remplacer président et Sénat par une assemblée unique, à la fois législative et exécutive.","kaSite"],
+  ["bertrand","Travail","Exonérer d’impôt et de cotisations les heures travaillées au-delà de 35 heures.","beSite"],
+  ["bertrand","Immigration","Examiner chaque demande d’asile en un mois, avec assignation à résidence du demandeur.","beSite"],
+  ["bertrand","Immigration","Créer une Alliance méditerranéenne de contrôle de l’immigration avec Frontex.","beSite"],
+  ["bertrand","Défense","Ne jamais partager le siège français au Conseil de sécurité de l’ONU.","beSite"],
+  ["attal","Énergie","Doubler les fonds pour la géothermie, à 160 millions d’euros par an dès 2027.","atSite"],
+  ["attal","Économie","Rouvrir le dossier minier en France et couvrir 30 % des besoins en métaux par le recyclage.","atSite"],
+  ["attal","Éducation","Enseigner l’usage des outils d’IA à l’école, comme lire, écrire et compter.","atSite"],
+  ["attal","Fiscalité","Sortir les pensions alimentaires du revenu imposable du parent qui les reçoit.","atSite"],
+  ["attal","Justice","Punir d’une amende forfaitaire délictuelle le premier acte de maltraitance animale.","atSite"],
+  ["attal","Justice","Surveiller les prédateurs sexuels sur le modèle des fichés S.","atSite"],
+  ["philippe","Travail","Instaurer trois jours de carence pour tous les arrêts maladie, dans le privé comme dans le public.","phSite"],
+  ["philippe","Budget","Fusionner ou supprimer des dizaines d’agences et de comités publics.","phSite"],
+  ["philippe","Justice","Lever l’excuse de minorité pour les faits de narcotrafic.","phSite"],
+  ["retailleau","Travail","Réécrire le Code du travail en 50 principes et renvoyer le reste à la négociation.","reSite"],
+  ["retailleau","Énergie","Relancer immédiatement les recherches sur un réacteur nucléaire à neutrons rapides.","reSite"],
+  ["retailleau","Budget","Utiliser l’IA pour récupérer plusieurs milliards d’euros de fraude.","reSite"],
+  ["retailleau","Économie","Appliquer un principe « Buy European First » à l’argent public.","reSite"],
+  ["retailleau","Énergie","Augmenter la production et le stockage d’hydroélectricité.","reSite"],
+  ["glucksmann","Culture","Réformer la loi de 1986 pour limiter la concentration des médias.","glActe"],
+  ["glucksmann","Économie","Soutenir la reprise d’entreprises par leurs salariés en coopératives (Scop).","glActe"],
+  ["glucksmann","Travail","Limiter les écarts de salaires au sein d’une même entreprise.","glActe"],
+  ["glucksmann","Travail","Redonner la priorité aux accords de branche sur les accords d’entreprise.","glActe"],
+  ["glucksmann","Logement","Relancer et simplifier MaPrimeRénov’.","glActe"],
+  ["glucksmann","Transports","Relancer les trains de nuit et accélérer les lignes à grande vitesse.","glActe"],
+  ["glucksmann","Institutions","Lancer une convention citoyenne préparant une assemblée constituante.","glActe"],
+  ["glucksmann","Travail","Abroger la réforme Macron de l’assurance chômage.","glActe"],
+  ["lisnard","Travail","Supprimer les charges des particuliers employeurs au niveau du Smic.","liProg"],
+  ["lisnard","Retraites","Faire évoluer les régimes de retraite vers la capitalisation.","liProg"],
+  ["lisnard","Retraites","Créer une agence publique unique qui gère toutes les retraites.","liProg"],
+  ["lisnard","Immigration","Traiter les demandes d’asile dans les consulats, à l’étranger.","liProg"],
+  ["lisnard","Immigration","Conditionner le regroupement familial à des ressources et à des tests d’intégration.","liProg"],
+  ["ruffin","Travail","Rémunérer les coupures de plus de deux heures imposées par l’employeur.","ruSite"],
+  ["ruffin","Agriculture","Placer environ 3 millions d’hectares supplémentaires en gestion publique.","ruSite"],
+  ["ruffin","Santé","Climatiser les écoles, hôpitaux et Ehpad.","ruSite"],
+  ["ruffin","Sécurité","Équiper tous les pompiers de cagoules filtrantes fabriquées en France.","ruSite"],
+  ["bertrand","Retraites","Permettre de partir plus tôt avec une décote si l’on estime avoir assez.","beSite"],
+  ["bertrand","Retraites","Abaisser l’âge à partir duquel les femmes ne subissent plus de décote.","beSite"],
+  ["bertrand","Énergie","Limiter le développement des éoliennes.","beSite"],
+  ["zemmour","Énergie","Supprimer la directive imposant 45 % d’énergies renouvelables en Europe.","zeEu"],
+  ["zemmour","Agriculture","Abroger la stratégie européenne « de la ferme à la fourchette ».","zeEu"],
+  ["lepen","Logement","Remplacer MaPrimeRénov’ par « 100 % Rénov ».","lp22"],
+  ["lepen","Immigration","Supprimer le titre de séjour de tout étranger sans travail depuis un an.","lp22"],
+  ["lepen","Justice","Doubler le nombre de magistrats.","lp22"],
+  ["tondelier","Agriculture","Sortir progressivement des pesticides de synthèse et des engrais azotés d’ici 2050.","toProg"],
+  ["tondelier","Société","Interdire la corrida, les combats de coqs et le gavage.","toProg"],
+  ["tondelier","Santé","Faire rembourser l’activité physique adaptée par la Sécurité sociale.","toProg"],
+  ["roussel","Énergie","Viser un mix énergétique 100 % public et 100 % décarboné.","roJh"],
+  ["roussel","Travail","Abroger la loi El Khomri, les ordonnances Macron et la loi Borne sur le chômage.","roJh"],
+  ["roussel","Santé","Faire élire les représentants des cotisants à la tête de la Sécurité sociale.","roJh"],
+  ["dupont","Justice","Recruter 20 000 surveillants de prison supplémentaires.","ndDlf"],
+  ["dupont","Justice","Porter la prescription à 30 ans pour les crimes et à 10 ans pour les délits.","ndDlf"],
+  ["dupont","Justice","Abroger l’ordonnance de 1945 sur la justice des mineurs.","ndDlf"],
+  ["dupont","Défense","Créer une garde nationale de 100 000 réservistes.","ndDlf"],
+  ["dupont","Économie","Supprimer la TVA sur 50 produits de première nécessité.","ndDlf"],
+  ["dupont","Écologie","Sanctionner l’absence de pièces détachées pour un produit de moins de 10 ans.","ndDlf"],
+  ["dupont","Transports","Revenir aux 90 km/h sur les routes départementales.","ndDlf"],
+  ["asselineau","Institutions","Exiger 60 % de parlementaires présents pour tout vote à l’Assemblée et au Sénat.","asUpr"],
+  ["asselineau","Institutions","Supprimer le financement public des partis politiques.","asUpr"],
+  ["asselineau","Institutions","Diviser par deux le nombre de conseillers départementaux.","asUpr"],
+  ["asselineau","Budget","Réduire de 30 % les frais de fonctionnement de l’Élysée et du gouvernement.","asUpr"],
+  ["asselineau","Fiscalité","Baisser de 5 points les droits de succession sous 300 000 euros par héritier.","asUpr"],
+  ["asselineau","Éducation","Rétablir la remise des prix de fin d’année, abolie après Mai 68.","asUpr"],
+  ["philippot","Immigration","Exiger des étrangers une parfaite assimilation, ou leur départ.","ptSite"],
+  ["philippot","Famille","Refonder entièrement l’Aide sociale à l’enfance.","ptSite"],
+  ["branco","Institutions","Passer à un mandat présidentiel de sept ans, limité à trois mandats.","brRu"],
+  ["branco","Social","Ouvrir le RSA dès 18 ans, sans condition de ressources des parents.","brRu"],
+  ["branco","Travail","Fixer un objectif de 1 800 heures travaillées par actif et par an.","brRu"],
+  ["branco","Défense","Disposer de 300 chars et de 300 avions de combat.","brRu"],
+  ["branco","Justice","Limiter les gardes à vue à 24 heures et à 200 000 par an.","brRu"]
 ];
 
 
@@ -1439,7 +1685,7 @@ var SHARED = [
   [["melenchon","ruffin"],"Logement","Construire 200 000 logements publics par an.",{melenchon:"melR3",ruffin:"ruSite"},0],
   [["ruffin","melenchon"],"Écologie","Rétablir la consigne des bouteilles et bocaux en verre.",{ruffin:"ruSite",melenchon:"melB3"},0],
   [["tondelier","melenchon"],"Santé","Supprimer les franchises médicales.",{tondelier:"toMv",melenchon:"melS1"},0],
-  [["melenchon","roussel","glucksmann"],"Travail","Porter le Smic à 1 700 € net.",{melenchon:"melE2",roussel:"roPol",glucksmann:"glWiki"},0],
+  [["melenchon","roussel"],"Travail","Porter le Smic à 1 700 € net.",{melenchon:"melE2",roussel:"roPol"},0],
   [["zemmour","philippot"],"Immigration","Expulser tous les détenus étrangers des prisons françaises.",{zemmour:"zeBfm",philippot:"ptSite"},0],
   [["zemmour","philippot"],"Transports","Revenir sur l’interdiction de vendre des voitures thermiques neuves en 2035.",{zemmour:"zeEu",philippot:"ptSite"},0],
   [["lepen","lisnard"],"Retraites","Porter le minimum vieillesse à 1 000 € par mois.",{lepen:"lp22",lisnard:"liProg"},0],
@@ -1493,30 +1739,31 @@ var CASE_KIND = { cond: "Condamnation", civ: "Condamnation civile", cours: "Proc
 
 /* Mode « Qui a dit ça ? » : courtes citations d'interviews, de meetings et de débats, rapportées par la presse. [candidat, citation, contexte révélé après la réponse, source] */
 var QUOTES = [
-  ["melenchon","Pour ce qui est d’emmerder le monde, il est très fort.","À propos de la réforme proposée par Édouard Philippe, en arrivant au débat du Medef.",{s:"AFP via Bourse Direct",d:"27 août 2026",u:"https://www.boursedirect.fr/fr/actualites/categorie/politique/premier-grand-debat-des-candidats-a-la-presidentielle-sur-le-terrain-patronal-afp-b61c3d17e4cbb29e8a3b7cdd539f230c6ac1cafc"}],
-  ["melenchon","La primaire est finie.","À la fin de son meeting de lancement de campagne à Saint-Denis, à l’adresse du reste de la gauche.",{s:"Politis",d:"7 juin 2026",u:"https://www.politis.fr/articles/2026/06/presidentielle-2027-le-defi-melenchon/"}],
-  ["melenchon","La victoire est possible.","Discours de rentrée consacré à l’écologie, où il a proposé une « conscription écologique ».",{s:"Sud Radio (AFP)",d:"août 2026",u:"https://www.sudradio.fr/societe/presidentielle-melenchon-colore-sa-rentree-en-vert-en-proposant-la-conscription-ecologique"}],
-  ["lepen","Je ferai donc campagne sans bracelet électronique.","Au 20 heures de TF1, le soir de sa condamnation en appel, en annonçant un pourvoi en cassation.",{s:"Euronews",d:"7 juillet 2026",u:"https://fr.euronews.com/2026/07/07/je-suis-candidate-a-lelection-presidentielle-annonce-marine-le-pen-sur-tf1"}],
-  ["lepen","J’ai les mains propres.","Sur TF1, en annonçant sa candidature quelques heures après l’arrêt de la cour d’appel.",{s:"LCP",d:"7 juillet 2026",u:"https://lcp.fr/index%2Ephp/actualites/ce-soir-je-suis-candidate-a-l-election-presidentielle-annonce-marine-le-pen-438886"}],
-  ["philippe","Je demanderai des efforts, mais des efforts justes, partagés et étalés dans le temps.","Premier grand meeting de campagne, à l’Adidas Arena de Paris.",{s:"Europe 1",d:"5 juillet 2026",u:"https://www.europe1.fr/node/966771"}],
-  ["philippe","Prenez une bonne bière.","En ouverture d’une « réunion d’appartement » géante en visioconférence avec 9 500 personnes.",{s:"LCP",d:"25 juin 2026",u:"https://lcp.fr/actualites/si-je-devais-le-refaire-je-le-referais-autrement-le-mea-culpa-d-edouard-philippe-sur-les"}],
-  ["philippe","Tout n’est pas perdu.","Premiers mots de son premier grand meeting de campagne, devant environ 5 000 personnes.",{s:"Euronews",d:"5 juillet 2026",u:"https://fr.euronews.com/my-europe/2026/07/05/premier-meeting-de-campagne-pour-edouard-philippe-linteret-des-enfants-sera-sa-boussole"}],
-  ["attal","Tu voles, tu paies.","À l’adresse de la présidente du RN, en déclinant une formule de sa déclaration de politique générale.",{s:"Europe 1",d:"2025",u:"https://www.europe1.fr/node/671316"}],
-  ["attal","Je veux être le président qui parlera à la jeunesse parce qu’il la comprend.","Meeting de Lyon consacré à la jeunesse, en pleine mobilisation lycéenne.",{s:"La Gazette France (AFP)",d:"10 octobre 2026",u:"https://www.lagazettefrance.fr/article/presidentielle-attal-melenchon-pour-les-candidats-l-atout-ou-le-peril-jeune"}],
-  ["glucksmann","Ce soir, la bataille de France commence.","Le soir de sa victoire dès le premier tour de la primaire sociale-démocrate.",{s:"Public Sénat",d:"11 octobre 2026",u:"https://www.publicsenat.fr/actualites/politique/ce-soir-la-bataille-de-france-commence-apres-sa-victoire-a-la-primaire-de-la-gauche-raphael-glucksmann-assure-que-rien-ne-le-fera-l"}],
-  ["glucksmann","Il n’y aura pas d’accord avec la France insoumise.","Sur France 2, au lendemain de sa victoire à la primaire.",{s:"Sud Radio (AFP)",d:"octobre 2026",u:"https://www.sudradio.fr/societe/apres-une-primaire-reussie-les-choses-serieuses-commencent-pour-glucksmann"}],
-  ["glucksmann","Ma détermination est sans faille.","Meeting de lancement de campagne aux Docks de Paris, à Aubervilliers.",{s:"LCP",d:"13 juin 2026",u:"https://lcp.fr/actualites/gagner-en-2027-raphael-glucksmann-lance-sa-campagne-et-veut-ramener-la-gauche-au-pouvoir"}],
-  ["retailleau","Je ne prétendrai jamais à être Jupiter.","Premier grand meeting de campagne, au Parc floral de Paris, en référence à Emmanuel Macron.",{s:"LCP",d:"20 juin 2026",u:"https://lcp.fr/index%2ephp/actualites/j-irai-jusqu-au-bout-bruno-retailleau-lance-sa-conquete-de-l-elysee-devant-une-droite"}],
-  ["retailleau","Mais où sont les propositions ?","Sur BFMTV-RMC, à propos du grand meeting parisien d’Édouard Philippe.",{s:"La Gazette France (AFP)",d:"juillet 2026",u:"https://www.lagazettefrance.fr/article/retailleau-critique-les-generalites-et-l-absence-de-propositions-de-philippe"}],
-  ["zemmour","Il ne suffit plus, en 2026, de fermer les frontières et d’arrêter les flux.","Discours de rentrée aux universités d’été de son parti, à Port-Marly.",{s:"Techniques de l’ingénieur (AFP)",d:"13 septembre 2026",u:"https://www.techniques-ingenieur.fr/actualite/breves-afp/eric-zemmour-prepare-sa-candidature-et-appelle-a-un-vote-du-sursaut-163638/"}],
-  ["zemmour","Vous avez compris, je serai candidat à la présidentielle.","Sur BFMTV, après avoir d’abord parlé d’un « processus de candidature ».",{s:"LCP",d:"17 septembre 2026",u:"https://lcp.fr/index%2Ephp/actualites/presidentielle-2027-eric-zemmour-officialise-sa-candidature-441871"}],
-  ["tondelier","Il n’y a pas de raison que le seul débat de cette rentrée soit au Medef sur les entreprises.","En réclamant un grand débat télévisé sur l’écologie après un été de canicules et d’incendies.",{s:"Le Petit Journal (AFP)",d:"26 août 2026",u:"https://lepetitjournal.com/fil-afp/premier-grand-debat-candidats-presidentielle-terrain-patronal-452067"}],
-  ["tondelier","Celui qui fait le choix du repli.","Pour qualifier le vainqueur de la primaire sociale-démocrate, Raphaël Glucksmann.",{s:"Le Petit Journal (AFP)",d:"12 octobre 2026",u:"https://lepetitjournal.com/expat-politique/apres-une-primaire-reussie-les-choses-serieuses-commencent-pour-glucksmann-455946"}],
-  ["ruffin","Raphaël Glucksmann remporte la primaire de Raphaël à Glucksmann !","Réaction ironique au résultat de la primaire sociale-démocrate, à laquelle il voulait participer.",{s:"LCP",d:"11 octobre 2026",u:"https://lcp.fr/index%2ephp/actualites/victoire-de-raphael-glucksmann-a-la-primaire-socialiste-premieres-reactions-des"}]
+  ["melenchon","Pour ce qui est d’emmerder le monde, il est très fort.","En arrivant au premier grand débat des candidats devant le patronat, à propos d’un rival qui veut repousser l’âge de la retraite.","Jean-Luc Mélenchon visait Édouard Philippe et son projet de réforme des retraites, à l’entrée du débat du Medef.",{s:"AFP via Bourse Direct",d:"27 août 2026",u:"https://www.boursedirect.fr/fr/actualites/categorie/politique/premier-grand-debat-des-candidats-a-la-presidentielle-sur-le-terrain-patronal-afp-b61c3d17e4cbb29e8a3b7cdd539f230c6ac1cafc"}],
+  ["melenchon","Nous, c’est carré. Il y a une équipe, un programme, un seul candidat.","Au 20 heures, en annonçant sa candidature, pendant que le reste de la gauche se déchire sur une primaire.","Jean-Luc Mélenchon, en officialisant sa quatrième candidature sur TF1.",{s:"La Libre (AFP)",d:"3 mai 2026",u:"https://www.lalibre.be/international/europe/2026/05/03/jean-luc-melenchon-officialise-sa-candidature-a-la-presidentielle-2027-62WVGQMVUREGHCOMM2PKZ2DE7M/"}],
+  ["melenchon","La primaire est finie.","Dernière phrase de son meeting de lancement, lancée aux autres partis de gauche qui préparent une primaire sans lui.","Jean-Luc Mélenchon, à Saint-Denis : pour lui, le premier tour fera office de primaire à gauche.",{s:"Politis",d:"7 juin 2026",u:"https://www.politis.fr/articles/2026/06/presidentielle-2027-le-defi-melenchon/"}],
+  ["lepen","Je ferai donc campagne sans bracelet électronique.","Au 20 heures, le soir d’un arrêt de cour d’appel qui lui permet finalement d’être candidate, mais avec un an de surveillance électronique.","Marine Le Pen sur TF1, en annonçant à la fois sa candidature et un pourvoi en cassation.",{s:"Euronews",d:"7 juillet 2026",u:"https://fr.euronews.com/2026/07/07/je-suis-candidate-a-lelection-presidentielle-annonce-marine-le-pen-sur-tf1"}],
+  ["lepen","J’ai les mains propres.","Quelques heures après avoir vu sa condamnation pour détournement de fonds publics confirmée en appel.","Marine Le Pen, sur TF1, le soir de l’arrêt dans l’affaire des assistants parlementaires européens.",{s:"LCP",d:"7 juillet 2026",u:"https://lcp.fr/index%2Ephp/actualites/ce-soir-je-suis-candidate-a-l-election-presidentielle-annonce-marine-le-pen-438886"}],
+  ["philippe","Prenez une bonne bière.","Premiers mots d’une « réunion d’appartement » géante en visioconférence, avec 9 500 personnes connectées un soir de canicule.","Édouard Philippe, en ouvrant sa réunion d’appartement 2.0 depuis Le Havre.",{s:"LCP",d:"25 juin 2026",u:"https://lcp.fr/actualites/si-je-devais-le-refaire-je-le-referais-autrement-le-mea-culpa-d-edouard-philippe-sur-les"}],
+  ["philippe","Si je devais le refaire, je le referais autrement.","Interrogé sur le plus gros échec de son passage au pouvoir : une limitation de vitesse sur les routes qui avait fâché beaucoup de monde.","Édouard Philippe, à propos des 80 km/h décidés quand il était à Matignon.",{s:"LCP",d:"26 juin 2026",u:"https://lcp.fr/actualites/si-je-devais-le-refaire-je-le-referais-autrement-le-mea-culpa-d-edouard-philippe-sur-les"}],
+  ["attal","Tu voles, tu paies.","À l’adresse d’une rivale condamnée pour détournement de fonds publics, en recyclant son propre slogan de Matignon : « tu casses, tu répares ».","Gabriel Attal, visant Marine Le Pen.",{s:"Europe 1",d:"2025",u:"https://www.europe1.fr/node/671316"}],
+  ["attal","Rien ni personne ne peut venir dicter aux femmes leur place.","Après le scandale de la tour Eiffel, où des employées avaient été écartées pendant la visite d’un groupe religieux.","Gabriel Attal, parmi les nombreux candidats indignés par l’épisode.",{s:"CNews",d:"7 sept. 2026",u:"https://www.cnews.fr/france/2026-09-07/presidentielle-2027-de-nombreux-candidats-sindignent-apres-leviction-du-personnel"}],
+  ["glucksmann","Une « héritocratie » au lieu de la méritocratie.","Au premier grand débat des candidats, pour réclamer une refonte de la taxation des héritages.","Raphaël Glucksmann, qui veut que l’effort compte davantage que la naissance.",{s:"Planet.fr",d:"août 2026",u:"https://www.planet.fr/presidentielle-les-petites-phrases-du-premier-debat-que-vous-avez-peut-etre-ratees.2998921.29334.html"}],
+  ["glucksmann","Ce soir, la bataille de France commence.","Le soir où il remporte, dès le premier tour, une primaire de la gauche.","Raphaël Glucksmann, vainqueur de la primaire sociale-démocrate avec 66 % des voix.",{s:"Public Sénat",d:"11 octobre 2026",u:"https://www.publicsenat.fr/actualites/politique/ce-soir-la-bataille-de-france-commence-apres-sa-victoire-a-la-primaire-de-la-gauche-raphael-glucksmann-assure-que-rien-ne-le-fera-l"}],
+  ["retailleau","Je ne prétendrai jamais à être Jupiter.","Pendant son premier grand meeting, une pique contre le style du président sortant.","Bruno Retailleau au Parc floral, en référence à Emmanuel Macron et à sa « présidence jupitérienne ».",{s:"LCP",d:"20 juin 2026",u:"https://lcp.fr/index%2ephp/actualites/j-irai-jusqu-au-bout-bruno-retailleau-lance-sa-conquete-de-l-elysee-devant-une-droite"}],
+  ["retailleau","Je ne confierai pas les intérêts de la France à ce parti qui est poutinophile !","Sur BFMTV, à propos du parti arrivé en tête des sondages, accusé de complaisance envers Moscou.","Bruno Retailleau, visant le Rassemblement national.",{s:"Le Tribunal du Net",d:"7 sept. 2026",u:"https://www.letribunaldunet.fr/politique/retailleau-rn-poutinophile-bfmtv.html"}],
+  ["retailleau","Mais où sont les propositions ?","Au lendemain du grand meeting parisien d’un rival du centre, jugé trop vague.","Bruno Retailleau, à propos du meeting d’Édouard Philippe à l’Adidas Arena.",{s:"La Gazette France (AFP)",d:"juillet 2026",u:"https://www.lagazettefrance.fr/article/retailleau-critique-les-generalites-et-l-absence-de-propositions-de-philippe"}],
+  ["zemmour","Je préfère un robot plutôt qu’un étranger.","Sur BFMTV, le soir où il confirme sa candidature, à propos des aides à domicile pour les personnes âgées.","Éric Zemmour, qui défend la robotisation plutôt que l’immigration de travail.",{s:"Algérie 360",d:"sept. 2026",u:"https://www.algerie360.com/eric-zemmour-robot-plutot-qu-etranger/"}],
+  ["zemmour","Il ne suffit plus, en 2026, de fermer les frontières et d’arrêter les flux.","À ses universités d’été, pour expliquer que stopper l’immigration ne suffirait plus et qu’il faut aller plus loin.","Éric Zemmour, partisan de la « remigration », à Port-Marly.",{s:"Techniques de l’ingénieur (AFP)",d:"13 septembre 2026",u:"https://www.techniques-ingenieur.fr/actualite/breves-afp/eric-zemmour-prepare-sa-candidature-et-appelle-a-un-vote-du-sursaut-163638/"}],
+  ["tondelier","Nous n’avons pas le droit de perdre chacun de notre côté une élection que nous pouvons gagner ensemble.","Aux journées d’été de son parti, en tendant la main aux socialistes et aux insoumis.","Marine Tondelier à Grenoble, pour défendre l’union de la gauche face au RN.",{s:"LCP",d:"21 août 2026",u:"https://lcp.fr/actualites/presidentielle-2027-a-grenoble-l-ecologiste-marine-tondelier-adresse-un-message-a-la"}],
+  ["tondelier","Celui qui fait le choix du repli.","Pour qualifier le vainqueur d’une primaire de la gauche sociale-démocrate, qui refuse tout accord avec les insoumis.","Marine Tondelier, à propos de Raphaël Glucksmann.",{s:"Le Petit Journal (AFP)",d:"12 octobre 2026",u:"https://lepetitjournal.com/expat-politique/apres-une-primaire-reussie-les-choses-serieuses-commencent-pour-glucksmann-455946"}],
+  ["ruffin","Raphaël Glucksmann remporte la primaire de Raphaël à Glucksmann !","Réaction moqueuse au résultat d’une primaire à laquelle il voulait participer, jugée bien trop étroite.","François Ruffin, écarté de fait d’une primaire réduite au PS et à Place publique.",{s:"LCP",d:"11 octobre 2026",u:"https://lcp.fr/index%2ephp/actualites/victoire-de-raphael-glucksmann-a-la-primaire-socialiste-premieres-reactions-des"}],
+  ["bertrand","Si je cherchais une place, je serais ministre depuis dix ans.","Dans la presse corse, pour répondre à ceux qui l’invitent à rejoindre le camp présidentiel plutôt que de se présenter.","Xavier Bertrand, dans Corse-Matin, avant de confirmer sa candidature devant le Medef.",{s:"AFP via Bourse Direct",d:"10 août 2026",u:"https://www.boursedirect.fr/fr/actualites/categorie/politique/presidentielle-xavier-bertrand-confirme-qu-il-sera-bien-candidat-afp-83d7efd89fbe37c083d2fb08a34084aa680443ad"}],
+  ["roussel","Jean-Luc Mélenchon est certainement le pire candidat de second tour.","Sur LCI, en refusant la candidature commune que lui proposaient les insoumis.","Fabien Roussel, qui assume sa propre candidature communiste.",{s:"Le Figaro avec AFP (via Newsar)",d:"5 avril 2026",u:"https://newsar.codejungle.org/articles/53356"}]
 ];
 
 /* Familles politiques (classement usuel de la presse), utilisées par les antisèches. */
-var FAMILY = { arthaud: "Extrême gauche", kazib: "Extrême gauche", melenchon: "Gauche radicale", roussel: "Gauche (communiste)", ruffin: "Gauche", glucksmann: "Gauche sociale-démocrate", tondelier: "Écologistes", batho: "Écologistes", attal: "Centre (camp présidentiel)", philippe: "Centre droit", retailleau: "Droite", bertrand: "Droite", lisnard: "Droite", dupont: "Droite souverainiste", asselineau: "Souverainistes (Frexit)", philippot: "Souverainistes (Frexit)", polony: "Souverainistes", lepen: "Extrême droite", zemmour: "Extrême droite" };
+var FAMILY = { arthaud: "Extrême gauche", kazib: "Extrême gauche", melenchon: "Gauche radicale", roussel: "Gauche (communiste)", ruffin: "Gauche", glucksmann: "Gauche sociale-démocrate", tondelier: "Écologistes", batho: "Écologistes", attal: "Centre (camp présidentiel)", philippe: "Centre droit", retailleau: "Droite", bertrand: "Droite", lisnard: "Droite", dupont: "Droite souverainiste", asselineau: "Souverainistes (Frexit)", philippot: "Souverainistes (Frexit)", branco: "Souverainistes (Frexit)", polony: "Souverainistes", lepen: "Extrême droite", zemmour: "Extrême droite" };
 
 /* Mode « Le Conseil constitutionnel tousse » : mesures qui butent sur la Constitution, la jurisprudence ou les traités. [candidats, mesure, verdict, obstacle, source] */
 var IMPOSS = [
@@ -1553,8 +1800,8 @@ CASES.forEach(function (r) {
   M.push({ id: M.length, c: r[0], cs: [r[0]], t: CASE_KIND[r[1]], kind: r[1], year: r[2], m: r[3], status: r[4], srcs: o, kase: true });
 });
 QUOTES.forEach(function (r) {
-  var o = {}; o[r[0]] = r[3];
-  M.push({ id: M.length, c: r[0], cs: [r[0]], t: "Citation", m: r[1], ctx: r[2], srcs: o, quote: true });
+  var o = {}; o[r[0]] = r[4];
+  M.push({ id: M.length, c: r[0], cs: [r[0]], t: "Citation", m: r[1], pre: r[2], ctx: r[3], srcs: o, quote: true });
 });
 IMPOSS.forEach(function (r) {
   var o = {}; r[0].forEach(function (c) { o[c] = r[4]; });
@@ -1716,11 +1963,15 @@ var NOPROG = [
   { name: "Karim Bouamrane", ini: "KB", party: "Maire de Saint-Ouen", q: "Candidature déclarée. Programme pas encore déclaré." },
   { name: "Olivier Becht", ini: "OB", party: "« Extrême centre »", q: "Programme quelque part au centre. On le cherche encore." },
   { name: "Gilles Platret", ini: "GP", party: "Ex-LR", q: "Programme en préparation. On lui garde une place au chaud." },
-  { name: "Juan Branco", ini: "JB", party: "Sans étiquette", q: "Programme en cours de rédaction. Plaidoirie à suivre." },
   { name: "Francis Lalanne", ini: "FLa", party: "Sans étiquette", q: "Programme pas encore sorti. Le single non plus." },
   { name: "Selma Labib", ini: "SL", party: "NPA-Révolutionnaires", q: "Programme en débat interne. Prévoir du café." },
   { name: "Clara Egger", ini: "CE", party: "Solution démocratique", q: "Le programme sera peut-être soumis au vote. On attend le résultat." },
-  { name: "Mira Markovic", ini: "MM", party: "Parti animaliste", q: "Programme bientôt. Les animaux de compagnie patientent aussi." }
+  { name: "Mira Markovic", ini: "MM", party: "Parti animaliste", q: "Programme bientôt. Les animaux de compagnie patientent aussi." },
+  { name: "Antoine Mikolajczak", ini: "AM", party: "Équinoxe", q: "Programme partiel. Le reste est attendu pour l’équinoxe de printemps." },
+  { name: "Sylvain Durif", ini: "SD", party: "Sans étiquette", q: "Programme en attente de transmission cosmique." },
+  { name: "Manolo Mlekuz", ini: "MMl", party: "Trajectoire", q: "La trajectoire est annoncée. La destination, pas encore." },
+  { name: "Jean-François Legendre", ini: "JFL", party: "À nous maintenant", q: "Le programme ? « À nous maintenant »… mais pas tout de suite." },
+  { name: "Benoît Mathieu", ini: "BM", party: "Sans étiquette", q: "Ingénieur : le programme est encore au stade du prototype." }
 ];
 function countAll(id) { return M.filter(function (x) { return !special(x) && x.cs.indexOf(id) >= 0; }).length; }
 function countOf(id) { return SINGLE.filter(function (x) { return x.c === id; }).length; }
@@ -1770,6 +2021,7 @@ function renderHemi() {
 }
 $("hemi").addEventListener("mouseover", function (e) { var g = e.target.closest(".seat"); if (!g) return; var c = CBY[g.dataset.c]; $("hemi-cap").textContent = c.name; $("hemi-cap2").textContent = FAMILY[c.id] + " · " + plural(countAll(c.id), "mesure", "mesures"); });
 $("hemi").addEventListener("focusin", function (e) { var g = e.target.closest(".seat"); if (!g) return; var c = CBY[g.dataset.c]; $("hemi-cap").textContent = c.name; $("hemi-cap2").textContent = FAMILY[c.id] + " · " + plural(countAll(c.id), "mesure", "mesures"); });
+$("g-info").addEventListener("click", function () { var open = $("g-infobox").hidden; $("g-infobox").hidden = !open; this.setAttribute("aria-expanded", open ? "true" : "false"); });
 function hemiGo(e) { var g = e.target.closest(".seat"); if (!g) return; cfg.mode = "target"; cfg.targets = [g.dataset.c]; startGame(buildQuestions(cfg), cfg); }
 $("hemi").addEventListener("click", hemiGo);
 $("hemi").addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hemiGo(e); } });
@@ -1788,15 +2040,7 @@ function renderHome() {
       return "<div class=\"board soon-b noprog\" title=\"" + esc(x.q) + "\"><span class=\"soon\">À venir</span><span class=\"num\">?</span><span class=\"ini\">" + esc(x.ini) + "</span><span class=\"nm\">" + esc(x.name) + "</span><span class=\"pt\">" + esc(x.party) + "</span><span class=\"soonq\">" + esc(x.q) + "</span></div>";
     }).join("");
   stagger($("boards-home"));
-  var nTot = C.length + NOPROG.length;
-  countUp($("kl-n"), nTot, 1200);
-  $("kl-s").textContent = pick([
-    "Première épreuve d’immunité : les 500 parrainages. Le conseil de la tribu, c’est vous, le 18 avril.",
-    "Les sondages ? Des épreuves de confort. L’épreuve d’orientation, c’est le premier tour.",
-    "Totem d’immunité non fourni. Les programmes, si, enfin presque tous.",
-    "Ils n’ont pas encore mangé de vers. Mais certains ont déjà avalé des couleuvres.",
-    "Le dernier poteau, c’est le second tour, le 2 mai. Accrochez-vous."
-  ]);
+  $("more-n").textContent = C.length + NOPROG.length; $("more-s").textContent = "dont " + (part.length + NOPROG.length) + " « à venir »";
   $("cand-pick").innerHTML = C.map(function (c) {
     return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"false\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
   }).join("");
@@ -1804,6 +2048,40 @@ function renderHome() {
   $("duel-a").innerHTML = opts; $("duel-b").innerHTML = opts;
   $("duel-chips").innerHTML = DUELS.map(function (d, i) { return "<button type=\"button\" data-i=\"" + i + "\">" + esc(last(CBY[d[0]].name)) + " / " + esc(last(CBY[d[1]].name)) + "</button>"; }).join("");
   syncSetup();
+}
+
+// ---- Splash d’ouverture : « Au début, ils étaient 29… » ----
+function runIntro() {
+  var seen = false;
+  try { seen = sessionStorage.getItem("intro27") === "1"; sessionStorage.setItem("intro27", "1"); } catch (e) {}
+  if (seen || navigator.webdriver) return;
+  var all = C.map(function (c) { return { ini: c.ini, col: FAMCOL[FAMILY[c.id]] || "#888" }; }).concat(NOPROG.map(function (x) { return { ini: x.ini, col: "#9aa3b5" }; }));
+  var N = all.length, ov = document.createElement("div");
+  ov.id = "intro"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", "Introduction");
+  ov.innerHTML = "<button type=\"button\" class=\"skip\">Passer ✕</button><div class=\"ibox\">" +
+    "<p class=\"it1\">Au début, ils étaient</p><p class=\"inum\" id=\"i-n\">" + N + "</p>" +
+    "<div class=\"itok\" id=\"i-tok\">" + all.map(function (t, k) { return "<span style=\"--c:" + t.col + ";--d:" + (k * 28) + "ms\">" + esc(t.ini) + "</span>"; }).join("") + "</div>" +
+    "<p class=\"istep\" id=\"i-step\">&nbsp;</p>" +
+    "<p class=\"it2\" id=\"i-t2\">À la fin, il n’en restera qu’<em>un</em>.</p>" +
+    "<p class=\"it3\" id=\"i-t3\">" + esc(pick(["Conseil de la tribu le 18 avril. Finale le 2 mai.", "Totem d’immunité non fourni. Programmes, presque tous.", "Toi, tu peux déjà t’entraîner. Eux aussi, d’ailleurs.", "Aucun candidat n’a été mangé pendant ce générique."])) + "</p></div>";
+  document.body.appendChild(ov);
+  var timers = [], done = false;
+  function close() { if (done) return; done = true; timers.forEach(clearTimeout); ov.classList.add("out"); setTimeout(function () { ov.remove(); }, 450); document.removeEventListener("keydown", close); }
+  ov.addEventListener("click", close); document.addEventListener("keydown", close);
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) { $("i-n").textContent = "1"; ov.querySelector(".it1").textContent = "Il en reste…"; ov.classList.add("end"); timers.push(setTimeout(close, 2600)); return; }
+  var toks = [].slice.call(ov.querySelectorAll(".itok span")), keep = Math.floor(Math.random() * N);
+  var order = toks.map(function (t, k) { return k; }).filter(function (k) { return k !== keep; }).sort(function () { return Math.random() - 0.5; });
+  var steps = ["Épreuve des 500 parrainages", "Épreuve des sondages", "Épreuve du débat télé", "Premier tour"], t0 = 1500, dt = 62, left = N;
+  order.forEach(function (k, j) {
+    timers.push(setTimeout(function () {
+      toks[k].classList.add("ko"); left--; $("i-n").textContent = left;
+      $("i-step").textContent = steps[Math.min(steps.length - 1, Math.floor(j / order.length * steps.length))];
+    }, t0 + j * dt));
+  });
+  var tEnd = t0 + order.length * dt + 150;
+  timers.push(setTimeout(function () { toks[keep].classList.add("win"); toks[keep].textContent = "?"; ov.classList.add("end"); ov.querySelector(".it1").textContent = "Il en reste…"; $("i-step").innerHTML = "&nbsp;"; }, tEnd));
+  timers.push(setTimeout(close, tEnd + 2600));
 }
 var MODES = ["classic", "duel", "blitz", "target", "accord", "citations", "casier", "conseil"];
 function syncSetup() {
@@ -1972,6 +2250,129 @@ function hudUpdate() {
   else $("g-pts").textContent = fmt(game.pts);
   var s = $("g-streak"); s.textContent = "Série ×" + game.streak; s.classList.toggle("hot", game.streak >= 3);
 }
+// ---- Le petit « i » : lexique et repères par thème ----
+var GLOSS = [
+  ["Smic", "Smic", "Le salaire minimum légal en France, revalorisé au moins une fois par an (le 1er janvier)."],
+  ["RIC", "RIC", "Référendum d’initiative citoyenne : en réunissant assez de signatures, des citoyens déclenchent eux-mêmes un vote, par exemple pour proposer ou abroger une loi."],
+  ["IFI", "IFI", "Impôt sur la fortune immobilière. Il a remplacé l’ISF en 2018 et ne taxe que le patrimoine immobilier au-delà de 1,3 million d’euros."],
+  ["ISF", "ISF", "Impôt de solidarité sur la fortune, qui taxait l’ensemble du patrimoine des plus aisés. Supprimé en 2018 et remplacé par l’IFI."],
+  ["EPR2?", "EPR2", "Nouveau modèle de réacteur nucléaire d’EDF. L’État a lancé la construction de six réacteurs de ce type."],
+  ["UE", "UE", "Union européenne : 27 pays qui partagent un marché unique et des règles communes."],
+  ["PIB", "PIB", "Produit intérieur brut : la richesse produite par le pays en un an. On s’en sert pour comparer dette ou dépenses (« 3 % du PIB »)."],
+  ["PFAS", "PFAS", "Les « polluants éternels » : des substances chimiques (poêles, textiles, emballages…) qui ne se dégradent presque pas dans la nature."],
+  ["ONU", "ONU", "Organisation des Nations unies. La France est l’un des cinq membres permanents de son Conseil de sécurité."],
+  ["RSA", "RSA", "Revenu de solidarité active : une aide mensuelle pour les personnes sans ressources ou presque."],
+  ["TVA", "TVA", "Taxe sur la valeur ajoutée, payée sur presque tout ce qu’on achète (20 % au taux normal). C’est la première recette de l’État."],
+  ["CDI", "CDI", "Contrat à durée indéterminée : le contrat de travail « classique », sans date de fin."],
+  ["CDD", "CDD", "Contrat à durée déterminée : un contrat de travail avec une date de fin."],
+  ["PME", "PME", "Petites et moyennes entreprises : moins de 250 salariés."],
+  ["TPE", "TPE", "Très petites entreprises : moins de 10 salariés."],
+  ["EDF", "EDF", "Électricité de France, le principal producteur d’électricité, détenu à 100 % par l’État depuis 2023."],
+  ["PAC", "PAC", "Politique agricole commune : les aides européennes aux agriculteurs, l’une des plus grosses dépenses de l’UE."],
+  ["APL", "APL", "Aide personnalisée au logement, versée par la CAF pour alléger le loyer."],
+  ["COP", "COP", "La conférence annuelle de l’ONU sur le climat, où les pays négocient leurs engagements."],
+  ["AME", "AME", "Aide médicale de l’État : prise en charge des soins des étrangers en situation irrégulière, sous condition de ressources."],
+  ["BTP", "BTP", "Bâtiment et travaux publics : le secteur de la construction."],
+  ["UNRWA", "UNRWA", "Agence de l’ONU chargée de l’aide aux réfugiés palestiniens."],
+  ["BCE", "BCE", "Banque centrale européenne : elle fixe les taux d’intérêt de la zone euro."],
+  ["ONF", "ONF", "Office national des forêts : il gère les forêts publiques."],
+  ["OFB", "OFB", "Office français de la biodiversité : établissement public qui contrôle notamment le respect des règles environnementales."],
+  ["DPE", "DPE", "Diagnostic de performance énergétique : une note de A à G pour un logement. Les plus mal notés sont peu à peu interdits à la location."],
+  ["A69", "A69", "Projet d’autoroute entre Toulouse et Castres, très contesté par des écologistes."],
+  ["GPA", "GPA", "Gestation pour autrui : une femme porte l’enfant d’un autre couple. Interdite en France."],
+  ["PMA", "PMA", "Procréation médicalement assistée. Ouverte en France à toutes les femmes depuis 2021."],
+  ["SRU", "loi SRU", "Loi qui impose à de nombreuses communes d’avoir 20 à 25 % de logements sociaux, sous peine d’amende."],
+  ["AESH", "AESH", "Accompagnants d’élèves en situation de handicap, qui les aident en classe."],
+  ["NOTRe", "loi NOTRe", "Loi de 2015 qui a redistribué les compétences entre régions, départements et intercommunalités."],
+  ["RFI", "RFI", "Radio France internationale, radio publique diffusée dans le monde entier."],
+  ["CEDH", "CEDH", "Cour européenne des droits de l’homme (Strasbourg). Elle dépend du Conseil de l’Europe, pas de l’UE."],
+  ["OMS", "OMS", "Organisation mondiale de la santé, agence de l’ONU."],
+  ["SNU", "SNU", "Service national universel : un séjour de cohésion proposé aux 15-17 ans."],
+  ["HLM", "HLM", "Habitations à loyer modéré : les logements sociaux."],
+  ["OQTF", "OQTF", "Obligation de quitter le territoire français : décision qui ordonne à un étranger en situation irrégulière de partir."],
+  ["ARS", "ARS", "Agences régionales de santé : elles organisent hôpitaux et soins dans chaque région."],
+  ["OTAN", "OTAN", "Alliance militaire entre pays d’Amérique du Nord et d’Europe, dont la France fait partie."],
+  ["ASPA", "ASPA", "Allocation de solidarité aux personnes âgées, le « minimum vieillesse »."],
+  ["minimum vieillesse", "minimum vieillesse", "Revenu minimum garanti aux retraités qui ont de très petites pensions (ASPA)."],
+  ["PEA", "PEA", "Plan d’épargne en actions : un placement en Bourse avec un avantage fiscal."],
+  ["CSG", "CSG", "Contribution sociale généralisée : un prélèvement sur presque tous les revenus pour financer la Sécurité sociale."],
+  ["SNCF", "SNCF", "Société nationale des chemins de fer, l’opérateur ferroviaire public."],
+  ["Schengen", "Schengen", "L’espace européen sans contrôle aux frontières entre les pays membres."],
+  ["Mercosur", "Mercosur", "Marché commun d’Amérique du Sud (Brésil, Argentine, Uruguay, Paraguay…). Un accord commercial avec l’UE inquiète les agriculteurs."],
+  ["quinquennat", "quinquennat", "Mandat de cinq ans. Celui du président est passé de sept à cinq ans en 2000."],
+  ["septennat", "septennat", "Mandat de sept ans, comme celui des présidents avant 2002."],
+  ["proportionnelle", "proportionnelle", "Mode de scrutin où les sièges sont répartis selon le pourcentage de voix. Aujourd’hui, les députés sont élus un par circonscription."],
+  ["référendum", "référendum", "Vote direct des citoyens sur un texte. En France, c’est le président qui peut le déclencher (articles 11 et 89 de la Constitution)."],
+  ["Frexit", "Frexit", "Sortie de la France de l’Union européenne, sur le modèle du Brexit britannique."],
+  ["Zucman", "taxe Zucman", "Impôt minimum de 2 % sur les patrimoines de plus de 100 millions d’euros, proposé par l’économiste Gabriel Zucman."],
+  ["superprofits", "superprofits", "Bénéfices exceptionnels d’entreprises liés à une crise (énergie, guerre…), qu’on propose de taxer davantage."],
+  ["laïcité", "laïcité", "Principe issu de la loi de 1905 : séparation des Églises et de l’État, neutralité religieuse de l’État."],
+  ["49[.-]3", "49.3", "Article de la Constitution qui permet au gouvernement de faire adopter un texte sans vote, sauf si une motion de censure le renverse."],
+  ["quotient familial", "quotient familial", "Mécanisme qui réduit l’impôt sur le revenu selon le nombre d’enfants à charge."],
+  ["droit du sol", "droit du sol", "Un enfant né en France de parents étrangers peut devenir français, sous conditions de résidence, à sa majorité ou avant."],
+  ["regroupement familial", "regroupement familial", "Droit d’un étranger en situation régulière de faire venir son conjoint et ses enfants mineurs, sous conditions de ressources et de logement."],
+  ["rétention", "rétention", "Les centres de rétention enferment des étrangers en attente d’expulsion, pour une durée limitée."],
+  ["peines? planchers?", "peines planchers", "Peines minimales obligatoires pour certains délits ou en cas de récidive. Elles ont existé de 2007 à 2014."],
+  ["Parcoursup", "Parcoursup", "Plateforme nationale d’inscription dans l’enseignement supérieur après le bac."],
+  ["carte scolaire", "carte scolaire", "Règle qui affecte chaque élève dans un collège ou un lycée selon son adresse."],
+  ["rupture conventionnelle", "rupture conventionnelle", "Fin d’un CDI d’un commun accord entre salarié et employeur, qui ouvre droit au chômage."],
+  ["franchises? médicales?", "franchises médicales", "Petite somme laissée à la charge du patient sur chaque boîte de médicaments ou acte médical."],
+  ["intéressement", "intéressement", "Prime versée aux salariés selon les résultats de leur entreprise."],
+  ["participation(?! publique)", "participation", "Part des bénéfices de l’entreprise redistribuée aux salariés (obligatoire à partir de 50 salariés)."],
+  ["dividendes", "dividendes", "Part des bénéfices d’une entreprise versée à ses actionnaires."],
+  ["Sécurité sociale", "Sécurité sociale", "Le système public qui couvre maladie, retraite, famille, accidents du travail. Financé surtout par les cotisations et la CSG."],
+  ["droits de succession|succession|héritage", "droits de succession", "Impôt payé sur ce que l’on hérite. Il dépend du lien de parenté et du montant, après un abattement (100 000 € par enfant)."],
+  ["niche", "niche fiscale", "Réduction d’impôt accordée pour encourager une dépense ou une activité (emploi à domicile, dons…)."],
+  ["flat tax", "flat tax", "Le prélèvement forfaitaire unique : un taux unique, autour de 30 %, sur les revenus de l’épargne et des placements."],
+  ["bouclier tarifaire", "bouclier tarifaire", "Plafonnement par l’État des hausses de prix de l’énergie, comme en 2022-2023."],
+  ["cotisations", "cotisations", "Prélèvements sur les salaires qui financent la Sécu, le chômage et les retraites."],
+  ["Constitution", "Constitution", "Le texte suprême de la Ve République (1958). La réviser demande un vote du Parlement réuni en Congrès ou un référendum."],
+  ["Cades", "Cades", "Caisse d’amortissement de la dette sociale : elle rembourse peu à peu la dette accumulée par la Sécurité sociale."],
+  ["Congrès", "Congrès", "Réunion des députés et des sénateurs à Versailles, notamment pour réviser la Constitution (majorité des 3/5 requise)."],
+  ["Ve République", "Ve République", "Le régime politique actuel, fondé par la Constitution de 1958."],
+  ["Code du travail", "Code du travail", "L’ensemble des règles qui encadrent les relations entre salariés et employeurs."],
+  ["Sénat", "Sénat", "Seconde chambre du Parlement, élue au suffrage indirect par des élus locaux."],
+  ["ENA", "ENA", "L’école qui formait les hauts fonctionnaires, remplacée en 2022 par l’Institut national du service public."],
+  ["dette", "dette publique", "Ce que doivent l’État, la Sécu et les collectivités. Elle dépasse 110 % du PIB en France."],
+  ["3 ?%", "3 %", "La règle européenne fixe le déficit public sous 3 % du PIB. La France est au-dessus depuis la crise du Covid."]
+];
+GLOSS.forEach(function (g) { g.re = new RegExp("(^|[^A-Za-zÀ-ÿ0-9])(" + g[0] + ")(?![A-Za-zÀ-ÿ0-9])", g[0] === g[0].toUpperCase() ? "" : "i"); });
+var REPERE = {
+  "Écologie": "La France s’est fixé la neutralité carbone en 2050 : ne pas émettre plus de gaz à effet de serre qu’elle n’en absorbe.",
+  "Économie": "Entreprises, industrie, commerce, prix et pouvoir d’achat. Beaucoup de règles économiques se décident aussi à Bruxelles.",
+  "Santé": "L’Assurance maladie rembourse une partie des soins, les mutuelles une autre. Les ARS organisent l’offre dans chaque région.",
+  "Fiscalité": "Impôt sur le revenu, TVA, impôts sur le patrimoine et les successions… La TVA est la première recette de l’État.",
+  "Travail": "Durée légale : 35 heures par semaine, au-delà ce sont des heures supplémentaires. Le Smic est le salaire minimum.",
+  "Social": "Aides et minima sociaux (RSA, allocations, APL…), versés surtout par la CAF.",
+  "Famille": "Allocations familiales, congés parentaux, garde d’enfants, quotient familial.",
+  "Société": "Vie en commun et libertés : fin de vie, laïcité, droits, mœurs…",
+  "Éducation": "École obligatoire de 3 à 16 ans, puis obligation de formation jusqu’à 18 ans.",
+  "Culture": "Audiovisuel public, patrimoine, création, médias.",
+  "Défense": "La France est membre de l’OTAN et dispose de la dissuasion nucléaire. Une loi de programmation fixe le budget des armées sur plusieurs années.",
+  "Institutions": "Ve République (1958) : président élu pour 5 ans, deux mandats de suite au maximum. Le Parlement, c’est l’Assemblée nationale et le Sénat.",
+  "Justice": "Tribunaux, peines, prisons. Les mineurs relèvent d’un code spécifique depuis 2021.",
+  "Sécurité": "Police nationale en ville, gendarmerie en zone rurale, polices municipales sous l’autorité des maires.",
+  "Logement": "Logement social (HLM), aides (APL), loyers, construction, rénovation.",
+  "International": "La France est membre permanent du Conseil de sécurité de l’ONU. Diplomatie, aide au développement, conflits.",
+  "Énergie": "L’électricité française vient majoritairement du nucléaire, produite surtout par EDF.",
+  "Numérique": "Réseaux sociaux, IA, données, protection des mineurs en ligne. Beaucoup de règles se décident au niveau européen.",
+  "Immigration": "Titres de séjour, asile, nationalité, expulsions. Une partie des règles vient du droit européen et de la CEDH.",
+  "Transports": "Train, route, avion, transports en commun. La SNCF est l’opérateur ferroviaire public historique.",
+  "Jeunesse": "Mesures pour les 15-25 ans : emploi, aides, engagement, service civique…",
+  "Retraites": "Système par répartition : les cotisations des actifs paient les pensions des retraités. La réforme de 2023 relève l’âge légal de 62 à 64 ans.",
+  "Agriculture": "Une grande partie des aides agricoles vient de la PAC européenne. Enjeux : revenus, prix, normes, accords commerciaux.",
+  "Budget": "Dépenses et dette publiques. Les règles européennes demandent un déficit sous 3 % du PIB.",
+  "Europe": "Traités, budget, règles communes de l’UE. Changer un traité demande l’accord des 27 pays."
+};
+function infoHtml(m) {
+  var seen = {}, terms = [];
+  GLOSS.forEach(function (g) { if (!seen[g[1]] && g.re.test(m.m)) { seen[g[1]] = 1; terms.push("<li><b>" + esc(g[1]) + "</b> : " + esc(g[2]) + "</li>"); } });
+  var h = terms.length ? "<p class=\"ih\">Les mots à connaître</p><ul>" + terms.slice(0, 4).join("") + "</ul>" : "";
+  var rp = REPERE[m.t];
+  if (rp) h += "<p class=\"ih\">Repère · " + esc(m.t) + "</p><p>" + esc(rp) + "</p>";
+  return h;
+}
+
 function renderQ() {
   var q = game.qs[game.i], m = M[q.mid], n = game.qs.length, blitz = game.cfg.mode === "blitz";
   if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = (game.cfg.mode === "casier" ? "Dossier " : game.cfg.mode === "citations" ? "Citation " : game.cfg.mode === "conseil" ? "Saisine " : "Mesure ") + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
@@ -1991,6 +2392,9 @@ function renderQ() {
   $("g-keys").hidden = blitz;
   game.sel = [];
   $("g-hint").hidden = true; $("g-hint").innerHTML = "";
+  $("g-pre").hidden = !m.quote; $("g-pre").innerHTML = m.quote ? "<b>Le contexte</b> " + esc(m.pre) : "";
+  var ih = (!kase && !m.quote) ? infoHtml(m) : "";
+  $("g-info").hidden = !ih; $("g-info").setAttribute("aria-expanded", "false"); $("g-infobox").hidden = true; $("g-infobox").innerHTML = ih;
   updCheat();
   var keys = "123456789";
   if (q.type === "vf") {
@@ -2082,7 +2486,7 @@ function reveal(a, animate) {
   var gainTxt = a.gain ? " <span class=\"gain\">+" + a.gain + " pts" + (a.ok ? bonusTxt(a.detail) : " (consolation)") + "</span>" : "";
   parts.push("<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + esc(head) + gainTxt + (m.fou ? "<span class=\"fou\">Accord improbable</span>" : "") + "</span>");
   if (m.kase) parts.push("<span class=\"status\">Statut : " + esc(m.status) + "</span>");
-  if (m.quote) parts.push("<span class=\"status\">Contexte : " + esc(m.ctx) + "</span>");
+  if (m.quote) parts.push("<span class=\"status\">Qui et quand : " + esc(m.ctx) + "</span>");
   if (m.imp) { $("g-kind").hidden = false; $("g-kind").textContent = m.verdict; $("g-kind").className = "kind imp"; parts.push("<span class=\"status\">L’obstacle : " + esc(m.obstacle) + "</span>"); }
   if (game.cfg.mode !== "blitz") {
     var quip = m.imp ? pick(QUIP_IMP) : m.kase ? (a.ok ? pick(QUIP_CASE_OK) : pick(QUIP_CASE_KO)) : m.quote ? (a.ok ? pick(QUIP_QUOTE_OK) : pick(QUIP_QUOTE_KO)) : m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
@@ -2441,6 +2845,7 @@ setInterval(cdTick, 1000);
 setInterval(cdQuip, 12000);
 initExplorer();
 renderHome();
+runIntro();
 if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else if (location.hash === "#antiseches") { show("cheat"); renderCheat(); } else show("setup");
 window.addEventListener("hashchange", function () { if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } });
 })();
