@@ -494,11 +494,10 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
           <button type="button" id="m-duel" data-mode="duel" aria-pressed="false"><b>Confrontation</b><span>Deux candidats face à face : à qui est la mesure ?</span></button>
           <button type="button" id="m-blitz" data-mode="blitz" aria-pressed="false"><b>Éclair 60 s</b><span>Un maximum de bonnes réponses en une minute.</span></button>
           <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Teste-toi sur un ou plusieurs candidats.</span></button>
-          <button type="button" id="m-multi" data-mode="multi" aria-pressed="false"><b>Multi-réponses</b><span>Parfois plusieurs candidats proposent la même chose. Trouve-les tous.</span></button>
           <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Les mesures que des rivaux partagent. Oui, ça arrive.</span></button>
           <button type="button" id="m-citations" data-mode="citations" aria-pressed="false"><b>Qui a dit ça&nbsp;?<i class="new">Nouveau</i></b><span>10 petites phrases de meetings, de débats et d’interviews. À qui les rendre ?</span></button>
           <button type="button" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>10 dossiers : condamnations, procès, relaxes et polémiques. Statut judiciaire et source à chaque fois.</span></button>
-          <button type="button" class="wide" id="m-conseil" data-mode="conseil" aria-pressed="false"><b>Le Conseil constitutionnel tousse<i class="new">Nouveau</i></b><span>Mesures qui se heurtent à la Constitution, à la jurisprudence ou aux traités. Devine qui les propose, puis découvre l’obstacle (sourcé).</span></button>
+          <button type="button" id="m-conseil" data-mode="conseil" aria-pressed="false"><b>Le Conseil constitutionnel tousse<i class="new">Nouveau</i></b><span>Mesures qui se heurtent à la Constitution, à la jurisprudence ou aux traités. Devine qui les propose, puis découvre l’obstacle (sourcé).</span></button>
         </div>
 
         <div class="field" id="fld-pool">
@@ -662,7 +661,7 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
       <li>Marine Le Pen, Éric Zemmour et Fabien Roussel n’ont pas encore publié de programme complet pour 2027 : une partie de leurs mesures vient de leurs programmes précédents encore en ligne, indiqués comme tels dans la source.</li>
       <li>« Les principaux » : les sept candidats invités au premier débat de la campagne, organisé par le Medef le 27 août 2026.</li>
       <li>Dans les modes à réponse unique, seules les mesures propres à un candidat sont posées.</li>
-      <li>Les mesures partagées par plusieurs candidats sont jouables dans les modes Multi-réponses et « Ils sont d’accord ! », avec la source de chacun.</li>
+      <li>Les mesures partagées par plusieurs candidats sont jouables dans le mode « Ils sont d’accord ! », avec la source de chacun.</li>
       <li>Mode « Casier &amp; polémiques » : uniquement des faits publics rapportés par la presse ou les juridictions, avec le statut exact de chaque procédure à la date de mise à jour (définitif, appel, cassation en cours, relaxe, non-lieu). Une procédure en cours n’est pas une condamnation. Ici, l’humour ne porte jamais sur les affaires.</li>
       <li>Mode « Le Conseil constitutionnel tousse » : uniquement des obstacles juridiques documentés (décision du Conseil constitutionnel, texte de la Constitution, analyse de juristes rapportée par la presse). Cela ne préjuge pas d’une révision de la Constitution, que certains candidats proposent justement.</li>
       <li>Antisèches : la famille politique reprend le classement usuel de la presse ; c’est un repère simplifié, que les intéressés contestent parfois.</li>
@@ -1806,7 +1805,7 @@ function renderHome() {
   $("duel-chips").innerHTML = DUELS.map(function (d, i) { return "<button type=\"button\" data-i=\"" + i + "\">" + esc(last(CBY[d[0]].name)) + " / " + esc(last(CBY[d[1]].name)) + "</button>"; }).join("");
   syncSetup();
 }
-var MODES = ["classic", "duel", "blitz", "target", "multi", "accord", "citations", "casier", "conseil"];
+var MODES = ["classic", "duel", "blitz", "target", "accord", "citations", "casier", "conseil"];
 function syncSetup() {
   MODES.forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
   ["main", "all"].forEach(function (p) { $("p-" + p).setAttribute("aria-pressed", cfg.pool === p); });
