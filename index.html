@@ -420,7 +420,8 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
           <button type="button" id="m-target" data-mode="target" aria-pressed="false"><b>Ciblé</b><span>Teste-toi sur un ou plusieurs candidats.</span></button>
           <button type="button" id="m-multi" data-mode="multi" aria-pressed="false"><b>Multi-réponses</b><span>Parfois plusieurs candidats proposent la même chose. Trouve-les tous.</span></button>
           <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Les mesures que des rivaux partagent. Oui, ça arrive.</span></button>
-          <button type="button" class="wide" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>10 dossiers : condamnations, procès en cours, relaxes et sorties qui ont fait du bruit. À qui appartient le dossier ? Tout est sourcé, statut judiciaire compris.</span></button>
+          <button type="button" id="m-citations" data-mode="citations" aria-pressed="false"><b>Qui a dit ça&nbsp;?<i class="new">Nouveau</i></b><span>10 petites phrases de meetings, de débats et d’interviews. À qui les rendre ?</span></button>
+          <button type="button" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>10 dossiers : condamnations, procès, relaxes et polémiques. Statut judiciaire et source à chaque fois.</span></button>
         </div>
 
         <div class="field" id="fld-pool">
@@ -456,6 +457,9 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
             <select id="duel-b"></select>
           </div>
           <div class="chips" id="duel-chips" aria-label="Affiches suggérées"></div>
+        </div>
+        <div class="field" id="fld-citations" hidden>
+          <p class="notice">Citations courtes, telles que rapportées par la presse, avec leur contexte et leur source affichés après ta réponse.</p>
         </div>
         <div class="field" id="fld-casier" hidden>
           <p class="notice">Présomption d’innocence : une enquête ou un procès en cours n’est pas une condamnation. Chaque fiche indique le statut exact de la procédure et sa source. Les candidats sans affaire ni polémique retenue servent de leurres.</p>
@@ -563,13 +567,14 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
     <details>
     <summary>Méthode et limites</summary>
     <ul>
-      <li>État au 10 novembre 2026. Les mesures sont reformulées de façon neutre à partir des programmes officiels (souvent consultés via le recensement Votons 2027), de déclarations et d’articles de presse. Chaque mesure renvoie à sa source.</li>
+      <li>État au 11 novembre 2026. Les mesures sont reformulées de façon neutre à partir des programmes officiels (souvent consultés via le recensement Votons 2027), de déclarations et d’articles de presse. Chaque mesure renvoie à sa source.</li>
       <li>Jean-Luc Mélenchon : plus de 230 mesures tirées du texte intégral de L’Avenir en commun (1 069 mesures), publié le 6 novembre 2026. En modes classique et éclair, le tirage est équilibré : chaque candidat a la même chance d’être tiré, quel que soit le nombre de ses mesures.</li>
       <li>Marine Le Pen, Éric Zemmour et Fabien Roussel n’ont pas encore publié de programme complet pour 2027 : une partie de leurs mesures vient de leurs programmes précédents encore en ligne, indiqués comme tels dans la source.</li>
       <li>« Les principaux » : les sept candidats invités au premier débat de la campagne, organisé par le Medef le 27 août 2026.</li>
       <li>Dans les modes à réponse unique, seules les mesures propres à un candidat sont posées.</li>
       <li>Les mesures partagées par plusieurs candidats sont jouables dans les modes Multi-réponses et « Ils sont d’accord ! », avec la source de chacun.</li>
       <li>Mode « Casier &amp; polémiques » : uniquement des faits publics rapportés par la presse ou les juridictions, avec le statut exact de chaque procédure à la date de mise à jour (définitif, appel, cassation en cours, relaxe, non-lieu). Une procédure en cours n’est pas une condamnation. Ici, l’humour ne porte jamais sur les affaires.</li>
+      <li>Mode « Qui a dit ça ? » : citations courtes d’interviews, de meetings et de débats, telles que rapportées par la presse ; le contexte et la source s’affichent après chaque réponse.</li>
       <li>Candidats déclarés sans programme recensé (affichés « À venir » sur l’accueil, pas encore jouables) : d’après le décompte de Public Sénat du 14 octobre 2026, complété par la déclaration de Teddy Riner le 9 novembre 2026 (France 24, franceinfo). Liste non exhaustive.</li>
       <li>Le compte à rebours vise l’ouverture des bureaux de vote le dimanche 18 avril 2027 à 8 h (heure de Paris), date retenue par le Conseil des ministres du 1er juillet 2026.</li>
       <li>L’humour vise le joueur, jamais les candidats. Aucun candidat n’a été maltraité pendant la fabrication de ce quiz. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
@@ -719,7 +724,6 @@ var RAW = [
   ["melenchon","International","Créer une force méditerranéenne de sécurité civile contre les incendies et pour le secours en mer.","melM3"],
   ["melenchon","Économie","Rendre effectif le droit de l’État de réquisitionner les usines et entreprises d’intérêt général.","melE1"],
   ["melenchon","Économie","Séparer strictement les banques d’affaires et les banques de détail.","melE3"],
-  ["melenchon","Fiscalité","Supprimer la convention judiciaire qui permet aux entreprises de négocier leur sanction en cas de fraude fiscale.","melE2"],
   ["melenchon","Fiscalité","Supprimer la flat tax et imposer les revenus du capital comme ceux du travail.","melE2"],
   ["melenchon","Travail","Revaloriser de 10 % le point d’indice des fonctionnaires et inscrire son dégel dans la loi.","melE2"],
   ["melenchon","Social","Réformer la Cades, la caisse de la dette sociale, qui prive la Sécurité sociale de 19 milliards d’euros par an.","melE3"],
@@ -1064,7 +1068,6 @@ var RAW = [
   // ---------- David Lisnard ----------
   ["lisnard","Immigration","Diviser par huit le nombre de titres de séjour délivrés.","liProg"],
   ["lisnard","Éducation","Abroger la carte scolaire.","liProg"],
-  ["lisnard","Éducation","Créer un certificat de fin de primaire qui conditionne l’entrée au collège.","liProg"],
   ["lisnard","Éducation","Initier les élèves au grec, au latin et à la philosophie dès le primaire.","liProg"],
   ["lisnard","Travail","Créer un contrat de travail unique, fusionnant CDI et CDD, pour les nouveaux emplois.","liProg"],
   ["lisnard","Logement","Supprimer l’obligation de 20 à 25 % de logements sociaux par commune (article 55 de la loi SRU).","liProg"],
@@ -1108,7 +1111,6 @@ var RAW = [
 
   // ---------- Petits candidats ----------
   ["arthaud","Travail","Porter le Smic à 2 200 €.","arLo"],
-  ["arthaud","Travail","Interdire les licenciements et les suppressions d’emplois.","arLo"],
   ["arthaud","Économie","Exproprier sans indemnité les actionnaires, à commencer par ceux du pétrole et de l’armement.","arLo"],
   ["arthaud","Défense","Réquisitionner les profits des marchands d’armes pour financer les écoles et les hôpitaux.","arLo"],
   ["arthaud","International","Retirer les troupes françaises d’Afrique.","arLo"],
@@ -1160,6 +1162,162 @@ var RAW = [
   ["kazib","Défense","Démanteler l’industrie d’armement française, deuxième exportateur d’armes au monde.","kaSite"],
 
   ["polony","Éducation","Voter une loi de programmation de dix ans pour l’école.","poSite"],
+  // Ajouts du 11 novembre 2026
+  ["polony","Agriculture","Sortir les agriculteurs de la concurrence mondiale et privilégier les produits français dans la commande publique.","poSite"],
+  ["polony","Énergie","Instaurer une taxe flottante sur les carburants : quand le prix monte, la taxe baisse.","poSite"],
+  ["polony","Économie","Refaire de l’État un stratège qui planifie les investissements et protège les filières vitales.","poSite"],
+  ["polony","Énergie","Refuser la privatisation des barrages hydroélectriques et renationaliser EDF.","poSite"],
+  ["polony","Écologie","Ne pas assouplir les normes environnementales, mais les imposer aussi aux produits importés.","poSite"],
+  ["polony","Justice","Développer des centres éducatifs fermés qui fonctionnent vraiment pour les jeunes qui dérivent.","poSite"],
+  ["polony","Éducation","Réduire les filières de bac pro tertiaire qui débouchent peu sur un emploi.","poSite"],
+  ["polony","Éducation","Augmenter de 20 à 30 % le salaire des enseignants en comptant d’autres tâches que les heures de cours.","poSite"],
+  ["polony","Institutions","Ouvrir un grand chantier contre la corruption et encadrer strictement le pantouflage.","poSite"],
+  ["polony","Institutions","Consulter régulièrement le peuple par référendum.","poSite"],
+  ["batho","Agriculture","Réserver d’ici la fin du quinquennat les aides agricoles au bio et à l’agroécologie régénérative.","baSite"],
+  ["batho","Écologie","Créer des conseils citoyens de l’eau dans les territoires pour veiller sur l’eau potable.","baSite"],
+  ["batho","Énergie","Développer massivement la géothermie et l’autoconsommation collective d’électricité.","baSite"],
+  ["batho","Santé","Rendre le Nutri-Score obligatoire et interdire la publicité pour les produits nocifs.","baSite"],
+  ["batho","Économie","Remplacer le PIB comme boussole par l’empreinte écologique et un indice de santé sociale.","baSite"],
+  ["batho","Budget","Voter des budgets pluriannuels pour la sortie des énergies fossiles, comme pour la défense.","baSite"],
+  ["batho","Éducation","Garantir à chaque enfant des classes vertes et une éducation à la nature.","baSite"],
+  ["batho","Institutions","Inscrire dans la Constitution la pleine santé et un « principe d’habitabilité ».","baSite"],
+  ["batho","Institutions","Abolir le présidentialisme, jugé hérité de la monarchie.","baSite"],
+  ["batho","Institutions","Convoquer des états généraux des Outre-mer contre la vie chère.","baSite"],
+  ["batho","Institutions","Instaurer une « règle d’or de la constance » pour que les normes cessent de changer en permanence.","baSite"],
+  ["batho","Sécurité","Créer un ministère dédié à la sécurité civile et une loi de programmation pour les pompiers.","baSite"],
+  ["arthaud","Économie","Supprimer le secret commercial et le secret bancaire.","arLo"],
+  ["arthaud","Budget","Faire payer intégralement la dette et le budget de l’État par les profits patronaux.","arLo"],
+  ["arthaud","Santé","Rouvrir les maternités, cliniques et centres de santé de proximité qui ont fermé.","arLo"],
+  ["arthaud","Social","Faire prendre en charge par la collectivité tous les besoins liés à la perte d’autonomie.","arLo"],
+  ["arthaud","Écologie","Permettre aux riverains de contrôler au jour le jour ce que les usines rejettent dans l’air, les sols et l’eau.","arLo"],
+  ["arthaud","Économie","Collectiviser les grands moyens de production et les banques.","arLo"],
+  ["arthaud","Écologie","Pour sauver la planète, recenser les besoins et planifier toute l’économie.","arLo"],
+  ["arthaud","Travail","Embaucher massivement dans les hôpitaux, les Ehpad, l’école et les transports selon les besoins listés par le personnel.","arLo"],
+  ["kazib","Économie","Exproprier les banques, offrir des prêts à taux zéro et supprimer les agios.","kaSite"],
+  ["kazib","Travail","Passer à la semaine de 28 heures sans baisse de salaire.","kaSite"],
+  ["kazib","Jeunesse","Verser aux étudiants un revenu égal au Smic, financé par le patronat.","kaSite"],
+  ["kazib","Économie","Supprimer toutes les aides publiques aux grandes entreprises.","kaSite"],
+  ["kazib","Travail","Mettre fin à la sous-traitance et donner un CDI à tout le monde.","kaSite"],
+  ["kazib","Société","Socialiser intégralement le travail domestique.","kaSite"],
+  ["kazib","Fiscalité","Taxer jusqu’à 100 % les revenus du capital au-delà de 260 000 €.","kaSite"],
+  ["kazib","Travail","Interdire le travail de nuit et du dimanche dans les secteurs non essentiels.","kaSite"],
+  ["kazib","Retraites","Garantir des pensions au moins égales au Smic, quel que soit le nombre de trimestres cotisés.","kaSite"],
+  ["kazib","Société","Créer sur les lieux de travail et d’études des commissions contre les violences sexistes, indépendantes des directions.","kaSite"],
+  ["kazib","Justice","Amnistier les manifestants, jeunes des quartiers populaires et syndicalistes condamnés.","kaSite"],
+  ["kazib","Sécurité","Dissoudre les corps spéciaux de police.","kaSite"],
+  ["kazib","Santé","Rendre l’avortement, la PMA et les transitions de genre libres et gratuits.","kaSite"],
+  ["kazib","Santé","Nationaliser toute l’industrie pharmaceutique.","kaSite"],
+  ["kazib","Justice","Élire les juges au suffrage direct et généraliser les jurys populaires.","kaSite"],
+  ["kazib","Immigration","Fermer les centres de rétention administrative.","kaSite"],
+  ["kazib","International","Soutenir la libération de la Palestine et de la Kanaky.","kaSite"],
+  ["kazib","Transports","Exproprier les grands constructeurs automobiles pour développer massivement les transports collectifs.","kaSite"],
+  ["philippot","Justice","Faire toute la lumière sur le volet français de l’affaire Epstein.","ptSite"],
+  ["philippot","Institutions","Ne réviser la Constitution que par référendum, en supprimant la voie du Congrès.","ptSite"],
+  ["philippot","Institutions","Proposer la départementalisation aux territoires d’Outre-mer qui le souhaitent.","ptSite"],
+  ["philippot","Numérique","Rendre libre et auditable le code source de tous les outils numériques publics.","ptSite"],
+  ["philippot","Économie","Instituer un « nouveau franc » par une grande loi monétaire.","ptSite"],
+  ["philippot","Éducation","Faire de l’école un sanctuaire sans intelligence artificielle.","ptSite"],
+  ["philippot","Éducation","Revenir sur les restrictions de l’instruction en famille.","ptSite"],
+  ["philippot","Santé","Garantir la liberté vaccinale et ne plus jamais instaurer de pass sanitaire.","ptSite"],
+  ["philippot","Santé","Supprimer le Conseil de l’Ordre des médecins.","ptSite"],
+  ["philippot","Agriculture","Bannir les insectes et les larves de l’alimentation.","ptSite"],
+  ["philippot","Agriculture","Remplacer la PAC par une « Politique agricole française » fondée sur les circuits courts et le bio.","ptSite"],
+  ["zemmour","Immigration","Interdire les Frères musulmans dans toute l’Europe, sur le modèle autrichien.","zeEu"],
+  ["zemmour","Europe","Inscrire dans les traités les racines grecques, latines et chrétiennes de l’Europe.","zeEu"],
+  ["zemmour","Europe","Mettre fin définitivement à la procédure d’adhésion de la Turquie à l’UE.","zeEu"],
+  ["zemmour","Europe","Supprimer le service diplomatique de l’UE pour ne pas doubler la diplomatie des États.","zeEu"],
+  ["zemmour","Budget","Supprimer la moitié des agences européennes.","zeEu"],
+  ["zemmour","Économie","Appliquer la règle « une norme créée, deux normes supprimées ».","zeEu"],
+  ["zemmour","Économie","Imposer la mention « fabriqué en Chine » sur tous les produits manufacturés concernés.","zeEu"],
+  ["zemmour","Agriculture","Instaurer la priorité nationale dans les marchés publics des cantines scolaires.","zeEu"],
+  ["zemmour","Immigration","Instaurer un blocus naval militaire en Méditerranée.","zeEu"],
+  ["zemmour","Écologie","Abroger toutes les directives et tous les règlements du Pacte vert européen.","zeEu"],
+  ["lepen","Immigration","Supprimer le visa pour soins.","lp22"],
+  ["lepen","Jeunesse","Créer un chèque-formation de 200 à 300 € par mois pour les apprentis, les alternants et leurs employeurs.","lp22"],
+  ["lepen","Fiscalité","Supprimer l’impôt sur les sociétés pendant cinq ans pour les entrepreneurs de moins de 30 ans.","lp22"],
+  ["lepen","Famille","Accorder une part fiscale complète dès le deuxième enfant.","lp22"],
+  ["lepen","Famille","Créer un prêt à taux zéro pour les jeunes familles, transformé en subvention à la naissance du troisième enfant.","lp22"],
+  ["lepen","Fiscalité","Exonérer les donations des parents et grands-parents jusqu’à 100 000 € par enfant.","lp22"],
+  ["lepen","Fiscalité","Rétablir la demi-part fiscale des veuves et des veufs.","lp22"],
+  ["lepen","Agriculture","Obliger les cantines à servir 80 % de produits agricoles français.","lp22"],
+  ["lepen","Fiscalité","Remplacer l’IFI par un impôt sur la fortune financière.","lp22"],
+  ["lepen","Logement","Créer un fonds de garantie des loyers pour protéger les propriétaires.","lp22"],
+  ["lepen","Budget","Créer un ministère de la Lutte contre les fraudes.","lp22"],
+  ["lepen","Santé","Créer un droit opposable aux visites dans les Ehpad.","lp22"],
+  ["lepen","Transports","Supprimer le plan vélo.","lp22"],
+  ["philippe","Économie","Aucune nouvelle norme et aucun nouvel impôt pendant tout le quinquennat.","phSite"],
+  ["philippe","Économie","Créer un « livret capital France » pour mobiliser l’épargne dormante.","phSite"],
+  ["philippe","Travail","Imposer un délai de 3 à 6 mois entre un arrêt maladie et une rupture conventionnelle.","phSite"],
+  ["philippe","Justice","Permettre au garde des Sceaux d’adresser des instructions individuelles au parquet.","phSite"],
+  ["philippe","Europe","Faire voter un « Buy European Tech Act » et des achats technologiques groupés entre États européens.","phSite"],
+  ["philippe","Éducation","Recréer des écoles normales pour former les professeurs.","phSite"],
+  ["philippe","Éducation","Permettre d’avancer la rentrée d’une ou deux semaines pour les élèves en difficulté.","phSite"],
+  ["philippe","Éducation","Créer une amende de responsabilisation pour les parents d’enfants harceleurs.","phSite"],
+  ["philippe","Éducation","Rendre publiques les évaluations de performance des établissements scolaires.","phSite"],
+  ["philippe","Éducation","Apprendre à nager à tous les enfants dès la maternelle.","phSite"],
+  ["philippe","Justice","Créer une Inspection nationale de l’enfance qui contrôle tous les lieux d’accueil de mineurs au moins tous les trois ans.","phSite"],
+  ["philippe","Sécurité","Créer une « fiche S financière » pour les personnes condamnées pour narcotrafic.","phSite"],
+  ["philippe","Justice","Prélever les amendes impayées directement sur les prestations sociales.","phSite"],
+  ["philippe","Sécurité","Former tous les Français aux premiers secours.","phSite"],
+  ["philippe","Écologie","Climatiser massivement les lieux qui accueillent des personnes fragiles.","phSite"],
+  ["philippe","Transports","Verser la même aide pour une voiture électrique d’occasion que pour une neuve.","phSite"],
+  ["attal","Éducation","Créer un barème national des sanctions scolaires.","atSite"],
+  ["attal","Éducation","Instaurer un conseil de discipline dès l’école primaire.","atSite"],
+  ["attal","Éducation","Augmenter les professeurs de 200 € nets par mois dès la rentrée 2027.","atSite"],
+  ["attal","Éducation","Offrir à chaque élève un tuteur d’intelligence artificielle gratuit et validé par l’Éducation nationale.","atSite"],
+  ["attal","Éducation","Consacrer chaque jour 30 minutes à l’esprit critique et au décryptage de l’information.","atSite"],
+  ["attal","Éducation","Nommer un ministre de l’Éducation pour cinq ans, numéro deux du gouvernement.","atSite"],
+  ["attal","Travail","Remplacer le Code du travail par une « Constitution du travail » d’une cinquantaine d’articles.","atSite"],
+  ["attal","Travail","Supprimer le plafond légal d’heures supplémentaires.","atSite"],
+  ["attal","Économie","Créer un statut « Auto-TPE » pour faciliter l’embauche du premier salarié.","atSite"],
+  ["attal","Économie","Rendre obligatoire un « test PME » avant le vote de chaque nouvelle loi.","atSite"],
+  ["attal","Justice","Créer un parquet national de lutte contre la pédocriminalité.","atSite"],
+  ["attal","Société","Créer un fichier national des personnes interdites de détenir un animal.","atSite"],
+  ["attal","Famille","Créer une carte « famille monoparentale », sur le modèle de la carte famille nombreuse.","atSite"],
+  ["attal","Institutions","Ne permettre plus qu’un seul recours contre un projet d’aménagement.","atSite"],
+  ["attal","Écologie","Créer un ministère de l’Eau.","atSite"],
+  ["attal","Santé","Dépister automatiquement les PFAS dans tous les captages d’eau potable.","atSite"],
+  ["attal","Europe","Créer une politique européenne commune de l’IA, sur le modèle de la PAC.","atSite"],
+  ["retailleau","Travail","Limiter à six mois et plafonner l’indemnisation chômage après une rupture conventionnelle.","reSite"],
+  ["retailleau","Logement","Réexaminer tous les cinq ans la situation de chaque locataire HLM.","reSite"],
+  ["retailleau","Numérique","Créer un ministère de plein exercice chargé de l’intelligence artificielle.","reSite"],
+  ["retailleau","Éducation","Créer 1 000 « écoles libres » au sein de l’école publique.","reSite"],
+  ["retailleau","Éducation","Créer une Réserve nationale des sciences, sur le modèle de la réserve militaire.","reSite"],
+  ["retailleau","Énergie","Porter les stocks stratégiques d’uranium à cinq ans de consommation.","reSite"],
+  ["retailleau","Numérique","Créer un visa « Talents Tech » et un programme « Retour au pays » pour les chercheurs et ingénieurs.","reSite"],
+  ["retailleau","Agriculture","Supprimer toute subvention publique aux structures qui pratiquent l’« agribashing ».","reSite"],
+  ["retailleau","Agriculture","Inscrire une présomption de bonne foi pour les agriculteurs.","reSite"],
+  ["retailleau","Agriculture","S’opposer à l’intégration de l’Ukraine au marché agricole européen.","reSite"],
+  ["glucksmann","Numérique","Bannir TikTok, jugé dangereux pour la souveraineté et la démocratie.","glActe"],
+  ["glucksmann","Énergie","Retirer EDF, Framatome et Orano de tout partenariat avec le russe Rosatom.","glActe"],
+  ["glucksmann","International","Lancer une coalition internationale pour la démocratie et les droits.","glActe"],
+  ["glucksmann","Numérique","Ouvrir un campus international de l’IA qui forme ensemble codeurs, juristes et scientifiques.","glActe"],
+  ["glucksmann","Santé","Généraliser le Pass’Sport Santé à tous les âges.","glActe"],
+  ["glucksmann","Immigration","Mettre fin à la politique du chiffre sur les OQTF, et appliquer celles qui sont délivrées.","glActe"],
+  ["glucksmann","Fiscalité","Taxer automatiquement les superprofits des multinationales et des « profiteurs de guerre ».","glActe"],
+  ["tondelier","Santé","Interdire les produits ultra-transformés dans les cantines.","toProg"],
+  ["tondelier","Société","Préserver les lieux de sociabilité, en particulier les cafés et les bistrots.","toProg"],
+  ["tondelier","Social","Créer un pass activités sport et culture pour les personnes âgées modestes.","toProg"],
+  ["tondelier","Social","Créer un service public laïc des obsèques.","toProg"],
+  ["tondelier","Numérique","Simplifier l’exercice du droit à la « mort numérique ».","toProg"],
+  ["tondelier","Éducation","Plafonner à 12 élèves les classes de primaire en éducation prioritaire.","toProg"],
+  ["tondelier","Europe","Quintupler Erasmus pour que la moitié des étudiants passent par un autre pays européen.","toProg"],
+  ["tondelier","Institutions","Remplacer le ministre chargé des Cultes par un ministre de la Laïcité.","toProg"],
+  ["tondelier","Institutions","Élire au suffrage direct les présidents des métropoles et des agglomérations.","toProg"],
+  ["tondelier","Logement","Revaloriser les APL de 10 %, avec un mécanisme qui empêche les propriétaires de les répercuter sur les loyers.","toProg"],
+  ["tondelier","Transports","Créer un parc social de voitures électriques.","toProg"],
+  ["tondelier","Jeunesse","Créer une banque publique des stages et des alternances.","toProg"],
+  ["roussel","Fiscalité","Rendre l’impôt sur le revenu plus progressif en passant à 15 tranches.","roJh"],
+  ["roussel","Social","Ouvrir le RSA aux moins de 25 ans.","roJh"],
+  ["roussel","Logement","Abroger la loi Elan sur le logement.","roJh"],
+  ["roussel","Santé","Voter une loi-cadre pour la psychiatrie.","roJh"],
+  ["bertrand","Sécurité","Permettre aux préfets de fermer les mosquées salafistes.","beSite"],
+  ["bertrand","Institutions","Laisser les Corses se prononcer par référendum sur leur avenir institutionnel.","beSite"],
+  ["bertrand","Transports","Ne jamais taxer les voitures électriques.","beSite"],
+  ["bertrand","Sécurité","Généraliser la saisie des biens des dealers.","beSite"],
+  ["ruffin","Travail","Compter le temps de trajet entre deux interventions comme du temps de travail.","ruSite"],
+  ["ruffin","Économie","Relocaliser la production de 100 produits jugés prioritaires.","ruSite"],
+  ["ruffin","Jeunesse","Rendre le Bafa gratuit.","ruSite"]
 ];
 
 
@@ -1207,7 +1365,11 @@ var SHARED = [
   [["zemmour","lisnard","retailleau"],"Justice","Juger les mineurs délinquants comme des majeurs dès 16 ans.",{zemmour:"zeMv",lisnard:"liProg",retailleau:"reMv"},0],
   [["lepen","zemmour"],"Sécurité","Instaurer une présomption de légitime défense pour les forces de l’ordre.",{lepen:"lp22",zemmour:"zeMv"},0],
   [["lisnard","retailleau"],"Immigration","Remplacer l’aide médicale d’État par une simple aide médicale d’urgence.",{lisnard:"liProg",retailleau:"reMv"},0],
-  [["lepen","retailleau"],"Éducation","Rendre l’uniforme obligatoire à l’école.",{lepen:"lp22",retailleau:"reMv"},0]
+  [["lepen","retailleau"],"Éducation","Rendre l’uniforme obligatoire à l’école.",{lepen:"lp22",retailleau:"reMv"},0],
+  [["arthaud","kazib"],"Travail","Interdire les licenciements.",{arthaud:"arLo",kazib:"kaSite"},0],
+  [["arthaud","kazib"],"Fiscalité","Supprimer la TVA.",{arthaud:"arLo",kazib:"kaSite"},0],
+  [["attal","lisnard"],"Éducation","Créer un certificat de fin de primaire obligatoire pour entrer au collège.",{attal:"atSite",lisnard:"liProg"},0],
+  [["ruffin","melenchon"],"Justice","Supprimer la convention judiciaire d’intérêt public, qui permet aux entreprises de négocier leur sanction.",{ruffin:"ruSite",melenchon:"melE2"},0]
 ];
 
 /* Mode « Casier & polémiques » : faits judiciaires et polémiques publiques, formulés de façon neutre, avec leur statut exact à la date de mise à jour. Une procédure en cours n'est pas une condamnation. */
@@ -1238,6 +1400,30 @@ var CASES = [
 ];
 var CASE_KIND = { cond: "Condamnation", civ: "Condamnation civile", cours: "Procédure en cours", nl: "Relaxe ou non-lieu", pol: "Polémique" };
 
+/* Mode « Qui a dit ça ? » : courtes citations d'interviews, de meetings et de débats, rapportées par la presse. [candidat, citation, contexte révélé après la réponse, source] */
+var QUOTES = [
+  ["melenchon","Pour ce qui est d’emmerder le monde, il est très fort.","À propos de la réforme proposée par Édouard Philippe, en arrivant au débat du Medef.",{s:"AFP via Bourse Direct",d:"27 août 2026",u:"https://www.boursedirect.fr/fr/actualites/categorie/politique/premier-grand-debat-des-candidats-a-la-presidentielle-sur-le-terrain-patronal-afp-b61c3d17e4cbb29e8a3b7cdd539f230c6ac1cafc"}],
+  ["melenchon","La primaire est finie.","À la fin de son meeting de lancement de campagne à Saint-Denis, à l’adresse du reste de la gauche.",{s:"Politis",d:"7 juin 2026",u:"https://www.politis.fr/articles/2026/06/presidentielle-2027-le-defi-melenchon/"}],
+  ["melenchon","La victoire est possible.","Discours de rentrée consacré à l’écologie, où il a proposé une « conscription écologique ».",{s:"Sud Radio (AFP)",d:"août 2026",u:"https://www.sudradio.fr/societe/presidentielle-melenchon-colore-sa-rentree-en-vert-en-proposant-la-conscription-ecologique"}],
+  ["lepen","Je ferai donc campagne sans bracelet électronique.","Au 20 heures de TF1, le soir de sa condamnation en appel, en annonçant un pourvoi en cassation.",{s:"Euronews",d:"7 juillet 2026",u:"https://fr.euronews.com/2026/07/07/je-suis-candidate-a-lelection-presidentielle-annonce-marine-le-pen-sur-tf1"}],
+  ["lepen","J’ai les mains propres.","Sur TF1, en annonçant sa candidature quelques heures après l’arrêt de la cour d’appel.",{s:"LCP",d:"7 juillet 2026",u:"https://lcp.fr/index%2Ephp/actualites/ce-soir-je-suis-candidate-a-l-election-presidentielle-annonce-marine-le-pen-438886"}],
+  ["philippe","Je demanderai des efforts, mais des efforts justes, partagés et étalés dans le temps.","Premier grand meeting de campagne, à l’Adidas Arena de Paris.",{s:"Europe 1",d:"5 juillet 2026",u:"https://www.europe1.fr/node/966771"}],
+  ["philippe","Prenez une bonne bière.","En ouverture d’une « réunion d’appartement » géante en visioconférence avec 9 500 personnes.",{s:"LCP",d:"25 juin 2026",u:"https://lcp.fr/actualites/si-je-devais-le-refaire-je-le-referais-autrement-le-mea-culpa-d-edouard-philippe-sur-les"}],
+  ["philippe","Tout n’est pas perdu.","Premiers mots de son premier grand meeting de campagne, devant environ 5 000 personnes.",{s:"Euronews",d:"5 juillet 2026",u:"https://fr.euronews.com/my-europe/2026/07/05/premier-meeting-de-campagne-pour-edouard-philippe-linteret-des-enfants-sera-sa-boussole"}],
+  ["attal","Tu voles, tu paies.","À l’adresse de la présidente du RN, en déclinant une formule de sa déclaration de politique générale.",{s:"Europe 1",d:"2025",u:"https://www.europe1.fr/node/671316"}],
+  ["attal","Je veux être le président qui parlera à la jeunesse parce qu’il la comprend.","Meeting de Lyon consacré à la jeunesse, en pleine mobilisation lycéenne.",{s:"La Gazette France (AFP)",d:"10 octobre 2026",u:"https://www.lagazettefrance.fr/article/presidentielle-attal-melenchon-pour-les-candidats-l-atout-ou-le-peril-jeune"}],
+  ["glucksmann","Ce soir, la bataille de France commence.","Le soir de sa victoire dès le premier tour de la primaire sociale-démocrate.",{s:"Public Sénat",d:"11 octobre 2026",u:"https://www.publicsenat.fr/actualites/politique/ce-soir-la-bataille-de-france-commence-apres-sa-victoire-a-la-primaire-de-la-gauche-raphael-glucksmann-assure-que-rien-ne-le-fera-l"}],
+  ["glucksmann","Il n’y aura pas d’accord avec la France insoumise.","Sur France 2, au lendemain de sa victoire à la primaire.",{s:"Sud Radio (AFP)",d:"octobre 2026",u:"https://www.sudradio.fr/societe/apres-une-primaire-reussie-les-choses-serieuses-commencent-pour-glucksmann"}],
+  ["glucksmann","Ma détermination est sans faille.","Meeting de lancement de campagne aux Docks de Paris, à Aubervilliers.",{s:"LCP",d:"13 juin 2026",u:"https://lcp.fr/actualites/gagner-en-2027-raphael-glucksmann-lance-sa-campagne-et-veut-ramener-la-gauche-au-pouvoir"}],
+  ["retailleau","Je ne prétendrai jamais à être Jupiter.","Premier grand meeting de campagne, au Parc floral de Paris, en référence à Emmanuel Macron.",{s:"LCP",d:"20 juin 2026",u:"https://lcp.fr/index%2ephp/actualites/j-irai-jusqu-au-bout-bruno-retailleau-lance-sa-conquete-de-l-elysee-devant-une-droite"}],
+  ["retailleau","Mais où sont les propositions ?","Sur BFMTV-RMC, à propos du grand meeting parisien d’Édouard Philippe.",{s:"La Gazette France (AFP)",d:"juillet 2026",u:"https://www.lagazettefrance.fr/article/retailleau-critique-les-generalites-et-l-absence-de-propositions-de-philippe"}],
+  ["zemmour","Il ne suffit plus, en 2026, de fermer les frontières et d’arrêter les flux.","Discours de rentrée aux universités d’été de son parti, à Port-Marly.",{s:"Techniques de l’ingénieur (AFP)",d:"13 septembre 2026",u:"https://www.techniques-ingenieur.fr/actualite/breves-afp/eric-zemmour-prepare-sa-candidature-et-appelle-a-un-vote-du-sursaut-163638/"}],
+  ["zemmour","Vous avez compris, je serai candidat à la présidentielle.","Sur BFMTV, après avoir d’abord parlé d’un « processus de candidature ».",{s:"LCP",d:"17 septembre 2026",u:"https://lcp.fr/index%2Ephp/actualites/presidentielle-2027-eric-zemmour-officialise-sa-candidature-441871"}],
+  ["tondelier","Il n’y a pas de raison que le seul débat de cette rentrée soit au Medef sur les entreprises.","En réclamant un grand débat télévisé sur l’écologie après un été de canicules et d’incendies.",{s:"Le Petit Journal (AFP)",d:"26 août 2026",u:"https://lepetitjournal.com/fil-afp/premier-grand-debat-candidats-presidentielle-terrain-patronal-452067"}],
+  ["tondelier","Celui qui fait le choix du repli.","Pour qualifier le vainqueur de la primaire sociale-démocrate, Raphaël Glucksmann.",{s:"Le Petit Journal (AFP)",d:"12 octobre 2026",u:"https://lepetitjournal.com/expat-politique/apres-une-primaire-reussie-les-choses-serieuses-commencent-pour-glucksmann-455946"}],
+  ["ruffin","Raphaël Glucksmann remporte la primaire de Raphaël à Glucksmann !","Réaction ironique au résultat de la primaire sociale-démocrate, à laquelle il voulait participer.",{s:"LCP",d:"11 octobre 2026",u:"https://lcp.fr/index%2ephp/actualites/victoire-de-raphael-glucksmann-a-la-primaire-socialiste-premieres-reactions-des"}]
+];
+
 </script>
 <script>
 (function () {
@@ -1256,10 +1442,15 @@ CASES.forEach(function (r) {
   var o = {}; o[r[0]] = r[5];
   M.push({ id: M.length, c: r[0], cs: [r[0]], t: CASE_KIND[r[1]], kind: r[1], year: r[2], m: r[3], status: r[4], srcs: o, kase: true });
 });
+QUOTES.forEach(function (r) {
+  var o = {}; o[r[0]] = r[3];
+  M.push({ id: M.length, c: r[0], cs: [r[0]], t: "Citation", m: r[1], ctx: r[2], srcs: o, quote: true });
+});
 var KASES = M.filter(function (x) { return x.kase; });
-var SINGLE = M.filter(function (x) { return !x.shared && !x.kase; });
+var QUOTEM = M.filter(function (x) { return x.quote; });
+var SINGLE = M.filter(function (x) { return !x.shared && !x.kase && !x.quote; });
 var SH = M.filter(function (x) { return x.shared; });
-var THEMES = Array.from(new Set(M.filter(function (x) { return !x.kase; }).map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
+var THEMES = Array.from(new Set(M.filter(function (x) { return !x.kase && !x.quote; }).map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
 var MAIN = C.filter(function (c) { return c.main; }).map(function (c) { return c.id; });
 var ALL = C.map(function (c) { return c.id; });
 var DUELS = [["lepen","melenchon"],["philippe","attal"],["glucksmann","melenchon"],["retailleau","zemmour"],["tondelier","ruffin"],["arthaud","kazib"],["philippot","asselineau"],["lisnard","retailleau"]];
@@ -1343,6 +1534,20 @@ var QUIP_CASE_KO = [
   "Raté. Vous avez confondu les dossiers, ça arrive aussi aux greffes.",
   "Non. La présomption d’innocence s’applique aussi à vos réponses."
 ];
+var QUIP_QUOTE_OK = [
+  "Exact. Vous avez visiblement écouté le meeting jusqu’au bout.",
+  "Bien vu. On vous soupçonne de lire les dépêches AFP au petit-déjeuner.",
+  "Juste. Vous reconnaîtriez cette voix les yeux fermés.",
+  "Bonne réponse. La petite phrase n’a pas de secret pour vous.",
+  "Exact. Le service communication du candidat vous remercie."
+];
+var QUIP_QUOTE_KO = [
+  "Raté. Les petites phrases se ressemblent parfois, c’est le principe.",
+  "Non. Vous venez de prêter une phrase à quelqu’un qui ne l’a jamais dite. Classique.",
+  "Perdu. Heureusement, il n’y a pas de droit de réponse dans ce quiz.",
+  "Raté. Un conseiller en communication quelque part soupire.",
+  "Non. Sortie de son contexte, une phrase va avec tout le monde."
+];
 var CD_QUIPS = [
   "Largement le temps de lire tous les programmes. En théorie.",
   "Il reste des débats, des sondages et au moins trois « petites phrases » par semaine.",
@@ -1378,11 +1583,8 @@ var SOON = {
   lepen: "Programme 2027 à l’impression. En attendant, on a ressorti celui de 2022.",
   zemmour: "On fait avec le programme des européennes. Le reste est encore dans les cartons.",
   roussel: "Les « jours heureux » de 2022 servent de bande-annonce.",
-  polony: "Une seule mesure recensée. Elle se sent un peu seule.",
-  batho: "Programme en chargement… 23 %.",
-  philippot: "Mesures en route. Comme le bus de 8 h 12.",
-  arthaud: "Un dépliant pour l’instant. La suite au prochain tract.",
-  kazib: "Programme en cours de rédaction. Ne quittez pas, un conseiller va vous répondre."
+  polony: "Une « vision » en ligne, un programme encore en cuisson. Repassez après le dessert.",
+  arthaud: "Un dépliant pour l’instant. La suite au prochain tract."
 };
 // Candidats déclarés sans programme recensé : affichés sur l'accueil seulement, pas encore jouables.
 var NOPROG = [
@@ -1446,7 +1648,7 @@ function renderHome() {
   $("duel-chips").innerHTML = DUELS.map(function (d, i) { return "<button type=\"button\" data-i=\"" + i + "\">" + esc(last(CBY[d[0]].name)) + " / " + esc(last(CBY[d[1]].name)) + "</button>"; }).join("");
   syncSetup();
 }
-var MODES = ["classic", "duel", "blitz", "target", "multi", "accord", "casier"];
+var MODES = ["classic", "duel", "blitz", "target", "multi", "accord", "citations", "casier"];
 function syncSetup() {
   MODES.forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
   ["main", "all"].forEach(function (p) { $("p-" + p).setAttribute("aria-pressed", cfg.pool === p); });
@@ -1459,6 +1661,7 @@ function syncSetup() {
   $("fld-duel").hidden = cfg.mode !== "duel";
   $("fld-cands").hidden = cfg.mode !== "target";
   $("fld-casier").hidden = cfg.mode !== "casier";
+  $("fld-citations").hidden = cfg.mode !== "citations";
   $("d-hard").innerHTML = (cfg.pool === "main" ? "Les 7 panneaux" : "Les " + C.length + " panneaux") + "<small>Aucune aide</small>";
   $("duel-a").value = cfg.duel[0]; $("duel-b").value = cfg.duel[1];
   C.forEach(function (c) { var b = $("pick-" + c.id); if (b) b.setAttribute("aria-pressed", cfg.targets.indexOf(c.id) >= 0); });
@@ -1530,6 +1733,14 @@ function buildQuestions(conf, onlyIds) {
       return { mid: x.id, type: "pick", opts: dec.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; }) };
     });
   }
+  if (conf.mode === "citations") {
+    var qs = QUOTEM.filter(only), authors = Array.from(new Set(QUOTEM.map(function (x) { return x.c; }))).concat(MAIN);
+    authors = Array.from(new Set(authors));
+    return balanced(shuffle(qs), onlyIds ? qs.length : 10).map(function (x) {
+      var dec = shuffle(authors.filter(function (id) { return id !== x.c; })).slice(0, 3);
+      return { mid: x.id, type: "pick", opts: dec.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; }) };
+    });
+  }
   if (conf.mode === "multi") {
     var n = conf.len === "all" ? M.length : parseInt(conf.len, 10);
     var sh = shuffle(SH.filter(only)), si = balanced(SINGLE.filter(only), onlyIds ? 9999 : n);
@@ -1585,11 +1796,11 @@ function hudUpdate() {
 }
 function renderQ() {
   var q = game.qs[game.i], m = M[q.mid], n = game.qs.length, blitz = game.cfg.mode === "blitz";
-  if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = (game.cfg.mode === "casier" ? "Dossier " : "Mesure ") + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
+  if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = (game.cfg.mode === "casier" ? "Dossier " : game.cfg.mode === "citations" ? "Citation " : "Mesure ") + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
   else $("g-prog").textContent = game.timeLeft + " s";
   hudUpdate();
   var kase = !!m.kase;
-  $("g-theme").textContent = kase ? (m.year && m.year !== "—" ? "Dossier · " + m.year : "Dossier") : m.t;
+  $("g-theme").textContent = kase ? (m.year && m.year !== "—" ? "Dossier · " + m.year : "Dossier") : m.quote ? "Citation · " + m.srcs[m.c].d : m.t;
   $("g-kind").hidden = !kase;
   if (kase) { $("g-kind").textContent = m.t; $("g-kind").className = "kind " + m.kind; }
   $("g-notice").hidden = game.cfg.mode !== "casier";
@@ -1612,7 +1823,7 @@ function renderQ() {
     }).join("") + "</div>";
     $("g-validate").hidden = false; $("g-validate").disabled = true;
   } else {
-    $("g-ask").textContent = game.cfg.mode === "casier" ? "À quel candidat appartient ce dossier ?" : (game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?");
+    $("g-ask").textContent = game.cfg.mode === "casier" ? "À quel candidat appartient ce dossier ?" : game.cfg.mode === "citations" ? "Qui a dit ça ?" : (game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?");
     $("g-opts").innerHTML = "<div class=\"boards" + (q.opts.length === 2 ? " two" : "") + "\">" + q.opts.map(function (cid, k) {
       return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" aria-label=\"" + esc(CBY[cid].name) + "\"", k < 9 ? keys[k] : "");
     }).join("") + "</div>";
@@ -1661,7 +1872,7 @@ function validateMulti() {
 function reveal(a, animate) {
   var q = game.qs[game.i], m = M[q.mid];
   var st = $("g-stamp");
-  st.textContent = m.kase ? (a.ok ? pick(["Bien vu", "Exact", "Dossier bouclé"]) : pick(["Raté", "Mauvais dossier", "Classé faux"])) : a.ok ? (m.fou ? "C’est fou" : pick(STAMP_OK)) : (a.type === "multi" && a.good ? "Ballottage" : pick(STAMP_KO));
+  st.textContent = m.quote ? (a.ok ? pick(["Bien entendu", "Cité juste", "Verbatim"]) : pick(["Hors micro", "Mal cité", "Faux témoin"])) : m.kase ? (a.ok ? pick(["Bien vu", "Exact", "Dossier bouclé"]) : pick(["Raté", "Mauvais dossier", "Classé faux"])) : a.ok ? (m.fou ? "C’est fou" : pick(STAMP_OK)) : (a.type === "multi" && a.good ? "Ballottage" : pick(STAMP_KO));
   st.className = "stamp " + (a.ok ? "ok" : "ko") + (animate ? " thump" : "");
   st.hidden = false;
   $("g-validate").hidden = true;
@@ -1688,8 +1899,9 @@ function reveal(a, animate) {
   var gainTxt = a.gain ? " <span class=\"gain\">+" + a.gain + " pts" + (a.ok ? bonusTxt(a.detail) : " (consolation)") + "</span>" : "";
   parts.push("<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + esc(head) + gainTxt + (m.fou ? "<span class=\"fou\">Accord improbable</span>" : "") + "</span>");
   if (m.kase) parts.push("<span class=\"status\">Statut : " + esc(m.status) + "</span>");
+  if (m.quote) parts.push("<span class=\"status\">Contexte : " + esc(m.ctx) + "</span>");
   if (game.cfg.mode !== "blitz") {
-    var quip = m.kase ? (a.ok ? pick(QUIP_CASE_OK) : pick(QUIP_CASE_KO)) : m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
+    var quip = m.kase ? (a.ok ? pick(QUIP_CASE_OK) : pick(QUIP_CASE_KO)) : m.quote ? (a.ok ? pick(QUIP_QUOTE_OK) : pick(QUIP_QUOTE_KO)) : m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
     parts.push("<span class=\"quip\">" + esc(quip) + "</span>");
   }
   parts.push("<span>" + srcHtml(m) + "</span>");
@@ -1705,7 +1917,7 @@ function reveal(a, animate) {
   hudUpdate();
   if (game.cfg.mode !== "blitz") {
     var nx = $("g-next");
-    nx.textContent = game.i + 1 < game.qs.length ? (m.kase ? "Dossier suivant →" : "Mesure suivante →") : "Voir mon résultat →";
+    nx.textContent = game.i + 1 < game.qs.length ? (m.kase ? "Dossier suivant →" : m.quote ? "Citation suivante →" : "Mesure suivante →") : "Voir mon résultat →";
     nx.hidden = false;
     if (animate) nx.focus({ preventScroll: true });
   }
@@ -1774,6 +1986,7 @@ function finish() {
       "Vous reconnaissez mieux les mesures de " + (pa > pb ? A.name : B.name) + " (" + Math.max(pa, pb) + " %) que celles de " + (pa > pb ? B.name : A.name) + " (" + Math.min(pa, pb) + " %).") + " " + t.text;
   }
   if (game.cfg.mode === "blitz") text = plural(sc, "bonne réponse", "bonnes réponses") + " en 60 secondes. " + text;
+  if (game.cfg.mode === "citations") text = "Vous avez rendu " + plural(sc, "citation", "citations") + " sur " + total + " à leur auteur. " + t.text.replace("chaque mesure a sa source", "chaque citation a sa source");
   if (game.cfg.mode === "casier") text = "Vous avez attribué " + plural(sc, "dossier", "dossiers") + " sur " + total + " au bon candidat. Rappel utile : une procédure en cours n’est pas une condamnation. " + t.text.replace("chaque mesure a sa source", "chaque dossier a sa source");
   if (game.cfg.mode === "accord") text = "Vous avez retrouvé " + plural(sc, "accord", "accords") + " sur " + total + ". Morale de l’histoire : ils se ressemblent parfois plus qu’ils ne l’avouent. " + t.text;
   $("r-title").textContent = t.label;
@@ -1849,7 +2062,7 @@ $("r-retry").addEventListener("click", function () {
 });
 $("r-setup").addEventListener("click", goMenu);
 $("r-copy").addEventListener("click", function () {
-  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »", casier: "« Casier & polémiques »" }[game.cfg.mode];
+  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »", casier: "« Casier & polémiques »", citations: "« Qui a dit ça ? »" }[game.cfg.mode];
   var extra = game.cfg.mode === "duel" ? " (" + last(CBY[game.cfg.duel[0]].name) + " / " + last(CBY[game.cfg.duel[1]].name) + ")" : "";
   var txt = "Qui a proposé ça ? Présidentielle 2027, " + lab + extra + " : " + fmt(r.pts) + " points, " + r.score + "/" + r.total + " (" + r.pct + " %), « " + r.label + " ». À toi : " + location.href.split("#")[0];
   var done = function (msg) { $("r-copied").textContent = msg; $("r-copied").hidden = false; };
@@ -1867,7 +2080,7 @@ function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 function renderExplorer() {
   var q = norm($("ex-q").value.trim()), fc = $("ex-c").value, ft = $("ex-t").value;
   var list = M.filter(function (x) {
-    if (x.kase) return false;
+    if (x.kase || x.quote) return false;
     var okc = !fc || (fc === "__main" ? x.cs.some(function (c) { return MAIN.indexOf(c) >= 0; }) : fc === "__shared" ? x.shared : x.cs.indexOf(fc) >= 0);
     return okc && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + names(x.cs)).indexOf(q) >= 0);
   });
