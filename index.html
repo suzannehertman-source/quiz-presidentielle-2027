@@ -77,7 +77,8 @@ main.wrap { padding: 28px 20px 56px; }
 .card { background: var(--sheet); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 4px; }
 .modebox { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
 .modebox h2 { margin: 0; font: 800 26px/1 var(--f-display); text-transform: uppercase; letter-spacing: .01em; }
-.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.modes button b { overflow-wrap: anywhere; }
 .modes button { text-align: left; border: 1.5px solid var(--line); background: var(--sheet); padding: 10px 12px; border-radius: 3px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; }
 .modes button b { font: 800 19px/1 var(--f-display); text-transform: uppercase; letter-spacing: .02em; }
 .modes button span { font-size: 12.5px; color: var(--muted); line-height: 1.3; }
@@ -274,7 +275,7 @@ footer.method details ul { margin-top: 8px; }
 /* ---- Mouvement ---- */
 .view:not([hidden]) { animation: rise .38s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-.pop > * { animation: pop .42s cubic-bezier(.2,1.4,.4,1) both; }
+.pop > * { animation: pop .42s cubic-bezier(.2,1.4,.4,1) backwards; }
 @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
 .bulletin.enter { animation: slidein .4s cubic-bezier(.2,.9,.2,1) both; }
 @keyframes slidein { from { opacity: 0; transform: translateX(24px) rotate(.6deg); } to { opacity: 1; transform: none; } }
@@ -367,6 +368,68 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
 @keyframes thump2 { from { transform: rotate(-6deg) scale(2.4); opacity: 0; } to { transform: rotate(-6deg) scale(1); opacity: 1; } }
 .endfx .skip { font-size: 12px; color: #5a6478; margin: 4px 0 0; }
 
+/* ---- Antisèches ---- */
+.next-row .grow { flex: 1; }
+.cheat-btn { border: 1.5px dashed var(--gold) !important; background: transparent !important; color: var(--gold) !important; font: 800 17px/1 var(--f-display) !important; text-transform: uppercase; letter-spacing: .04em; padding: 12px 16px !important; border-radius: 3px; cursor: pointer; }
+.cheat-btn small { font: 700 12px/1 var(--f-ui); margin-left: 4px; }
+.cheat-btn:disabled { opacity: .35; cursor: not-allowed; }
+.cheat-btn:hover:not(:disabled) { background: var(--ko-soft) !important; }
+.hintbox { margin: 12px 0 0; padding: 10px 14px; border: 1.5px dashed var(--gold); border-radius: 3px; background: var(--sheet); font: italic 400 16px/1.4 var(--f-read); }
+.hintbox[hidden] { display: none; }
+.hintbox b { font-style: normal; font-family: var(--f-ui); }
+.memo { font-size: 13px; color: var(--muted); }
+.cheat-head h2 { margin: 0 0 6px; font: 900 40px/1 var(--f-display); text-transform: uppercase; }
+.cheat-head p { margin: 0 0 18px; max-width: 70ch; font: 400 17px/1.45 var(--f-read); }
+.cheat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.fiche { padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
+.fiche::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--fam, var(--accent)); }
+.fiche h3 { margin: 0; display: flex; gap: 8px; align-items: baseline; font: 800 22px/1.05 var(--f-display); text-transform: uppercase; }
+.fiche h3 .num { font-size: 14px; background: var(--ink); color: var(--paper); padding: 3px 6px 2px; }
+.fiche .fam { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.fiche .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.fiche .tags span { font-size: 11.5px; font-weight: 700; color: var(--accent); border: 1px solid currentColor; padding: 2px 6px; border-radius: 2px; text-transform: uppercase; letter-spacing: .06em; }
+.fiche ul { margin: 0; padding-left: 16px; font: 400 15px/1.35 var(--f-read); display: flex; flex-direction: column; gap: 4px; }
+.fiche .btn { align-self: flex-start; margin-top: 4px; padding: 7px 12px; font-size: 13px; }
+.fiche .soonx { font: italic 400 13px/1.3 var(--f-read); color: var(--gold); }
+.kind.imp { background: var(--ink); }
+
+/* ---- Gimmick Koh-Lanta ---- */
+.kl { display: flex; gap: 14px; align-items: center; margin: 4px 0 16px; padding: 14px 16px; border-radius: 4px; background: linear-gradient(100deg, #2b1a0e, #4a2a12 60%, #6b3a12); color: #fbe9c8; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.kl::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 34px 50%, rgba(255,170,60,.35), transparent 120px); animation: glowkl 2.2s ease-in-out infinite alternate; pointer-events: none; }
+@keyframes glowkl { from { opacity: .55; } to { opacity: 1; } }
+.kl .torch { font-size: 38px; line-height: 1; display: inline-block; transform-origin: 50% 90%; animation: flicker 1.3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(255,140,0,.8)); position: relative; z-index: 1; }
+@keyframes flicker { 0%, 100% { transform: rotate(-3deg) scale(1); } 30% { transform: rotate(2deg) scale(1.06, .97); } 60% { transform: rotate(-1deg) scale(.97, 1.04); } }
+.kl-t { margin: 0; font: 900 clamp(20px, 2.6vw, 26px)/1.1 var(--f-display); text-transform: uppercase; letter-spacing: .02em; position: relative; z-index: 1; }
+.kl-t b { color: #ffb347; font-variant-numeric: tabular-nums; }
+.kl-s { margin: 6px 0 0; font: italic 400 14px/1.35 var(--f-read); opacity: .9; position: relative; z-index: 1; }
+
+/* ---- Plus graphique ---- */
+body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.3px), radial-gradient(rgba(225,0,15,.05) 1.2px, transparent 1.3px); background-size: 26px 26px, 26px 26px; background-position: 0 0, 13px 13px; }
+.board { overflow: hidden; }
+.board::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--fam, transparent); }
+.board .ini { color: var(--fam, var(--ink)); }
+:root[data-theme="dark"] .board .ini { color: var(--ink); }
+.modes .ico { font-style: normal; font-size: 22px; line-height: 1; margin-right: 6px; display: inline-block; transition: transform .2s ease; }
+.modes button:hover .ico { transform: rotate(-12deg) scale(1.2); }
+.hemi { margin: 0 0 18px; padding: 14px 14px 8px; }
+.hemi h3 { margin: 0 0 2px; font: 800 20px/1 var(--f-display); text-transform: uppercase; }
+.hemi p { margin: 0; font-size: 13px; color: var(--muted); }
+.hemi svg { width: 100%; height: auto; display: block; margin-top: 6px; overflow: visible; }
+.hemi .seat { cursor: pointer; transition: transform .18s ease; transform-box: fill-box; transform-origin: center; }
+.hemi .seat:hover, .hemi .seat:focus { transform: scale(1.22); outline: none; }
+.hemi .seat text { font: 800 11px/1 var(--f-display); fill: #fff; pointer-events: none; }
+.hemi .cap { font: 700 14px/1.2 var(--f-ui); fill: var(--ink); }
+.hemi .cap2 { font: 400 12px/1.2 var(--f-ui); fill: var(--muted); }
+.hemi .lr { font: 700 10px/1 var(--f-ui); fill: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+.trail { display: flex; flex-wrap: wrap; gap: 3px; margin: -6px 0 12px; }
+.trail i { width: 14px; height: 18px; border-radius: 2px; border: 1.5px solid var(--line); background: var(--sheet); display: inline-block; }
+.trail i.ok { background: var(--ok); border-color: var(--ok); }
+.trail i.ko { background: var(--ko); border-color: var(--ko); }
+.trail i.part { background: linear-gradient(135deg, var(--ok) 50%, var(--ko) 50%); border-color: var(--gold); }
+.trail i.cur { border-color: var(--accent); border-width: 2.5px; animation: pulse 1s ease-in-out infinite alternate; }
+@keyframes pulse { to { transform: translateY(-3px); } }
+.bigscore .medal { font-size: 60px; color: inherit; line-height: 1; display: block; margin-bottom: 6px; animation: pop .6s .2s cubic-bezier(.2,1.6,.4,1) backwards; }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -381,6 +444,7 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
       <span class="cd-chip" id="cd-chip" title="Avant le premier tour, le 18 avril 2027">1er tour J-…</span>
       <nav class="tabs" aria-label="Sections">
         <button type="button" id="tab-jouer" data-view="jouer" aria-pressed="true">⌂ Menu</button>
+        <button type="button" id="tab-cheat" data-view="cheat" aria-pressed="false">Antisèches</button>
         <button type="button" id="tab-explorer" data-view="explorer" aria-pressed="false">Toutes les mesures</button>
       </nav>
     </div>
@@ -408,6 +472,18 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
           <li><b id="f-cand">0</b><span>candidats</span></li>
           <li><b id="f-th">0</b><span>thèmes</span></li>
         </ul>
+        <div class="card hemi">
+          <h3>L’hémicycle des candidats</h3>
+          <p>De la gauche à la droite, selon le classement usuel de la presse. Clique sur un siège pour réviser ce candidat.</p>
+          <svg id="hemi" viewBox="0 0 420 235" role="group" aria-label="Hémicycle des candidats"></svg>
+        </div>
+        <div class="kl" id="kl">
+          <span class="torch" aria-hidden="true">🔥</span>
+          <div>
+            <p class="kl-t">Au début, ils étaient <b id="kl-n">29</b>.<br>À la fin, il n’en restera qu’un.</p>
+            <p class="kl-s" id="kl-s">Première épreuve d’immunité : les 500 parrainages. Le conseil de la tribu, c’est vous, le 18 avril.</p>
+          </div>
+        </div>
         <p class="boards-intro">Panneaux numérotés par ordre alphabétique. En bas, bandeau <span class="soon-l">À venir</span> : programme 2027 incomplet, ou candidature déclarée sans programme pour l’instant (panneaux « ? », pas encore jouables). On complète dès que ça sort.</p>
         <div class="boards" id="boards-home"></div>
       </div>
@@ -422,6 +498,7 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
           <button type="button" id="m-accord" data-mode="accord" aria-pressed="false"><b>Ils sont d’accord&nbsp;!</b><span>Les mesures que des rivaux partagent. Oui, ça arrive.</span></button>
           <button type="button" id="m-citations" data-mode="citations" aria-pressed="false"><b>Qui a dit ça&nbsp;?<i class="new">Nouveau</i></b><span>10 petites phrases de meetings, de débats et d’interviews. À qui les rendre ?</span></button>
           <button type="button" id="m-casier" data-mode="casier" aria-pressed="false"><b>Casier &amp; polémiques<i class="new">Nouveau</i></b><span>10 dossiers : condamnations, procès, relaxes et polémiques. Statut judiciaire et source à chaque fois.</span></button>
+          <button type="button" class="wide" id="m-conseil" data-mode="conseil" aria-pressed="false"><b>Le Conseil constitutionnel tousse<i class="new">Nouveau</i></b><span>Mesures qui se heurtent à la Constitution, à la jurisprudence ou aux traités. Devine qui les propose, puis découvre l’obstacle (sourcé).</span></button>
         </div>
 
         <div class="field" id="fld-pool">
@@ -461,6 +538,9 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
         <div class="field" id="fld-citations" hidden>
           <p class="notice">Citations courtes, telles que rapportées par la presse, avec leur contexte et leur source affichés après ta réponse.</p>
         </div>
+        <div class="field" id="fld-conseil" hidden>
+          <p class="notice">Ici, pas de jugement sur le fond : chaque fiche indique seulement l’obstacle juridique identifié par le Conseil constitutionnel, des juristes ou les textes, avec sa source. Une Constitution, ça se révise, et certains candidats le proposent.</p>
+        </div>
         <div class="field" id="fld-casier" hidden>
           <p class="notice">Présomption d’innocence : une enquête ou un procès en cours n’est pas une condamnation. Chaque fiche indique le statut exact de la procédure et sa source. Les candidats sans affaire ni polémique retenue servent de leurres.</p>
         </div>
@@ -483,6 +563,7 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
       <span class="pts"><b id="g-pts">0</b><span>points</span></span>
       <button type="button" class="quit" id="g-quit">Je m’abstiens</button>
     </div>
+    <div class="trail" id="g-trail" aria-hidden="true"></div>
     <p class="notice" id="g-notice" hidden>Présomption d’innocence : une procédure en cours n’est pas une condamnation. Le statut exact s’affiche après ta réponse.</p>
     <article class="card bulletin" id="g-card" aria-live="polite">
       <span class="toast" id="g-toast" hidden></span>
@@ -493,13 +574,14 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
       <div class="stamp" id="g-stamp" hidden></div>
     </article>
     <div id="g-opts"></div>
-    <div class="next-row"><button type="button" id="g-validate" hidden>Valider mon choix</button><button type="button" id="g-next" hidden>Mesure suivante →</button></div>
+    <p class="hintbox" id="g-hint" hidden></p>
+    <div class="next-row"><button type="button" class="cheat-btn" id="g-cheat">Antisèche <small id="g-cheat-n">×3</small></button><span class="grow"></span><button type="button" id="g-validate" hidden>Valider mon choix</button><button type="button" id="g-next" hidden>Mesure suivante →</button></div>
     <p class="keys" id="g-keys">Raccourcis : touches <kbd>1</kbd> à <kbd>9</kbd> pour répondre, <kbd>Entrée</kbd> pour continuer.</p>
   </section>
 
   <section class="view" id="v-res" hidden>
     <div class="card res-top">
-      <div class="bigscore"><b id="r-pts">0</b><span id="r-sub">points</span></div>
+      <div class="bigscore"><span class="medal" id="r-medal">🏅</span><b id="r-pts">0</b><span id="r-sub">points</span></div>
       <div>
         <h2 id="r-title">Résultat</h2>
         <p id="r-text"></p>
@@ -535,6 +617,14 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
         <ul class="missed" id="r-missed"></ul>
       </div>
     </div>
+  </section>
+
+  <section class="view" id="v-cheat" hidden>
+    <div class="cheat-head">
+      <h2>Antisèches</h2>
+      <p>Une fiche par candidat pour réviser avant de jouer : famille politique, thèmes favoris et quelques mesures typiques. Pendant une partie, le bouton « Antisèche » donne un indice (trois par partie, et la question ne rapporte alors que la moitié des points).</p>
+    </div>
+    <div class="cheat-grid" id="cheat-grid"></div>
   </section>
 
   <section class="view" id="v-explorer" hidden>
@@ -574,6 +664,8 @@ footer.method::before { content: ""; display: block; height: 4px; background: li
       <li>Dans les modes à réponse unique, seules les mesures propres à un candidat sont posées.</li>
       <li>Les mesures partagées par plusieurs candidats sont jouables dans les modes Multi-réponses et « Ils sont d’accord ! », avec la source de chacun.</li>
       <li>Mode « Casier &amp; polémiques » : uniquement des faits publics rapportés par la presse ou les juridictions, avec le statut exact de chaque procédure à la date de mise à jour (définitif, appel, cassation en cours, relaxe, non-lieu). Une procédure en cours n’est pas une condamnation. Ici, l’humour ne porte jamais sur les affaires.</li>
+      <li>Mode « Le Conseil constitutionnel tousse » : uniquement des obstacles juridiques documentés (décision du Conseil constitutionnel, texte de la Constitution, analyse de juristes rapportée par la presse). Cela ne préjuge pas d’une révision de la Constitution, que certains candidats proposent justement.</li>
+      <li>Antisèches : la famille politique reprend le classement usuel de la presse ; c’est un repère simplifié, que les intéressés contestent parfois.</li>
       <li>Mode « Qui a dit ça ? » : citations courtes d’interviews, de meetings et de débats, telles que rapportées par la presse ; le contexte et la source s’affichent après chaque réponse.</li>
       <li>Candidats déclarés sans programme recensé (affichés « À venir » sur l’accueil, pas encore jouables) : d’après le décompte de Public Sénat du 14 octobre 2026, complété par la déclaration de Teddy Riner le 9 novembre 2026 (France 24, franceinfo). Liste non exhaustive.</li>
       <li>Le compte à rebours vise l’ouverture des bureaux de vote le dimanche 18 avril 2027 à 8 h (heure de Paris), date retenue par le Conseil des ministres du 1er juillet 2026.</li>
@@ -1424,6 +1516,25 @@ var QUOTES = [
   ["ruffin","Raphaël Glucksmann remporte la primaire de Raphaël à Glucksmann !","Réaction ironique au résultat de la primaire sociale-démocrate, à laquelle il voulait participer.",{s:"LCP",d:"11 octobre 2026",u:"https://lcp.fr/index%2ephp/actualites/victoire-de-raphael-glucksmann-a-la-primaire-socialiste-premieres-reactions-des"}]
 ];
 
+/* Familles politiques (classement usuel de la presse), utilisées par les antisèches. */
+var FAMILY = { arthaud: "Extrême gauche", kazib: "Extrême gauche", melenchon: "Gauche radicale", roussel: "Gauche (communiste)", ruffin: "Gauche", glucksmann: "Gauche sociale-démocrate", tondelier: "Écologistes", batho: "Écologistes", attal: "Centre (camp présidentiel)", philippe: "Centre droit", retailleau: "Droite", bertrand: "Droite", lisnard: "Droite", dupont: "Droite souverainiste", asselineau: "Souverainistes (Frexit)", philippot: "Souverainistes (Frexit)", polony: "Souverainistes", lepen: "Extrême droite", zemmour: "Extrême droite" };
+
+/* Mode « Le Conseil constitutionnel tousse » : mesures qui butent sur la Constitution, la jurisprudence ou les traités. [candidats, mesure, verdict, obstacle, source] */
+var IMPOSS = [
+  [["attal"],"Instaurer la comparution immédiate pour les mineurs récidivistes.","Déjà censuré","Le Conseil constitutionnel a censuré cette procédure dans la loi Attal le 19 juin 2025, au nom du principe fondamental propre à la justice des mineurs.",{s:"Actu-Juridique",d:"20 juin 2025",u:"https://www.actu-juridique.fr/breves/personnes-famille/justice-des-mineurs-large-censure-de-la-loi-attal-par-le-conseil-constitutionnel/"}],
+  [["bertrand"],"Fixer la majorité pénale à 15 ans, avec les mêmes sanctions qu’un adulte.","Risque de censure","L’atténuation de la responsabilité des mineurs est un principe à valeur constitutionnelle : en 2025, le Conseil a censuré l’application à certains mineurs des peines prévues pour les majeurs.",{s:"Le Club des juristes",d:"juin 2025",u:"https://www.leclubdesjuristes.com/en-bref/justice-penale-des-mineurs-le-conseil-constitutionnel-censure-de-nombreuses-dispositions-de-la-proposition-de-loi-11161/"}],
+  [["zemmour","lisnard","retailleau"],"Juger les mineurs délinquants comme des majeurs dès 16 ans.","Risque de censure","Même obstacle : le principe fondamental de la justice des mineurs impose une réponse pénale adaptée à l’âge, rappelé par la censure de juin 2025.",{s:"Le Club des juristes",d:"juin 2025",u:"https://www.leclubdesjuristes.com/justice/justice-penale-des-mineurs-la-decision-du-19-juin-2025-une-porte-de-sortie-pour-le-legislateur-11263/"}],
+  [["glucksmann","tondelier"],"Ouvrir le droit de vote à 16 ans.","Il faut réviser la Constitution","L’article 3 de la Constitution réserve le droit de vote aux « nationaux français majeurs » : une simple loi ne suffit pas.",{s:"Assemblée nationale (réponse ministérielle)",d:"16e législature",u:"https://www.assemblee-nationale.fr/dyn/16/questions/QANR5L16QE9323"}],
+  [["melenchon","glucksmann","tondelier"],"Donner le droit de vote aux étrangers non européens aux élections locales.","Il faut réviser la Constitution","Seul l’article 88-3 ouvre le vote aux municipales aux citoyens européens : l’étendre aux autres étrangers suppose une révision constitutionnelle, plusieurs fois tentée depuis 2000.",{s:"Sénat, rapport de la commission des lois",d:"2011",u:"https://www.senat.fr/rap/l11-142/l11-1421.pdf"}],
+  [["attal"],"Interdire le port du voile dans l’espace public aux mineures de moins de 15 ans.","Réserves des juristes","Plusieurs constitutionnalistes ont émis des réserves sur une telle interdiction, au regard de la liberté de culte et de l’égalité devant la loi.",{s:"LCP",d:"janvier 2026",u:"https://lcp.fr/actualites/voile-des-mineures-laurent-wauquiez-veut-l-interdire-dans-l-espace-public-428313"}],
+  [["retailleau"],"Soumettre la réduction de l’immigration à un référendum.","Il faut réviser la Constitution","L’article 11 ne permet pas aujourd’hui de soumettre l’immigration au référendum : il faudrait d’abord réviser la Constitution, ce qui suppose l’accord des deux chambres.",{s:"Public Sénat",d:"février 2026",u:"https://www.publicsenat.fr/actualites/politique/referendum-sur-limmigration-primaute-du-droit-national-le-projet-de-bruno-retailleau-est-il-faisable"}],
+  [["lepen"],"Instaurer la priorité nationale pour l’accès au logement social et à l’emploi.","Contraire à la Constitution (en l’état)","Le président du Conseil constitutionnel a rappelé qu’une préférence nationale systématique est contraire à la Constitution ; le RN envisage une révision par référendum, contestée par les juristes.",{s:"LCP",d:"juin 2024",u:"https://lcp.fr/actualites/legislatives-2024-le-programme-du-rassemblement-national-en-matiere-d-immigration-a-l"}],
+  [["kazib"],"Taxer jusqu’à 100 % les revenus du capital au-delà de 260 000 €.","Risque de censure","L’impôt ne doit pas être confiscatoire : le Conseil d’État a déduit de la jurisprudence de 2012 un plafond d’environ deux tiers pour le taux marginal.",{s:"Études fiscales internationales",d:"2026",u:"https://www.etudes-fiscales-internationales.com/archive/2026/06/07/index.html"}],
+  [["melenchon"],"Plafonner les héritages à 12 millions d’euros.","Risque de censure","Prendre 100 % au-delà de 12 millions serait très probablement jugé confiscatoire par le Conseil constitutionnel, selon les juristes des Surligneurs.",{s:"Actu-Juridique (Les Surligneurs)",d:"2022",u:"https://www.actu-juridique.fr/ntic-numerique-medias-presse/cette-semaine-chez-les-surligneurs-jl-melenchon-peut-il-confisquer-un-heritage-au-dela-de-12-millions/"}],
+  [["attal"],"Supprimer un échelon de collectivité territoriale.","Il faut réviser la Constitution","Si l’échelon supprimé est le département ou la région, il faut réviser l’article 72, qui les cite nommément comme collectivités de la République.",{s:"Acteurs publics",d:"entretien avec Michel Verpeaux",u:"https://acteurspublics.fr/articles/suppression-des-departements-rien-nest-possible-sans-reviser-la-constitution/"}],
+  [["philippot"],"Quitter l’Union européenne, l’euro, Schengen, la CEDH, l’Otan et l’OMS.","Possible… mais long","Le traité prévoit une sortie (article 50) : notification, négociation, puis départ deux ans plus tard, sauf prolongation décidée à l’unanimité.",{s:"Actu-Juridique",d:"analyse du Brexit",u:"https://www.actu-juridique.fr/droit-europeen-ue/une-approche-juridictionnelle-du-brexit/"}]
+];
+
 </script>
 <script>
 (function () {
@@ -1446,11 +1557,17 @@ QUOTES.forEach(function (r) {
   var o = {}; o[r[0]] = r[3];
   M.push({ id: M.length, c: r[0], cs: [r[0]], t: "Citation", m: r[1], ctx: r[2], srcs: o, quote: true });
 });
+IMPOSS.forEach(function (r) {
+  var o = {}; r[0].forEach(function (c) { o[c] = r[4]; });
+  M.push({ id: M.length, c: r[0][0], cs: r[0].slice(), t: "Mission impossible ?", m: r[1], verdict: r[2], obstacle: r[3], srcs: o, imp: true });
+});
 var KASES = M.filter(function (x) { return x.kase; });
+var IMPM = M.filter(function (x) { return x.imp; });
 var QUOTEM = M.filter(function (x) { return x.quote; });
-var SINGLE = M.filter(function (x) { return !x.shared && !x.kase && !x.quote; });
-var SH = M.filter(function (x) { return x.shared; });
-var THEMES = Array.from(new Set(M.filter(function (x) { return !x.kase && !x.quote; }).map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
+function special(x) { return x.kase || x.quote || x.imp; }
+var SINGLE = M.filter(function (x) { return !x.shared && !special(x); });
+var SH = M.filter(function (x) { return x.shared && !special(x); });
+var THEMES = Array.from(new Set(M.filter(function (x) { return !special(x); }).map(function (x) { return x.t; }))).sort(function (a, b) { return a.localeCompare(b, "fr"); });
 var MAIN = C.filter(function (c) { return c.main; }).map(function (c) { return c.id; });
 var ALL = C.map(function (c) { return c.id; });
 var DUELS = [["lepen","melenchon"],["philippe","attal"],["glucksmann","melenchon"],["retailleau","zemmour"],["tondelier","ruffin"],["arthaud","kazib"],["philippot","asselineau"],["lisnard","retailleau"]];
@@ -1548,6 +1665,13 @@ var QUIP_QUOTE_KO = [
   "Raté. Un conseiller en communication quelque part soupire.",
   "Non. Sortie de son contexte, une phrase va avec tout le monde."
 ];
+var QUIP_IMP = [
+  "Une Constitution, ça se révise. Mais il faut l’Assemblée, le Sénat, et parfois le peuple.",
+  "Neuf Sages à convaincre. Ou une révision à faire voter. Bon courage.",
+  "Promettre, c’est gratuit. Passer le Conseil constitutionnel, beaucoup moins.",
+  "La rue de Montpensier a l’oreille fine, même en campagne.",
+  "Moralité : un programme se relit aussi avec un juriste."
+];
 var CD_QUIPS = [
   "Largement le temps de lire tous les programmes. En théorie.",
   "Il reste des débats, des sondages et au moins trois « petites phrases » par semaine.",
@@ -1575,7 +1699,7 @@ function srcHtml(m) {
 }
 function boardHtml(c, tag, extra, key) {
   tag = tag || "div";
-  return "<" + tag + (tag === "button" ? " type=\"button\"" : "") + " class=\"board\" " + (extra || "") + ">" +
+  return "<" + tag + (tag === "button" ? " type=\"button\"" : "") + " class=\"board\" style=\"--fam:" + (FAMCOL[FAMILY[c.id]] || "transparent") + "\" " + (extra || "") + ">" +
     "<span class=\"num\">" + c.n + "</span>" + (key ? "<span class=\"key\">" + key + "</span>" : "") +
     "<span class=\"ini\">" + esc(c.ini) + "</span><span class=\"nm\">" + esc(c.name) + "</span><span class=\"pt\">" + esc(c.party) + "</span></" + tag + ">";
 }
@@ -1599,20 +1723,23 @@ var NOPROG = [
   { name: "Clara Egger", ini: "CE", party: "Solution démocratique", q: "Le programme sera peut-être soumis au vote. On attend le résultat." },
   { name: "Mira Markovic", ini: "MM", party: "Parti animaliste", q: "Programme bientôt. Les animaux de compagnie patientent aussi." }
 ];
+function countAll(id) { return M.filter(function (x) { return !special(x) && x.cs.indexOf(id) >= 0; }).length; }
 function countOf(id) { return SINGLE.filter(function (x) { return x.c === id; }).length; }
 
 /* ---------- État ---------- */
 var cfg = { mode: "classic", pool: "main", diff: "easy", len: "20", duel: ["lepen", "melenchon"], targets: [] };
 var game = null, timerId = null, autoId = null;
-var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer") };
+var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer"), cheat: $("v-cheat") };
 function show(v) {
   Object.keys(views).forEach(function (k) { views[k].hidden = (k !== v); });
   $("tab-jouer").setAttribute("aria-pressed", v === "setup");
   $("tab-explorer").setAttribute("aria-pressed", v === "explorer");
+  $("tab-cheat").setAttribute("aria-pressed", v === "cheat");
 }
 document.querySelectorAll("nav.tabs button").forEach(function (b) {
   b.addEventListener("click", function () {
     if (b.dataset.view === "explorer") { location.hash = "explorer"; show("explorer"); renderExplorer(); }
+    else if (b.dataset.view === "cheat") { clearInterval(timerId); clearTimeout(autoId); game = null; location.hash = "antiseches"; show("cheat"); renderCheat(); window.scrollTo({ top: 0 }); }
     else goMenu();
   });
 });
@@ -1627,7 +1754,29 @@ $("home-title").addEventListener("click", goMenu);
 $("g-menu").addEventListener("click", goMenu);
 
 /* ---------- Accueil ---------- */
+var MODE_ICON = { classic: "🗳️", duel: "🥊", blitz: "⚡", target: "🎯", multi: "🧩", accord: "🤝", citations: "🎤", conseil: "⚖️", casier: "🗂️" };
+var FAM_ORDER = ["Extrême gauche", "Gauche radicale", "Gauche (communiste)", "Gauche", "Gauche sociale-démocrate", "Écologistes", "Centre (camp présidentiel)", "Centre droit", "Droite", "Droite souverainiste", "Souverainistes", "Souverainistes (Frexit)", "Extrême droite"];
+function renderHemi() {
+  var list = C.slice().sort(function (a, b) { return FAM_ORDER.indexOf(FAMILY[a.id]) - FAM_ORDER.indexOf(FAMILY[b.id]) || a.n - b.n; });
+  var cx = 210, cy = 200, n = list.length, out = [];
+  out.push("<path d=\"M 30 200 A 180 180 0 0 1 390 200\" fill=\"none\" stroke=\"var(--line)\" stroke-width=\"1.5\" stroke-dasharray=\"3 5\"/>");
+  out.push("<text class=\"lr\" x=\"18\" y=\"222\">Gauche</text><text class=\"lr\" x=\"402\" y=\"222\" text-anchor=\"end\">Droite</text>");
+  list.forEach(function (c, i) {
+    var ang = Math.PI - (i + 0.5) / n * Math.PI, r = i % 2 ? 128 : 170;
+    var x = cx + r * Math.cos(ang), y = cy - r * Math.sin(ang), col = FAMCOL[FAMILY[c.id]] || "#888";
+    out.push("<g class=\"seat\" tabindex=\"0\" role=\"button\" data-c=\"" + c.id + "\" aria-label=\"" + esc(c.name + ", " + FAMILY[c.id]) + "\"><circle cx=\"" + x.toFixed(1) + "\" cy=\"" + y.toFixed(1) + "\" r=\"17\" fill=\"" + col + "\" stroke=\"var(--sheet)\" stroke-width=\"2.5\"/><text x=\"" + x.toFixed(1) + "\" y=\"" + (y + 4).toFixed(1) + "\" text-anchor=\"middle\">" + esc(c.ini) + "</text><title>" + esc(c.name + " · " + FAMILY[c.id]) + "</title></g>");
+  });
+  out.push("<text class=\"cap\" id=\"hemi-cap\" x=\"210\" y=\"178\" text-anchor=\"middle\">Survole un siège</text><text class=\"cap2\" id=\"hemi-cap2\" x=\"210\" y=\"196\" text-anchor=\"middle\">" + plural(n, "candidat jouable", "candidats jouables") + "</text>");
+  $("hemi").innerHTML = out.join("");
+}
+$("hemi").addEventListener("mouseover", function (e) { var g = e.target.closest(".seat"); if (!g) return; var c = CBY[g.dataset.c]; $("hemi-cap").textContent = c.name; $("hemi-cap2").textContent = FAMILY[c.id] + " · " + plural(countAll(c.id), "mesure", "mesures"); });
+$("hemi").addEventListener("focusin", function (e) { var g = e.target.closest(".seat"); if (!g) return; var c = CBY[g.dataset.c]; $("hemi-cap").textContent = c.name; $("hemi-cap2").textContent = FAMILY[c.id] + " · " + plural(countAll(c.id), "mesure", "mesures"); });
+function hemiGo(e) { var g = e.target.closest(".seat"); if (!g) return; cfg.mode = "target"; cfg.targets = [g.dataset.c]; startGame(buildQuestions(cfg), cfg); }
+$("hemi").addEventListener("click", hemiGo);
+$("hemi").addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hemiGo(e); } });
 function renderHome() {
+  renderHemi();
+  MODES.forEach(function (m) { var b = $("m-" + m); if (b && MODE_ICON[m] && !b.querySelector(".ico")) b.querySelector("b").insertAdjacentHTML("afterbegin", "<i class=\"ico\" aria-hidden=\"true\">" + MODE_ICON[m] + "</i>"); });
   countUp($("f-mes"), NPROG, 900);
   $("f-cand").textContent = C.length;
   $("f-th").textContent = THEMES.length;
@@ -1640,6 +1789,15 @@ function renderHome() {
       return "<div class=\"board soon-b noprog\" title=\"" + esc(x.q) + "\"><span class=\"soon\">À venir</span><span class=\"num\">?</span><span class=\"ini\">" + esc(x.ini) + "</span><span class=\"nm\">" + esc(x.name) + "</span><span class=\"pt\">" + esc(x.party) + "</span><span class=\"soonq\">" + esc(x.q) + "</span></div>";
     }).join("");
   stagger($("boards-home"));
+  var nTot = C.length + NOPROG.length;
+  countUp($("kl-n"), nTot, 1200);
+  $("kl-s").textContent = pick([
+    "Première épreuve d’immunité : les 500 parrainages. Le conseil de la tribu, c’est vous, le 18 avril.",
+    "Les sondages ? Des épreuves de confort. L’épreuve d’orientation, c’est le premier tour.",
+    "Totem d’immunité non fourni. Les programmes, si, enfin presque tous.",
+    "Ils n’ont pas encore mangé de vers. Mais certains ont déjà avalé des couleuvres.",
+    "Le dernier poteau, c’est le second tour, le 2 mai. Accrochez-vous."
+  ]);
   $("cand-pick").innerHTML = C.map(function (c) {
     return "<button type=\"button\" id=\"pick-" + c.id + "\" data-c=\"" + c.id + "\" aria-pressed=\"false\"><span class=\"n\">" + c.n + "</span><span>" + esc(c.name) + "</span></button>";
   }).join("");
@@ -1648,7 +1806,7 @@ function renderHome() {
   $("duel-chips").innerHTML = DUELS.map(function (d, i) { return "<button type=\"button\" data-i=\"" + i + "\">" + esc(last(CBY[d[0]].name)) + " / " + esc(last(CBY[d[1]].name)) + "</button>"; }).join("");
   syncSetup();
 }
-var MODES = ["classic", "duel", "blitz", "target", "multi", "accord", "citations", "casier"];
+var MODES = ["classic", "duel", "blitz", "target", "multi", "accord", "citations", "casier", "conseil"];
 function syncSetup() {
   MODES.forEach(function (m) { $("m-" + m).setAttribute("aria-pressed", cfg.mode === m); });
   ["main", "all"].forEach(function (p) { $("p-" + p).setAttribute("aria-pressed", cfg.pool === p); });
@@ -1662,6 +1820,7 @@ function syncSetup() {
   $("fld-cands").hidden = cfg.mode !== "target";
   $("fld-casier").hidden = cfg.mode !== "casier";
   $("fld-citations").hidden = cfg.mode !== "citations";
+  $("fld-conseil").hidden = cfg.mode !== "conseil";
   $("d-hard").innerHTML = (cfg.pool === "main" ? "Les 7 panneaux" : "Les " + C.length + " panneaux") + "<small>Aucune aide</small>";
   $("duel-a").value = cfg.duel[0]; $("duel-b").value = cfg.duel[1];
   C.forEach(function (c) { var b = $("pick-" + c.id); if (b) b.setAttribute("aria-pressed", cfg.targets.indexOf(c.id) >= 0); });
@@ -1733,6 +1892,15 @@ function buildQuestions(conf, onlyIds) {
       return { mid: x.id, type: "pick", opts: dec.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; }) };
     });
   }
+  if (conf.mode === "conseil") {
+    var im = shuffle(IMPM.filter(only));
+    if (!onlyIds) im = im.slice(0, 10);
+    return im.map(function (x) {
+      if (x.cs.length > 1) return { mid: x.id, type: "multi", opts: multiOptions(x, 5) };
+      var dec = shuffle(ALL.filter(function (id) { return id !== x.c; })).slice(0, 3);
+      return { mid: x.id, type: "pick", opts: dec.concat([x.c]).sort(function (a, b) { return CBY[a].n - CBY[b].n; }) };
+    });
+  }
   if (conf.mode === "citations") {
     var qs = QUOTEM.filter(only), authors = Array.from(new Set(QUOTEM.map(function (x) { return x.c; }))).concat(MAIN);
     authors = Array.from(new Set(authors));
@@ -1773,6 +1941,7 @@ function startGame(qs, conf) {
   clearInterval(timerId); clearTimeout(autoId);
   game = { qs: qs, i: 0, answers: [], cfg: JSON.parse(JSON.stringify(conf)), pts: 0, streak: 0, fails: 0, bestStreak: 0, over: false };
   if (conf.mode === "blitz") { game.timeLeft = 60; startTimer(); }
+  game.cheats = 3;
   shownPts = 0;
   show("game");
   renderQ();
@@ -1789,19 +1958,30 @@ function startTimer() {
   }, 1000);
 }
 var shownPts = 0;
+function trailUpdate() {
+  if (game.cfg.mode === "blitz") { $("g-trail").innerHTML = ""; return; }
+  var html = "", from = game.qs.length <= 30 ? 0 : Math.max(0, game.i - 20), to = Math.min(game.qs.length, from + 30);
+  for (var k = from; k < to; k++) {
+    var a = game.answers[k], cls = a ? (a.ok ? "ok" : (a.type === "multi" && a.good ? "part" : "ko")) : (k === game.i ? "cur" : "");
+    html += "<i class=\"" + cls + "\"></i>";
+  }
+  $("g-trail").innerHTML = html;
+}
 function hudUpdate() {
+  trailUpdate();
   if (game.pts !== shownPts) { var el = $("g-pts"); countUp(el, game.pts, 450, shownPts); el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); shownPts = game.pts; }
   else $("g-pts").textContent = fmt(game.pts);
   var s = $("g-streak"); s.textContent = "Série ×" + game.streak; s.classList.toggle("hot", game.streak >= 3);
 }
 function renderQ() {
   var q = game.qs[game.i], m = M[q.mid], n = game.qs.length, blitz = game.cfg.mode === "blitz";
-  if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = (game.cfg.mode === "casier" ? "Dossier " : game.cfg.mode === "citations" ? "Citation " : "Mesure ") + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
+  if (!blitz) { $("g-barwrap").classList.remove("timer"); $("g-prog").textContent = (game.cfg.mode === "casier" ? "Dossier " : game.cfg.mode === "citations" ? "Citation " : game.cfg.mode === "conseil" ? "Saisine " : "Mesure ") + (game.i + 1) + " / " + n; $("g-bar").style.width = pct(game.i, n) + "%"; }
   else $("g-prog").textContent = game.timeLeft + " s";
   hudUpdate();
   var kase = !!m.kase;
   $("g-theme").textContent = kase ? (m.year && m.year !== "—" ? "Dossier · " + m.year : "Dossier") : m.quote ? "Citation · " + m.srcs[m.c].d : m.t;
   $("g-kind").hidden = !kase;
+  if (m.imp) $("g-theme").textContent = "Le Conseil constitutionnel tousse";
   if (kase) { $("g-kind").textContent = m.t; $("g-kind").className = "kind " + m.kind; }
   $("g-notice").hidden = game.cfg.mode !== "casier";
   var card = $("g-card"); card.classList.remove("enter", "shake"); void card.offsetWidth; card.classList.add("enter");
@@ -1811,19 +1991,21 @@ function renderQ() {
   $("g-next").hidden = true; $("g-validate").hidden = true;
   $("g-keys").hidden = blitz;
   game.sel = [];
+  $("g-hint").hidden = true; $("g-hint").innerHTML = "";
+  updCheat();
   var keys = "123456789";
   if (q.type === "vf") {
     var w = CBY[q.who];
     $("g-ask").textContent = "Est-ce que " + w.name + " propose cette mesure ?";
     $("g-opts").innerHTML = "<div class=\"vf\"><button type=\"button\" id=\"vf-yes\" data-v=\"yes\">Oui, c’est " + esc(last(w.name)) + "</button><button type=\"button\" id=\"vf-no\" data-v=\"no\">Non, ce n’est pas " + esc(last(w.name)) + "</button></div>";
   } else if (q.type === "multi") {
-    $("g-ask").textContent = game.cfg.mode === "accord" ? "Qui est d’accord sur ce point ? Sélectionne tous ceux qui le proposent." : "Qui propose cette mesure ? Il peut y en avoir un seul, ou plusieurs.";
+    $("g-ask").textContent = m.imp ? "Qui propose cette mesure ? Attention, ils sont parfois plusieurs." : game.cfg.mode === "accord" ? "Qui est d’accord sur ce point ? Sélectionne tous ceux qui le proposent." : "Qui propose cette mesure ? Il peut y en avoir un seul, ou plusieurs.";
     $("g-opts").innerHTML = "<div class=\"boards\">" + q.opts.map(function (cid, k) {
       return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" aria-pressed=\"false\" aria-label=\"" + esc(CBY[cid].name) + "\"", k < 9 ? keys[k] : "");
     }).join("") + "</div>";
     $("g-validate").hidden = false; $("g-validate").disabled = true;
   } else {
-    $("g-ask").textContent = game.cfg.mode === "casier" ? "À quel candidat appartient ce dossier ?" : game.cfg.mode === "citations" ? "Qui a dit ça ?" : (game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?");
+    $("g-ask").textContent = m.imp ? "Qui propose cette mesure ?" : game.cfg.mode === "casier" ? "À quel candidat appartient ce dossier ?" : game.cfg.mode === "citations" ? "Qui a dit ça ?" : (game.cfg.mode === "duel" ? "Lequel des deux propose cette mesure ?" : "Qui propose cette mesure ?");
     $("g-opts").innerHTML = "<div class=\"boards" + (q.opts.length === 2 ? " two" : "") + "\">" + q.opts.map(function (cid, k) {
       return boardHtml(CBY[cid], "button", "id=\"opt-" + cid + "\" data-c=\"" + cid + "\" aria-label=\"" + esc(CBY[cid].name) + "\"", k < 9 ? keys[k] : "");
     }).join("") + "</div>";
@@ -1838,6 +2020,7 @@ function score(a, base, secs) {
     var streakB = Math.min(150, 25 * (game.streak - 1)), speedB = secs < 4 ? 50 : (secs < 8 ? 25 : 0);
     a.gain = base + streakB + speedB; a.detail = { streak: streakB, speed: speedB };
   } else { game.streak = 0; game.fails++; a.gain = a.partial || 0; }
+  if (game.qs[game.i].cheat) { a.gain = Math.round(a.gain / 2); a.cheated = true; }
   game.pts += a.gain;
 }
 $("g-opts").addEventListener("click", function (e) {
@@ -1872,10 +2055,11 @@ function validateMulti() {
 function reveal(a, animate) {
   var q = game.qs[game.i], m = M[q.mid];
   var st = $("g-stamp");
-  st.textContent = m.quote ? (a.ok ? pick(["Bien entendu", "Cité juste", "Verbatim"]) : pick(["Hors micro", "Mal cité", "Faux témoin"])) : m.kase ? (a.ok ? pick(["Bien vu", "Exact", "Dossier bouclé"]) : pick(["Raté", "Mauvais dossier", "Classé faux"])) : a.ok ? (m.fou ? "C’est fou" : pick(STAMP_OK)) : (a.type === "multi" && a.good ? "Ballottage" : pick(STAMP_KO));
+  st.textContent = m.imp ? (a.ok ? pick(["Bien vu", "Saisine juste", "Recevable"]) : pick(["Irrecevable", "Recalé", "Hors sujet"])) : m.quote ? (a.ok ? pick(["Bien entendu", "Cité juste", "Verbatim"]) : pick(["Hors micro", "Mal cité", "Faux témoin"])) : m.kase ? (a.ok ? pick(["Bien vu", "Exact", "Dossier bouclé"]) : pick(["Raté", "Mauvais dossier", "Classé faux"])) : a.ok ? (m.fou ? "C’est fou" : pick(STAMP_OK)) : (a.type === "multi" && a.good ? "Ballottage" : pick(STAMP_KO));
   st.className = "stamp " + (a.ok ? "ok" : "ko") + (animate ? " thump" : "");
   st.hidden = false;
   $("g-validate").hidden = true;
+  updCheat();
   if (q.type === "vf") {
     var truth = m.cs.indexOf(q.who) >= 0;
     $("vf-yes").disabled = true; $("vf-no").disabled = true;
@@ -1900,11 +2084,15 @@ function reveal(a, animate) {
   parts.push("<span class=\"verdict " + (a.ok ? "ok" : "ko") + "\">" + esc(head) + gainTxt + (m.fou ? "<span class=\"fou\">Accord improbable</span>" : "") + "</span>");
   if (m.kase) parts.push("<span class=\"status\">Statut : " + esc(m.status) + "</span>");
   if (m.quote) parts.push("<span class=\"status\">Contexte : " + esc(m.ctx) + "</span>");
+  if (m.imp) { $("g-kind").hidden = false; $("g-kind").textContent = m.verdict; $("g-kind").className = "kind imp"; parts.push("<span class=\"status\">L’obstacle : " + esc(m.obstacle) + "</span>"); }
   if (game.cfg.mode !== "blitz") {
-    var quip = m.kase ? (a.ok ? pick(QUIP_CASE_OK) : pick(QUIP_CASE_KO)) : m.quote ? (a.ok ? pick(QUIP_QUOTE_OK) : pick(QUIP_QUOTE_KO)) : m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
+    var quip = m.imp ? pick(QUIP_IMP) : m.kase ? (a.ok ? pick(QUIP_CASE_OK) : pick(QUIP_CASE_KO)) : m.quote ? (a.ok ? pick(QUIP_QUOTE_OK) : pick(QUIP_QUOTE_KO)) : m.fou ? pick(QUIP_FOU) : (a.ok ? pick(QUIP_OK) : (a.type === "multi" && a.good ? pick(QUIP_PARTIAL) : pick(QUIP_KO)));
     parts.push("<span class=\"quip\">" + esc(quip) + "</span>");
   }
-  parts.push("<span>" + srcHtml(m) + "</span>");
+  if (m.imp) { var so = m.srcs[m.c]; parts.push("<span>Source de l’obstacle : <a href=\"" + esc(so.u) + "\" target=\"_blank\" rel=\"noopener\">" + esc(so.s) + " ↗</a> · " + esc(so.d) + "</span>"); }
+  else parts.push("<span>" + srcHtml(m) + "</span>");
+  if (!special(m) && m.cs.length === 1) parts.push("<span class=\"memo\">Antisèche : " + esc(CBY[m.c].name) + " · " + esc(FAMILY[m.c]) + " · " + esc(CBY[m.c].party) + " · " + plural(countAll(m.c), "mesure", "mesures") + " dans le quiz</span>");
+  if (a.cheated) parts.push("<span class=\"memo\">Antisèche utilisée : points divisés par deux.</span>");
   $("g-src").innerHTML = parts.join("");
   $("g-src").hidden = false;
   if (animate) {
@@ -1917,7 +2105,7 @@ function reveal(a, animate) {
   hudUpdate();
   if (game.cfg.mode !== "blitz") {
     var nx = $("g-next");
-    nx.textContent = game.i + 1 < game.qs.length ? (m.kase ? "Dossier suivant →" : m.quote ? "Citation suivante →" : "Mesure suivante →") : "Voir mon résultat →";
+    nx.textContent = game.i + 1 < game.qs.length ? (m.kase ? "Dossier suivant →" : m.quote ? "Citation suivante →" : m.imp ? "Saisine suivante →" : "Mesure suivante →") : "Voir mon résultat →";
     nx.hidden = false;
     if (animate) nx.focus({ preventScroll: true });
   }
@@ -1955,6 +2143,55 @@ document.addEventListener("keydown", function (e) {
   else if (q.opts[k]) $("opt-" + q.opts[k]).click();
 });
 
+/* ---------- Antisèche en jeu ---------- */
+function updCheat() {
+  var b = $("g-cheat"), q = game.qs[game.i], answered = !!game.answers[game.i];
+  $("g-cheat-n").textContent = "×" + game.cheats;
+  var maxLvl = q.type === "pick" && q.opts.length > 2 ? 2 : 1;
+  b.disabled = answered || game.cheats <= 0 || (q.cheat || 0) >= maxLvl;
+  b.firstChild.textContent = q.cheat ? "Encore un indice " : "Antisèche ";
+}
+$("g-cheat").addEventListener("click", function () {
+  if (!game || game.over || game.answers[game.i] || game.cheats <= 0) return;
+  var q = game.qs[game.i], m = M[q.mid], lvl = (q.cheat || 0) + 1, h = $("g-hint");
+  if (lvl === 1) {
+    var fams = Array.from(new Set(m.cs.map(function (c) { return FAMILY[c]; })));
+    if (q.type === "multi") h.innerHTML = "<b>Antisèche :</b> " + plural(m.cs.length, "candidat propose", "candidats proposent") + " cette mesure (" + esc(fams.join(", ")) + ").";
+    else if (q.type === "vf") h.innerHTML = "<b>Antisèche :</b> l’auteur de cette mesure est classé « " + esc(FAMILY[m.c]) + " ».";
+    else h.innerHTML = "<b>Antisèche :</b> cherchez du côté « " + esc(FAMILY[m.c]) + " ».";
+  } else {
+    var wrong = shuffle(q.opts.filter(function (id) { return id !== m.c; })), keep = q.opts.length > 4 ? 1 : 1;
+    var drop = wrong.slice(0, wrong.length - keep);
+    drop.forEach(function (id) { var el = $("opt-" + id); if (el) { el.disabled = true; el.classList.add("dim"); } });
+    h.innerHTML += " <b>Et en bonus :</b> il ne reste que deux panneaux possibles.";
+  }
+  q.cheat = lvl; game.cheats--; h.hidden = false;
+  updCheat();
+});
+
+/* ---------- Fiches antisèches ---------- */
+var FAMCOL = { "Extrême gauche": "#b3261e", "Gauche radicale": "#d0342c", "Gauche (communiste)": "#c62828", "Gauche": "#e0554f", "Gauche sociale-démocrate": "#e57373", "Écologistes": "#17784a", "Centre (camp présidentiel)": "#e8a400", "Centre droit": "#4f6bd8", "Droite": "#000091", "Droite souverainiste": "#2b3a8f", "Souverainistes (Frexit)": "#5a6478", "Souverainistes": "#7a8295", "Extrême droite": "#13203a" };
+function renderCheat() {
+  $("cheat-grid").innerHTML = C.map(function (c) {
+    var mine = M.filter(function (x) { return !special(x) && x.cs.indexOf(c.id) >= 0; });
+    var th = {}; mine.forEach(function (x) { th[x.t] = (th[x.t] || 0) + 1; });
+    var top = Object.keys(th).sort(function (a, b) { return th[b] - th[a]; }).slice(0, 3);
+    var picks = mine.filter(function (x) { return !x.shared; });
+    var step = Math.max(1, Math.floor(picks.length / 3)), ex = [0, 1, 2].map(function (k) { return picks[k * step]; }).filter(Boolean);
+    return "<article class=\"card fiche\" style=\"--fam:" + (FAMCOL[FAMILY[c.id]] || "var(--accent)") + "\"><h3><span class=\"num\">" + c.n + "</span>" + esc(c.name) + "</h3>" +
+      "<span class=\"fam\">" + esc(c.party) + " · " + esc(FAMILY[c.id]) + " · " + plural(mine.length, "mesure", "mesures") + "</span>" +
+      (SOON[c.id] ? "<span class=\"soonx\">À venir : " + esc(SOON[c.id]) + "</span>" : "") +
+      "<div class=\"tags\">" + top.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</div>" +
+      "<ul>" + ex.map(function (x) { return "<li>" + esc(x.m) + "</li>"; }).join("") + "</ul>" +
+      "<button type=\"button\" class=\"btn\" data-rev=\"" + c.id + "\">Réviser " + esc(last(c.name)) + " →</button></article>";
+  }).join("");
+}
+$("cheat-grid").addEventListener("click", function (e) {
+  var b = e.target.closest("button[data-rev]"); if (!b) return;
+  cfg.mode = "target"; cfg.targets = [b.dataset.rev];
+  startGame(buildQuestions(cfg), cfg);
+});
+
 /* ---------- Résultats ---------- */
 function tier(p) {
   if (p >= 90) return { label: "Spin doctor", text: "Vous connaissez les programmes mieux que certains de leurs auteurs. Les cellules riposte des partis cherchent déjà votre numéro." };
@@ -1986,10 +2223,12 @@ function finish() {
       "Vous reconnaissez mieux les mesures de " + (pa > pb ? A.name : B.name) + " (" + Math.max(pa, pb) + " %) que celles de " + (pa > pb ? B.name : A.name) + " (" + Math.min(pa, pb) + " %).") + " " + t.text;
   }
   if (game.cfg.mode === "blitz") text = plural(sc, "bonne réponse", "bonnes réponses") + " en 60 secondes. " + text;
+  if (game.cfg.mode === "conseil") text = "Vous avez retrouvé l’auteur de " + plural(sc, "mesure", "mesures") + " sur " + total + " qui font tousser les juristes. " + t.text.replace("chaque mesure a sa source", "chaque obstacle a sa source");
   if (game.cfg.mode === "citations") text = "Vous avez rendu " + plural(sc, "citation", "citations") + " sur " + total + " à leur auteur. " + t.text.replace("chaque mesure a sa source", "chaque citation a sa source");
   if (game.cfg.mode === "casier") text = "Vous avez attribué " + plural(sc, "dossier", "dossiers") + " sur " + total + " au bon candidat. Rappel utile : une procédure en cours n’est pas une condamnation. " + t.text.replace("chaque mesure a sa source", "chaque dossier a sa source");
   if (game.cfg.mode === "accord") text = "Vous avez retrouvé " + plural(sc, "accord", "accords") + " sur " + total + ". Morale de l’histoire : ils se ressemblent parfois plus qu’ils ne l’avouent. " + t.text;
   $("r-title").textContent = t.label;
+  $("r-medal").textContent = p >= 90 ? "🏆" : p >= 75 ? "🥇" : p >= 55 ? "🥈" : p >= 35 ? "🥉" : p >= 15 ? "📰" : "🎲";
   $("r-text").textContent = text;
   var best = store("qui2027-best-" + key);
   var isRecord = total >= 5 && (!best || game.pts > best.pts);
@@ -2062,7 +2301,7 @@ $("r-retry").addEventListener("click", function () {
 });
 $("r-setup").addEventListener("click", goMenu);
 $("r-copy").addEventListener("click", function () {
-  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »", casier: "« Casier & polémiques »", citations: "« Qui a dit ça ? »" }[game.cfg.mode];
+  var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »", casier: "« Casier & polémiques »", citations: "« Qui a dit ça ? »", conseil: "« Le Conseil constitutionnel tousse »" }[game.cfg.mode];
   var extra = game.cfg.mode === "duel" ? " (" + last(CBY[game.cfg.duel[0]].name) + " / " + last(CBY[game.cfg.duel[1]].name) + ")" : "";
   var txt = "Qui a proposé ça ? Présidentielle 2027, " + lab + extra + " : " + fmt(r.pts) + " points, " + r.score + "/" + r.total + " (" + r.pct + " %), « " + r.label + " ». À toi : " + location.href.split("#")[0];
   var done = function (msg) { $("r-copied").textContent = msg; $("r-copied").hidden = false; };
@@ -2080,7 +2319,7 @@ function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "
 function renderExplorer() {
   var q = norm($("ex-q").value.trim()), fc = $("ex-c").value, ft = $("ex-t").value;
   var list = M.filter(function (x) {
-    if (x.kase || x.quote) return false;
+    if (special(x)) return false;
     var okc = !fc || (fc === "__main" ? x.cs.some(function (c) { return MAIN.indexOf(c) >= 0; }) : fc === "__shared" ? x.shared : x.cs.indexOf(fc) >= 0);
     return okc && (!ft || x.t === ft) && (!q || norm(x.m + " " + x.t + " " + names(x.cs)).indexOf(q) >= 0);
   });
@@ -2203,7 +2442,7 @@ setInterval(cdTick, 1000);
 setInterval(cdQuip, 12000);
 initExplorer();
 renderHome();
-if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else show("setup");
+if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else if (location.hash === "#antiseches") { show("cheat"); renderCheat(); } else show("setup");
 window.addEventListener("hashchange", function () { if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } });
 })();
 </script>
