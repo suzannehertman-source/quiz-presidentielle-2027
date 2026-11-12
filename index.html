@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Qui a proposé ça ? Présidentielle 2027</title>
 <meta name="description" content="Le quiz des programmes de la présidentielle 2027 : retrouve quel candidat propose chaque mesure.">
+<link rel="canonical" href="https://suzannehertman-source.github.io/quiz-presidentielle-2027/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://suzannehertman-source.github.io/quiz-presidentielle-2027/">
+<meta property="og:title" content="Qui a proposé ça ? Le quiz de la présidentielle 2027">
+<meta property="og:description" content="900 mesures, 20 candidats : sauras-tu retrouver qui propose quoi ? Et toi, tu es dans quelle team de campagne ?">
+<meta property="og:image" content="https://suzannehertman-source.github.io/quiz-presidentielle-2027/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qui a proposé ça ? Le quiz de la présidentielle 2027">
+<meta name="twitter:description" content="900 mesures, 20 candidats : sauras-tu retrouver qui propose quoi ?">
+<meta name="twitter:image" content="https://suzannehertman-source.github.io/quiz-presidentielle-2027/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='21' height='64' fill='%23000091'/%3E%3Crect x='21' width='22' height='64' fill='%23fff'/%3E%3Crect x='43' width='21' height='64' fill='%23e1000f'/%3E%3Ctext x='32' y='46' font-size='40' font-family='Arial' font-weight='900' text-anchor='middle' fill='%2313203a'%3E%3F%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -473,6 +487,8 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
 @keyframes thump { 40% { transform: scale(1.18); } }
 @keyframes wobble { from { transform: scale(1.9) rotate(-6deg); } to { transform: scale(1.9) rotate(6deg); } }
 
+.report { font-size: 12.5px; color: var(--muted); }
+#legal li { margin-bottom: 6px; }
 /* ---- Mes stats / team de campagne ---- */
 .card.team { display: flex; gap: 18px; align-items: center; padding: 18px; margin: 0 0 16px; border-top: 5px solid var(--accent); }
 .team-badge { flex: 0 0 auto; width: 96px; height: 96px; border-radius: 50%; background: var(--fam); color: #fff; display: grid; place-items: center; position: relative; box-shadow: 0 0 0 4px var(--sheet), 0 0 0 7px var(--rouge); animation: pop .5s cubic-bezier(.2,1.6,.4,1) backwards; }
@@ -645,10 +661,11 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
       </div>
     </div>
     <div class="res-actions">
-      <button type="button" class="btn primary" id="r-again">Rejouer</button>
+      <button type="button" class="btn" id="r-again">Rejouer</button>
       <button type="button" class="btn" id="r-retry">Rejouer mes erreurs</button>
       <button type="button" class="btn" id="r-setup">⌂ Menu</button>
-      <button type="button" class="btn" id="r-copy">Copier mon score</button>
+      <button type="button" class="btn primary" id="r-share">Partager mon score</button>
+      <button type="button" class="btn" id="r-copy">Copier</button>
       <span class="copied" id="r-copied" hidden>Copié.</span>
     </div>
     <div class="card team" id="r-team"></div>
@@ -745,6 +762,17 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
       <li>« Mes stats » : tes réponses sont comptées par candidat, uniquement dans ton navigateur (rien n’est envoyé). La « team de campagne » est une blague : bien connaître un programme ne veut pas dire le soutenir.</li>
       <li>Le petit « i » sur chaque question : les sigles et termes techniques de la mesure sont expliqués par un lexique neutre, plus un repère général sur le thème. Il ne révèle jamais le candidat.</li>
       </ul>
+    </details>
+    <details id="legal">
+    <summary>Mentions légales</summary>
+    <ul>
+      <li><b>Éditeur :</b> site édité à titre non professionnel par un particulier, qui a choisi de préserver son anonymat comme le permet la loi pour la confiance dans l’économie numérique (art. 1-1, II). Ses coordonnées ont été communiquées à l’hébergeur.</li>
+      <li><b>Hébergeur :</b> GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Téléphone : +1 877 448 4820.</li>
+      <li><b>Contact et corrections :</b> <span id="contact-line">une erreur, une mesure mal attribuée, une source à corriger ? Utilise le lien « Signaler une erreur » sous chaque réponse.</span></li>
+      <li><b>Indépendance :</b> ce quiz n’est lié à aucun candidat, parti, média ni institut. Il ne donne aucune consigne de vote. Les résultats des joueurs ne sont pas un sondage et ne sont jamais publiés.</li>
+      <li><b>Données personnelles :</b> aucun compte, aucun cookie, aucun traceur publicitaire. Tes scores et tes stats sont enregistrés uniquement dans ton navigateur (stockage local) et tu peux les effacer depuis « Mes stats ».</li>
+      <li><b>Contenus :</b> les mesures sont des reformulations courtes et neutres des programmes et déclarations, avec un lien vers chaque source. Les citations sont brèves et attribuées.</li>
+    </ul>
     </details>
   </div>
 </footer>
@@ -1839,15 +1867,14 @@ var QUOTES = [
   ["glucksmann","Une « héritocratie » au lieu de la méritocratie.","Au premier grand débat des candidats, pour réclamer une refonte de la taxation des héritages.","Raphaël Glucksmann, qui veut que l’effort compte davantage que la naissance.",{s:"Planet.fr",d:"août 2026",u:"https://www.planet.fr/presidentielle-les-petites-phrases-du-premier-debat-que-vous-avez-peut-etre-ratees.2998921.29334.html"}],
   ["glucksmann","Ce soir, la bataille de France commence.","Le soir où il remporte, dès le premier tour, une primaire de la gauche.","Raphaël Glucksmann, vainqueur de la primaire sociale-démocrate avec 66 % des voix.",{s:"Public Sénat",d:"11 octobre 2026",u:"https://www.publicsenat.fr/actualites/politique/ce-soir-la-bataille-de-france-commence-apres-sa-victoire-a-la-primaire-de-la-gauche-raphael-glucksmann-assure-que-rien-ne-le-fera-l"}],
   ["retailleau","Je ne prétendrai jamais à être Jupiter.","Pendant son premier grand meeting, une pique contre le style du président sortant.","Bruno Retailleau au Parc floral, en référence à Emmanuel Macron et à sa « présidence jupitérienne ».",{s:"LCP",d:"20 juin 2026",u:"https://lcp.fr/index%2ephp/actualites/j-irai-jusqu-au-bout-bruno-retailleau-lance-sa-conquete-de-l-elysee-devant-une-droite"}],
-  ["retailleau","Je ne confierai pas les intérêts de la France à ce parti qui est poutinophile !","Sur BFMTV, à propos du parti arrivé en tête des sondages, accusé de complaisance envers Moscou.","Bruno Retailleau, visant le Rassemblement national.",{s:"Le Tribunal du Net",d:"7 sept. 2026",u:"https://www.letribunaldunet.fr/politique/retailleau-rn-poutinophile-bfmtv.html"}],
+  ["retailleau","C’est un parti girouette.","Sur BFMTV, après la rencontre d’un président de parti rival avec le Britannique Nigel Farage, à propos d’un parti accusé de changer d’avis sur l’Ukraine.","Bruno Retailleau, visant le Rassemblement national, qu’il accuse aussi d’« amateurisme ».",{s:"Sud Radio (AFP)",d:"sept. 2026",u:"https://www.sudradio.fr/sud-radio/protocole-daccord-avec-nigel-farage-retailleau-reproche-a-bardella-son-amateurisme"}],
   ["retailleau","Mais où sont les propositions ?","Au lendemain du grand meeting parisien d’un rival du centre, jugé trop vague.","Bruno Retailleau, à propos du meeting d’Édouard Philippe à l’Adidas Arena.",{s:"La Gazette France (AFP)",d:"juillet 2026",u:"https://www.lagazettefrance.fr/article/retailleau-critique-les-generalites-et-l-absence-de-propositions-de-philippe"}],
-  ["zemmour","Je préfère un robot plutôt qu’un étranger.","Sur BFMTV, le soir où il confirme sa candidature, à propos des aides à domicile pour les personnes âgées.","Éric Zemmour, qui défend la robotisation plutôt que l’immigration de travail.",{s:"Algérie 360",d:"sept. 2026",u:"https://www.algerie360.com/eric-zemmour-robot-plutot-qu-etranger/"}],
   ["zemmour","Il ne suffit plus, en 2026, de fermer les frontières et d’arrêter les flux.","À ses universités d’été, pour expliquer que stopper l’immigration ne suffirait plus et qu’il faut aller plus loin.","Éric Zemmour, partisan de la « remigration », à Port-Marly.",{s:"Techniques de l’ingénieur (AFP)",d:"13 septembre 2026",u:"https://www.techniques-ingenieur.fr/actualite/breves-afp/eric-zemmour-prepare-sa-candidature-et-appelle-a-un-vote-du-sursaut-163638/"}],
   ["tondelier","Nous n’avons pas le droit de perdre chacun de notre côté une élection que nous pouvons gagner ensemble.","Aux journées d’été de son parti, en tendant la main aux socialistes et aux insoumis.","Marine Tondelier à Grenoble, pour défendre l’union de la gauche face au RN.",{s:"LCP",d:"21 août 2026",u:"https://lcp.fr/actualites/presidentielle-2027-a-grenoble-l-ecologiste-marine-tondelier-adresse-un-message-a-la"}],
   ["tondelier","Celui qui fait le choix du repli.","Pour qualifier le vainqueur d’une primaire de la gauche sociale-démocrate, qui refuse tout accord avec les insoumis.","Marine Tondelier, à propos de Raphaël Glucksmann.",{s:"Le Petit Journal (AFP)",d:"12 octobre 2026",u:"https://lepetitjournal.com/expat-politique/apres-une-primaire-reussie-les-choses-serieuses-commencent-pour-glucksmann-455946"}],
   ["ruffin","Raphaël Glucksmann remporte la primaire de Raphaël à Glucksmann !","Réaction moqueuse au résultat d’une primaire à laquelle il voulait participer, jugée bien trop étroite.","François Ruffin, écarté de fait d’une primaire réduite au PS et à Place publique.",{s:"LCP",d:"11 octobre 2026",u:"https://lcp.fr/index%2ephp/actualites/victoire-de-raphael-glucksmann-a-la-primaire-socialiste-premieres-reactions-des"}],
   ["bertrand","Si je cherchais une place, je serais ministre depuis dix ans.","Dans la presse corse, pour répondre à ceux qui l’invitent à rejoindre le camp présidentiel plutôt que de se présenter.","Xavier Bertrand, dans Corse-Matin, avant de confirmer sa candidature devant le Medef.",{s:"AFP via Bourse Direct",d:"10 août 2026",u:"https://www.boursedirect.fr/fr/actualites/categorie/politique/presidentielle-xavier-bertrand-confirme-qu-il-sera-bien-candidat-afp-83d7efd89fbe37c083d2fb08a34084aa680443ad"}],
-  ["roussel","Jean-Luc Mélenchon est certainement le pire candidat de second tour.","Sur LCI, en refusant la candidature commune que lui proposaient les insoumis.","Fabien Roussel, qui assume sa propre candidature communiste.",{s:"Le Figaro avec AFP (via Newsar)",d:"5 avril 2026",u:"https://newsar.codejungle.org/articles/53356"}]
+  ["roussel","Il ne gagnera jamais.","Après le ralliement de neuf députés de son propre groupe à l’Assemblée à un rival de gauche mieux placé dans les sondages.","Fabien Roussel, à propos de Jean-Luc Mélenchon, en assurant qu’il ira « jusqu’au bout » de sa candidature.",{s:"AFP via Bourse Direct",d:"nov. 2026",u:"https://www.boursedirect.fr/fr/actualites/categorie/politique/presidentielle-malgre-les-defections-roussel-ira-jusqu-au-bout-afp-d98703455dd586051a573e284c892abf88e9ae89"}]
 ];
 
 /* Familles politiques (classement usuel de la presse), utilisées par les antisèches. */
@@ -2023,6 +2050,15 @@ function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return { "
 function pct(a, b) { return b ? Math.round(100 * a / b) : 0; }
 function plural(n, one, many) { return n + " " + (n > 1 ? many : one); }
 function fmt(n) { return n.toLocaleString("fr-FR"); }
+/* ---------- Réglages de diffusion ---------- */
+var CONTACT_EMAIL = ""; // adresse dédiée aux corrections (à renseigner)
+function siteUrl() { return location.href.split("#")[0].split("?")[0]; }
+function reportLink(m) {
+  if (!CONTACT_EMAIL) return "";
+  var subj = "Correction – " + (m.quote ? "citation" : m.kase ? "dossier" : "mesure") + " n°" + m.id;
+  var body = "Bonjour,\n\nÀ propos de : « " + m.m + " »\n\nCe qui ne va pas (et une source si possible) :\n";
+  return "<a class=\"report\" href=\"mailto:" + CONTACT_EMAIL + "?subject=" + encodeURIComponent(subj) + "&body=" + encodeURIComponent(body) + "\">Signaler une erreur</a>";
+}
 function store(k, v) { try { if (v === undefined) { var x = localStorage.getItem(k); return x ? JSON.parse(x) : null; } localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
 function last(name) { return name.split(" ").slice(1).join(" "); }
 function names(ids) { var n = ids.map(function (id) { return CBY[id].name; }); return n.length < 2 ? n.join("") : n.slice(0, -1).join(", ") + " et " + n[n.length - 1]; }
@@ -2586,6 +2622,7 @@ function reveal(a, animate) {
   else parts.push("<span>" + srcHtml(m) + "</span>");
   if (!special(m) && m.cs.length === 1) parts.push("<span class=\"memo\">Antisèche : " + esc(CBY[m.c].name) + " · " + esc(FAMILY[m.c]) + " · " + esc(CBY[m.c].party) + " · " + plural(countAll(m.c), "mesure", "mesures") + " dans le quiz</span>");
   if (a.cheated) parts.push("<span class=\"memo\">Antisèche utilisée : points divisés par deux.</span>");
+  var rl = reportLink(m); if (rl) parts.push("<span>" + rl + "</span>");
   $("g-src").innerHTML = parts.join("");
   $("g-src").hidden = false;
   if (animate) {
@@ -2855,10 +2892,20 @@ $("r-retry").addEventListener("click", function () {
   startGame(buildQuestions(c2, ids), c2);
 });
 $("r-setup").addEventListener("click", goMenu);
+function shareText() {
+  var r = game.result, sq = game.answers.filter(Boolean).slice(0, 20).map(function (a) { return a.ok ? "🟩" : (a.type === "multi" && a.good ? "🟨" : "🟥"); }).join("");
+  var rk = ranking(getStats(), 3), team = rk.length ? "\nJe suis Team " + last(rk[0].c.name) + " 🎽" : "";
+  return "Qui a proposé ça ? 🗳️ " + r.score + "/" + r.total + " (" + r.pct + " %)\n« " + r.label + " »\n" + sq + team + "\nÀ toi de jouer : " + siteUrl();
+}
+$("r-share").addEventListener("click", function () {
+  var txt = shareText(), done = function (msg) { $("r-copied").textContent = msg; $("r-copied").hidden = false; };
+  if (navigator.share) { navigator.share({ title: "Qui a proposé ça ?", text: txt }).catch(function () {}); return; }
+  try { navigator.clipboard.writeText(txt).then(function () { done("Copié, à coller où tu veux."); }, function () { done(txt); }); } catch (e) { done(txt); }
+});
 $("r-copy").addEventListener("click", function () {
   var r = game.result, lab = { classic: "mode classique", duel: "confrontation", blitz: "mode éclair", target: "mode ciblé", multi: "multi-réponses", accord: "« Ils sont d’accord ! »", casier: "« Casier & polémiques »", citations: "« Qui a dit ça ? »", conseil: "« Le Conseil constitutionnel tousse »" }[game.cfg.mode];
   var extra = game.cfg.mode === "duel" ? " (" + last(CBY[game.cfg.duel[0]].name) + " / " + last(CBY[game.cfg.duel[1]].name) + ")" : "";
-  var txt = "Qui a proposé ça ? Présidentielle 2027, " + lab + extra + " : " + fmt(r.pts) + " points, " + r.score + "/" + r.total + " (" + r.pct + " %), « " + r.label + " ». À toi : " + location.href.split("#")[0];
+  var txt = "Qui a proposé ça ? Présidentielle 2027, " + lab + extra + " : " + fmt(r.pts) + " points, " + r.score + "/" + r.total + " (" + r.pct + " %), « " + r.label + " ». À toi : " + siteUrl();
   var done = function (msg) { $("r-copied").textContent = msg; $("r-copied").hidden = false; };
   try { navigator.clipboard.writeText(txt).then(function () { done("Copié, à coller où tu veux."); }, function () { done(txt); }); } catch (e) { done(txt); }
 });
@@ -2998,6 +3045,8 @@ setInterval(cdQuip, 12000);
 initExplorer();
 renderHome();
 runIntro();
+if (CONTACT_EMAIL) $("contact-line").innerHTML = "écris à <a href=\"mailto:" + CONTACT_EMAIL + "\">" + CONTACT_EMAIL + "</a>, ou utilise le lien « Signaler une erreur » sous chaque réponse.";
+else $("contact-line").textContent = "une adresse dédiée aux corrections arrive très bientôt.";
 if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else if (location.hash === "#antiseches") { show("cheat"); renderCheat(); } else if (location.hash === "#stats") { show("stats"); renderStats(); } else show("setup");
 window.addEventListener("hashchange", function () { if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } });
 })();
