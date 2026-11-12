@@ -455,7 +455,7 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
 .ibox { position: relative; z-index: 1; text-align: center; padding: 24px 18px; max-width: 620px; }
 .it1 { margin: 0; font: 800 clamp(22px, 5vw, 34px)/1 var(--f-display); text-transform: uppercase; color: var(--ink); animation: dropin .5s cubic-bezier(.2,1.4,.4,1) backwards; }
 .inum { margin: 0; font: 900 clamp(96px, 26vw, 180px)/.9 var(--f-display); color: var(--bleu); font-variant-numeric: tabular-nums; animation: dropin .6s .15s cubic-bezier(.2,1.6,.4,1) backwards; text-shadow: 6px 6px 0 rgba(225,0,15,.18); }
-#intro.end .inum { color: var(--rouge); animation: thump .5s ease; }
+#intro.end .it1, #intro.end .inum, #intro.end .istep { display: none; }
 .itok { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 14px auto 6px; max-width: 520px; }
 .itok span { width: 40px; height: 40px; border-radius: 50%; background: var(--c); color: #fff; font: 800 13px/40px var(--f-display); display: inline-block; animation: tokin .4s var(--d) cubic-bezier(.2,1.6,.4,1) backwards; transition: transform .35s ease, opacity .35s ease, filter .35s ease; position: relative; }
 .itok span.ko { transform: translateY(26px) rotate(-30deg) scale(.4); opacity: 0; filter: grayscale(1); }
@@ -473,6 +473,21 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
 @keyframes thump { 40% { transform: scale(1.18); } }
 @keyframes wobble { from { transform: scale(1.9) rotate(-6deg); } to { transform: scale(1.9) rotate(6deg); } }
 
+/* ---- Mes stats / team de campagne ---- */
+.card.team { display: flex; gap: 18px; align-items: center; padding: 18px; margin: 0 0 16px; border-top: 5px solid var(--accent); }
+.team-badge { flex: 0 0 auto; width: 96px; height: 96px; border-radius: 50%; background: var(--fam); color: #fff; display: grid; place-items: center; position: relative; box-shadow: 0 0 0 4px var(--sheet), 0 0 0 7px var(--rouge); animation: pop .5s cubic-bezier(.2,1.6,.4,1) backwards; }
+.team-badge .ini { font: 900 30px/1 var(--f-display); }
+.team-badge .tag { position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%) rotate(-4deg); background: var(--rouge); color: #fff; font: 800 11px/1 var(--f-ui); text-transform: uppercase; letter-spacing: .08em; padding: 4px 8px; white-space: nowrap; border-radius: 2px; }
+.team-txt p { margin: 0 0 6px; }
+.team-txt .t1 { font-size: 16px; }
+.team-txt .t2 { font: 700 17px/1.35 var(--f-read); color: var(--accent); }
+.team-txt .t3 { font-size: 14px; color: var(--muted); }
+.team-txt .t4 { font-size: 12px; color: var(--muted); font-style: italic; margin: 0; }
+.team-empty { margin: 0; color: var(--muted); }
+.st-sum { font-weight: 700; }
+.st-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+@media (max-width: 560px) { .card.team { flex-direction: column; text-align: center; } }
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
@@ -489,6 +504,7 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
         <button type="button" id="tab-jouer" data-view="jouer" aria-pressed="true">⌂ Menu</button>
         <button type="button" id="tab-cheat" data-view="cheat" aria-pressed="false">Antisèches</button>
         <button type="button" id="tab-explorer" data-view="explorer" aria-pressed="false">Toutes les mesures</button>
+        <button type="button" id="tab-stats" data-view="stats" aria-pressed="false">Mes stats</button>
       </nav>
     </div>
   </div>
@@ -635,6 +651,7 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
       <button type="button" class="btn" id="r-copy">Copier mon score</button>
       <span class="copied" id="r-copied" hidden>Copié.</span>
     </div>
+    <div class="card team" id="r-team"></div>
     <div class="res-grid">
       <div class="card panel">
         <h3 id="r-cand-h">Par candidat</h3>
@@ -657,6 +674,21 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
         <ul class="missed" id="r-missed"></ul>
       </div>
     </div>
+  </section>
+
+  <section class="view" id="v-stats" hidden>
+    <div class="cheat-head">
+      <h2>Mes stats</h2>
+      <p>Quel candidat tu connais le mieux, toutes parties confondues. Les stats restent dans ton navigateur, rien n’est envoyé nulle part.</p>
+      <p class="st-sum" id="st-sum"></p>
+    </div>
+    <div class="card team" id="st-team"></div>
+    <div class="card panel">
+      <h3>Ton classement des candidats</h3>
+      <p class="sub">Part de leurs mesures (et citations, dossiers…) que tu as bien attribuées.</p>
+      <div class="rows" id="st-rows"></div>
+    </div>
+    <div class="st-actions"><button type="button" class="btn primary" id="st-play">Jouer une partie</button><button type="button" class="btn" id="st-reset">Remettre à zéro</button></div>
   </section>
 
   <section class="view" id="v-cheat" hidden>
@@ -710,6 +742,7 @@ body { background-image: radial-gradient(rgba(0,0,145,.06) 1.2px, transparent 1.
       <li>Candidats déclarés sans programme recensé (affichés « À venir » sur l’accueil, pas encore jouables) : d’après les décomptes de Public Sénat d’octobre et du 9 novembre 2026. Les personnalités seulement « pressenties » (François Hollande, Bernard Cazeneuve, Dominique de Villepin…) ne sont pas listées tant qu’elles ne se sont pas déclarées. Juan Branco devient jouable avec le projet des Ruches.</li>
       <li>Le compte à rebours vise l’ouverture des bureaux de vote le dimanche 18 avril 2027 à 8 h (heure de Paris), date retenue par le Conseil des ministres du 1er juillet 2026.</li>
       <li>L’humour vise le joueur, jamais les candidats. Aucun candidat n’a été maltraité pendant la fabrication de ce quiz. Les programmes évoluent jusqu’au 12 mars 2027 : vérifie la source avant de citer une mesure.</li>
+      <li>« Mes stats » : tes réponses sont comptées par candidat, uniquement dans ton navigateur (rien n’est envoyé). La « team de campagne » est une blague : bien connaître un programme ne veut pas dire le soutenir.</li>
       <li>Le petit « i » sur chaque question : les sigles et termes techniques de la mesure sont expliqués par un lexique neutre, plus un repère général sur le thème. Il ne révèle jamais le candidat.</li>
       </ul>
     </details>
@@ -805,6 +838,8 @@ var S = {
   ptSite: { s: "Projet des Patriotes (via Votons 2027)", d: "2026", u: "https://les-patriotes.fr/projetpourlafrance/" },
   melLivre: { s: "L’Avenir en commun, le livre (via Votons 2027)", d: "2026", u: LAEC },
   brRu: { s: "Les Ruches, « Le projet » (via Votons 2027)", d: "2026", u: "https://ruches.org/le-projet" },
+  glPS11: { s: "Public Sénat", d: "nov. 2026", u: "https://www.publicsenat.fr/actualites/politique/presidentielle-2027-raphael-glucksmann-met-200-milliards-sur-la-table-et-invite-le-senat-a-voter-en-faveur-dune-future-republique-ecologique" },
+  phCarb: { s: "LesVoitures.fr, « Présidentielle 2027 et automobile »", d: "2026", u: "https://lesvoitures.fr/presidentielle-2027-automobile/" },
   poSite: { s: "Site de Natacha Polony (via Votons 2027)", d: "2026", u: "https://natachapolony2027.fr/natacha-polony/ma-vision" }
 };
 
@@ -1654,7 +1689,60 @@ var RAW = [
   ["branco","Social","Ouvrir le RSA dès 18 ans, sans condition de ressources des parents.","brRu"],
   ["branco","Travail","Fixer un objectif de 1 800 heures travaillées par actif et par an.","brRu"],
   ["branco","Défense","Disposer de 300 chars et de 300 avions de combat.","brRu"],
-  ["branco","Justice","Limiter les gardes à vue à 24 heures et à 200 000 par an.","brRu"]
+  ["branco","Justice","Limiter les gardes à vue à 24 heures et à 200 000 par an.","brRu"],
+  ["glucksmann","Fiscalité","Prélever une fois 5 % des patrimoines de plus de 100 millions d’euros pour financer l’investissement climatique.","glPS11"],
+  ["glucksmann","Énergie","Verser un chèque énergie exceptionnel de 500 euros à 6 millions de familles, et de 200 euros à 10 millions de familles des classes moyennes.","glPS11"],
+  ["philippe","Économie","Financer 450 millions d’euros d’aides aux carburants en ne remplaçant pas 7 000 fonctionnaires partant à la retraite.","phCarb"],
+  ["attal","Éducation","Faire du redoublement une décision pédagogique ordinaire.","atSite"],
+  ["attal","Justice","Rendre imprescriptibles les crimes sexuels commis sur des mineurs.","atSite"],
+  ["attal","Justice","Faire payer les dégradations commises par des mineurs à leurs parents.","atSite"],
+  ["attal","Institutions","Alléger les règles du référendum local pour en faire un outil courant.","atSite"],
+  ["attal","Énergie","Réunir les meilleurs ingénieurs européens autour de la fusion nucléaire.","atSite"],
+  ["attal","Énergie","Garantir la stabilité des prix de l’électricité pendant cinq ans.","atSite"],
+  ["philippe","Logement","Créer un prêt à taux zéro à chaque naissance pour aider les familles à déménager.","phSite"],
+  ["philippe","Fiscalité","Relever massivement les plafonds de donation aux enfants et petits-enfants pendant trois ans.","phSite"],
+  ["philippe","Justice","Aligner l’application des peines des grands narcotrafiquants sur celle des terroristes.","phSite"],
+  ["philippe","Écologie","Construire des « Canadairs français » contre les incendies.","phSite"],
+  ["philippe","Écologie","Investir massivement dans la capture de carbone.","phSite"],
+  ["retailleau","Énergie","Arrêter de subventionner de nouvelles éoliennes et de nouveaux panneaux solaires.","reSite"],
+  ["glucksmann","Travail","Lancer une stratégie « Zéro mort au travail ».","glActe"],
+  ["glucksmann","Écologie","Supprimer les niches fiscales polluantes.","glActe"],
+  ["glucksmann","Sécurité","Revoir la doctrine française du maintien de l’ordre.","glActe"],
+  ["glucksmann","Social","Créer un référent social unique pour simplifier l’accès aux droits.","glActe"],
+  ["lisnard","Immigration","Interdire toute régularisation après une entrée clandestine.","liProg"],
+  ["lisnard","Immigration","Expulser systématiquement les étrangers condamnés pour délits graves et les fichés S étrangers.","liProg"],
+  ["lisnard","Éducation","Créer des classes d’excellence en maths et en sciences dans chaque académie.","liProg"],
+  ["lisnard","Justice","Fixer aux juges des objectifs de délais de jugement.","liProg"],
+  ["ruffin","Agriculture","Verser 5 000 euros à chaque paysan touché par une crise, pour aider les petites fermes.","ruSite"],
+  ["ruffin","Institutions","Supprimer la rente à vie des anciens présidents et Premiers ministres.","ruSite"],
+  ["ruffin","Institutions","Créer une Haute Autorité à la probité regroupant tous les organes de déontologie.","ruSite"],
+  ["ruffin","Institutions","Imposer un « frigo » aux ministres sortants avant de rejoindre le privé.","ruSite"],
+  ["ruffin","Éducation","Créer un « bachelor professionnel » pour les élèves de lycée pro.","ruSite"],
+  ["lepen","Logement","Construire 100 000 logements sociaux par an, dont 20 000 pour étudiants et jeunes travailleurs.","lp22"],
+  ["lepen","Écologie","Supprimer le Fonds vert, sauf pour les inondations et les feux de forêts.","lp22"],
+  ["tondelier","Écologie","Instaurer un jour par semaine sans chasse, ainsi que les jours fériés et les vacances scolaires.","toProg"],
+  ["tondelier","Social","Remplacer le RSA par une « garantie d’autonomie ».","toProg"],
+  ["tondelier","Famille","Créer un statut de famille monoparentale.","toProg"],
+  ["tondelier","Écologie","Développer des alternatives au chalutage de fond.","toProg"],
+  ["roussel","Travail","Suspendre tous les plans sociaux et licenciements en cours.","roJh"],
+  ["roussel","Logement","Rétablir l’obligation d’adapter tous les logements neufs aux personnes handicapées.","roJh"],
+  ["dupont","Famille","Créer 100 000 places en crèche en cinq ans.","ndDlf"],
+  ["dupont","Institutions","Conditionner l’activation de la carte Vitale à la participation au vote.","ndDlf"],
+  ["dupont","Institutions","Supprimer les avantages des anciens présidents.","ndDlf"],
+  ["dupont","Immigration","Déployer l’armée aux frontières.","ndDlf"],
+  ["dupont","Immigration","Assigner à résidence les demandeurs d’asile.","ndDlf"],
+  ["dupont","Immigration","Renvoyer les réfugiés de guerre dans leur pays dès le retour de la paix.","ndDlf"],
+  ["asselineau","Institutions","Supprimer les conseils régionaux.","asUpr"],
+  ["asselineau","Santé","Interdire tout confinement ou couvre-feu non limité dans le temps et l’espace.","asUpr"],
+  ["asselineau","Santé","Interdire que les médecins de l’hôpital public soient payés par des laboratoires.","asUpr"],
+  ["asselineau","Agriculture","Favoriser les élevages en plein air.","asUpr"],
+  ["philippot","Énergie","Rétablir les monopoles publics dans le rail et l’énergie.","ptSite"],
+  ["branco","Santé","Dépister les troubles « dys » au CP et au CM1.","brRu"],
+  ["branco","Éducation","Imposer au moins 13 h 30 de français par semaine au CP.","brRu"],
+  ["branco","Logement","Surtaxer les 3 % de Français qui possèdent plusieurs logements en plus de leurs résidences.","brRu"],
+  ["branco","Institutions","Créer un « défenseur des peuples » élu pour neuf ans.","brRu"],
+  ["branco","Fiscalité","Publier chaque année les revenus fiscaux de tous les citoyens, comme en Finlande.","brRu"],
+  ["branco","Justice","Ramener la prescription à 3 ans pour les délits et 10 ans pour les crimes.","brRu"]
 ];
 
 
@@ -1711,7 +1799,7 @@ var SHARED = [
 
 /* Mode « Casier & polémiques » : faits judiciaires et polémiques publiques, formulés de façon neutre, avec leur statut exact à la date de mise à jour. Une procédure en cours n'est pas une condamnation. */
 var CASES = [
-  ["lepen","cond","2026","Affaire des assistants d’eurodéputés du FN (2004-2016) : condamnation en appel pour détournement de fonds publics à 3 ans de prison dont 2 avec sursis (1 an sous bracelet électronique), 100 000 € d’amende et 45 mois d’inéligibilité dont 30 avec sursis.","Non définitif : pourvoi en cassation en cours. La Cour de cassation doit statuer au plus tard début avril 2027. Elle conteste les faits et reste éligible.",{s:"Euronews, 7 juillet 2026",d:"arrêt de la cour d’appel de Paris",u:"https://fr.euronews.com/2026/07/07/marine-le-pen-condamnee-a-45-mois-dineligibilite-dont-30-mois-assortis-de-sursis"}],
+  ["lepen","cond","2026","Affaire des assistants d’eurodéputés du FN (2004-2016) : condamnation en appel pour détournement de fonds publics à 3 ans de prison dont 2 avec sursis (1 an sous bracelet électronique), 100 000 € d’amende et 45 mois d’inéligibilité dont 30 avec sursis.","Non définitif : pourvoi en cassation en cours. La Cour de cassation examinera ses questions prioritaires de constitutionnalité le 16 décembre 2026 et doit statuer au plus tard début avril 2027. Elle conteste les faits et reste éligible.",{s:"Euronews, 7 juillet 2026",d:"arrêt de la cour d’appel de Paris",u:"https://fr.euronews.com/2026/07/07/marine-le-pen-condamnee-a-45-mois-dineligibilite-dont-30-mois-assortis-de-sursis"}],
   ["lepen","pol","2017","Pour accepter une interview sur TF1 pendant la campagne présidentielle, a demandé que le drapeau européen prévu dans le décor soit retiré.","Polémique, sans suite judiciaire.",{s:"Public Sénat",d:"avril 2017",u:"https://www.publicsenat.fr/actualites/politique/philippot-qualifie-le-drapeau-europeen-de-torchon-oligarchique-58983"}],
   ["melenchon","cond","2019","Condamné par le tribunal correctionnel de Bobigny à 3 mois de prison avec sursis et 8 000 € d’amende pour rébellion et provocation lors de la perquisition agitée du siège de son mouvement en octobre 2018.","Définitif : il a annoncé ne pas faire appel.",{s:"Public Sénat",d:"9 décembre 2019",u:"https://www.publicsenat.fr/actualites/politique/melenchon-condamne-a-trois-mois-avec-sursis-pour-la-perquisition-houleuse-a-lfi"}],
   ["melenchon","pol","2026","Lors d’un rassemblement devant un tribunal parisien, a estimé que le caractère terroriste des massacres du 7 octobre 2023 pouvait être questionné.","Polémique, sans suite judiciaire connue.",{s:"La Gazette France (AFP)",d:"juin 2026",u:"https://www.lagazettefrance.fr/article/pour-melenchon-le-caractere-terroriste-du-7-octobre-peut-etre-questionne"}],
@@ -1961,7 +2049,7 @@ var NOPROG = [
   { name: "Teddy Riner", ini: "TR", party: "Sans étiquette", q: "Candidat depuis le 9 novembre. Le programme est encore au vestiaire." },
   { name: "Jean Lassalle", ini: "JL", party: "Résistons", q: "Programme en route, à pied, quelque part entre les Pyrénées et Paris." },
   { name: "Karim Bouamrane", ini: "KB", party: "Maire de Saint-Ouen", q: "Candidature déclarée. Programme pas encore déclaré." },
-  { name: "Olivier Becht", ini: "OB", party: "« Extrême centre »", q: "Programme quelque part au centre. On le cherche encore." },
+  { name: "Olivier Becht", ini: "OB", party: "« Extrême centre »", q: "Le « Projet France » est annoncé. On le cherche encore, quelque part au centre." },
   { name: "Gilles Platret", ini: "GP", party: "Ex-LR", q: "Programme en préparation. On lui garde une place au chaud." },
   { name: "Francis Lalanne", ini: "FLa", party: "Sans étiquette", q: "Programme pas encore sorti. Le single non plus." },
   { name: "Selma Labib", ini: "SL", party: "NPA-Révolutionnaires", q: "Programme en débat interne. Prévoir du café." },
@@ -1979,16 +2067,18 @@ function countOf(id) { return SINGLE.filter(function (x) { return x.c === id; })
 /* ---------- État ---------- */
 var cfg = { mode: "classic", pool: "main", diff: "easy", len: "20", duel: ["lepen", "melenchon"], targets: [] };
 var game = null, timerId = null, autoId = null;
-var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer"), cheat: $("v-cheat") };
+var views = { setup: $("v-setup"), game: $("v-game"), res: $("v-res"), explorer: $("v-explorer"), cheat: $("v-cheat"), stats: $("v-stats") };
 function show(v) {
   Object.keys(views).forEach(function (k) { views[k].hidden = (k !== v); });
   $("tab-jouer").setAttribute("aria-pressed", v === "setup");
   $("tab-explorer").setAttribute("aria-pressed", v === "explorer");
   $("tab-cheat").setAttribute("aria-pressed", v === "cheat");
+  $("tab-stats").setAttribute("aria-pressed", v === "stats");
 }
 document.querySelectorAll("nav.tabs button").forEach(function (b) {
   b.addEventListener("click", function () {
     if (b.dataset.view === "explorer") { location.hash = "explorer"; show("explorer"); renderExplorer(); }
+    else if (b.dataset.view === "stats") { clearInterval(timerId); clearTimeout(autoId); game = null; location.hash = "stats"; show("stats"); renderStats(); window.scrollTo({ top: 0 }); }
     else if (b.dataset.view === "cheat") { clearInterval(timerId); clearTimeout(autoId); game = null; location.hash = "antiseches"; show("cheat"); renderCheat(); window.scrollTo({ top: 0 }); }
     else goMenu();
   });
@@ -2069,7 +2159,7 @@ function runIntro() {
   function close() { if (done) return; done = true; timers.forEach(clearTimeout); ov.classList.add("out"); setTimeout(function () { ov.remove(); }, 450); document.removeEventListener("keydown", close); }
   ov.addEventListener("click", close); document.addEventListener("keydown", close);
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce) { $("i-n").textContent = "1"; ov.querySelector(".it1").textContent = "Il en reste…"; ov.classList.add("end"); timers.push(setTimeout(close, 2600)); return; }
+  if (reduce) { $("i-n").textContent = "1"; ov.classList.add("end"); timers.push(setTimeout(close, 2600)); return; }
   var toks = [].slice.call(ov.querySelectorAll(".itok span")), keep = Math.floor(Math.random() * N);
   var order = toks.map(function (t, k) { return k; }).filter(function (k) { return k !== keep; }).sort(function () { return Math.random() - 0.5; });
   var steps = ["Épreuve des 500 parrainages", "Épreuve des sondages", "Épreuve du débat télé", "Premier tour"], t0 = 1500, dt = 62, left = N;
@@ -2080,7 +2170,7 @@ function runIntro() {
     }, t0 + j * dt));
   });
   var tEnd = t0 + order.length * dt + 150;
-  timers.push(setTimeout(function () { toks[keep].classList.add("win"); toks[keep].textContent = "?"; ov.classList.add("end"); ov.querySelector(".it1").textContent = "Il en reste…"; $("i-step").innerHTML = "&nbsp;"; }, tEnd));
+  timers.push(setTimeout(function () { toks[keep].classList.add("win"); toks[keep].textContent = "?"; ov.classList.add("end"); $("i-step").innerHTML = "&nbsp;"; }, tEnd));
   timers.push(setTimeout(close, tEnd + 2600));
 }
 var MODES = ["classic", "duel", "blitz", "target", "accord", "citations", "casier", "conseil"];
@@ -2608,10 +2698,71 @@ function found(a, id) { // le joueur a-t-il bien associé ce candidat à la mesu
   if (a.type === "multi") return a.picks.indexOf(id) >= 0;
   return a.ok;
 }
+
+/* ---------- Mes stats : quel candidat je connais le mieux ---------- */
+var TEAM = {
+  melenchon: "Ta mission : régler les hologrammes avant chaque meeting.",
+  lepen: "Ta mission : nourrir les chats du QG pendant les déplacements.",
+  philippe: "Ta mission : animer les réunions d’appartement (bière fraîche fournie).",
+  attal: "Ta mission : trouver la prochaine formule choc en trois mots.",
+  glucksmann: "Ta mission : recompter les voix de la primaire. Toutes. Encore.",
+  retailleau: "Ta mission : traduire les discours en vendéen et inversement.",
+  zemmour: "Ta mission : ranger la bibliothèque de campagne (il y en a beaucoup).",
+  tondelier: "Ta mission : entretenir la garde-robe verte.",
+  ruffin: "Ta mission : boucler le prochain numéro du journal de campagne.",
+  roussel: "Ta mission : tenir le barbecue à la Fête de l’Huma.",
+  bertrand: "Ta mission : faire visiter les Hauts-de-France à toute la presse.",
+  lisnard: "Ta mission : dérouler le tapis rouge à chaque meeting.",
+  dupont: "Ta mission : conduire le camping-car de la 4e campagne. Le GPS connaît déjà la route.",
+  asselineau: "Ta mission : relire tous les articles des traités européens, un par un.",
+  philippot: "Ta mission : porter le drapeau en tête de cortège.",
+  polony: "Ta mission : relire l’éditorial avant publication.",
+  arthaud: "Ta mission : distribuer les tracts à 6 h devant l’usine.",
+  kazib: "Ta mission : tenir le mégaphone en manif.",
+  batho: "Ta mission : veiller sur les ruches du QG.",
+  branco: "Ta mission : préparer les plaidoiries de la campagne."
+};
+var STATS_KEY = "qui2027-stats";
+function getStats() { var s = store(STATS_KEY); return s && s.c ? s : { c: {}, g: 0, q: 0 }; }
+function recordStats(ans) {
+  if (!ans.length) return;
+  var s = getStats();
+  ans.forEach(function (a) {
+    var m = M[a.mid];
+    m.cs.forEach(function (id) { var x = s.c[id] || [0, 0]; x[1]++; if (found(a, id)) x[0]++; s.c[id] = x; });
+  });
+  s.g++; s.q += ans.length; store(STATS_KEY, s);
+}
+function ranking(s, min) {
+  return C.filter(function (c) { return s.c[c.id] && s.c[c.id][1] >= (min || 1); }).map(function (c) {
+    var x = s.c[c.id]; return { c: c, a: x[0], b: x[1], sc: (x[0] + 1) / (x[1] + 2) };
+  }).sort(function (x, y) { return y.sc - x.sc || y.b - x.b; });
+}
+function teamHtml(s) {
+  var rk = ranking(s, 3);
+  if (!rk.length) return "<p class=\"team-empty\">Joue encore un peu : il faut au moins 3 réponses sur un candidat pour savoir dans quelle équipe de campagne on t’embauche.</p>";
+  var b = rk[0], w = rk[rk.length - 1], p = pct(b.a, b.b);
+  var h = "<div class=\"team-badge\" style=\"--fam:" + (FAMCOL[FAMILY[b.c.id]] || "var(--accent)") + "\"><span class=\"ini\">" + esc(b.c.ini) + "</span><span class=\"tag\">Team " + esc(last(b.c.name)) + "</span></div>" +
+    "<div class=\"team-txt\"><p class=\"t1\">Le candidat que tu connais le mieux : <b>" + esc(b.c.name) + "</b> (" + p + " % de bonnes réponses sur " + b.b + ").</p>" +
+    "<p class=\"t2\">Félicitations, tu fais désormais partie de la team de campagne. " + esc(TEAM[b.c.id] || "Ta mission : tenir le stand de tracts au marché.") + "</p>";
+  if (rk.length > 1 && w.c.id !== b.c.id) h += "<p class=\"t3\">Celui que tu connais le moins : " + esc(w.c.name) + " (" + pct(w.a, w.b) + " %). Un café avec son programme s’impose.</p>";
+  return h + "<p class=\"t4\">Connaître un programme, ce n’est pas le soutenir. Promis, on ne t’enverra pas de carte d’adhérent.</p></div>";
+}
+function renderStats() {
+  var s = getStats(), rk = ranking(s, 1);
+  $("st-sum").textContent = s.g ? plural(s.g, "partie jouée", "parties jouées") + " · " + plural(s.q, "réponse", "réponses") + " · " + plural(rk.length, "candidat rencontré", "candidats rencontrés") : "Aucune partie pour l’instant. Lance une partie, tes stats se rempliront toutes seules.";
+  $("st-team").innerHTML = teamHtml(s);
+  $("st-rows").innerHTML = rk.length ? rk.map(function (o) { return rowHtml({ l: o.c.name, a: o.a, b: o.b }); }).join("") : "";
+  $("st-reset").hidden = !s.g;
+}
+$("st-reset").addEventListener("click", function () { store(STATS_KEY, { c: {}, g: 0, q: 0 }); renderStats(); });
+$("st-play").addEventListener("click", function () { goMenu(); });
+
 function finish() {
   clearInterval(timerId); clearTimeout(autoId);
   game.over = true;
   var ans = game.answers.filter(Boolean);
+  recordStats(ans);
   var total = ans.length, sc = ans.filter(function (a) { return a.ok; }).length, p = pct(sc, total), t = tier(p);
   var key = modeKey(game.cfg);
   game.result = { pts: game.pts, score: sc, total: total, pct: p, label: t.label, streak: game.bestStreak };
@@ -2656,6 +2807,7 @@ function finish() {
     rows.sort(function (x, y) { return (y.a / y.b) - (x.a / x.b) || y.b - x.b; });
   }
   $("r-cand").innerHTML = rows.map(rowHtml).join("");
+  $("r-team").innerHTML = teamHtml(getStats());
   var casier = game.cfg.mode === "casier";
   $("r-theme-h").textContent = casier ? "Par type de dossier" : "Par thème";
   $("r-theme-sub").textContent = casier ? "Condamnations, procédures, relaxes, polémiques." : "Taux de bonnes réponses selon le sujet.";
@@ -2846,7 +2998,7 @@ setInterval(cdQuip, 12000);
 initExplorer();
 renderHome();
 runIntro();
-if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else if (location.hash === "#antiseches") { show("cheat"); renderCheat(); } else show("setup");
+if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } else if (location.hash === "#antiseches") { show("cheat"); renderCheat(); } else if (location.hash === "#stats") { show("stats"); renderStats(); } else show("setup");
 window.addEventListener("hashchange", function () { if (location.hash === "#explorer") { show("explorer"); renderExplorer(); } });
 })();
 </script>
